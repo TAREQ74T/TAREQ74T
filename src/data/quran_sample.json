@@ -1,0 +1,86 @@
+{
+  "surahs": [
+    {
+      "number": 1,
+      "name_ar": "سُوْرَةُ الْفَاتِحَةِ",
+      "name_en": "Al-Faatiha",
+      "ayahs_count": 7,
+      "ayahs": [
+        {
+          "number": 1,
+          "number_in_surah": 1,
+          "arabic_text": "بِسۡمِ ٱللَّهِ ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ",
+          "tafseer": []
+        },
+        {
+          "number": 2,
+          "number_in_surah": 2,
+          "arabic_text": "ٱلۡحَمۡدُ لِلَّهِ رَبِّ ٱلۡعَٰلَمِينَ",
+          "tafseer": []
+        },
+        {
+          "number": 3,
+          "number_in_surah": 3,
+          "arabic_text": "ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ",
+          "tafseer": []
+        },
+        {
+          "number": 4,
+          "number_in_surah": 4,
+          "arabic_text": "مَٰلِكِ يَوۡمِ ٱلدِّينِ",
+          "tafseer": []
+        },
+        {
+          "number": 5,
+          "number_in_surah": 5,
+          "arabic_text": "إِيَّاكَ نَعۡبُدُ وَإِيَّاكَ نَسۡتَعِينُ",
+          "tafseer": []
+        },
+        {
+          "number": 6,
+          "number_in_surah": 6,
+          "arabic_text": "ٱهۡدِنَا ٱلصِّرَٰطَ ٱلۡمُسۡتَقِيمَ",
+          "tafseer": []
+        },
+        {
+          "number": 7,
+          "number_in_surah": 7,
+          "arabic_text": "صِرَٰطَ ٱلَّذِينَ أَنۡعَمۡتَ عَلَيۡهِمۡ غَيۡرِ ٱلۡمَغۡضُوبِ عَلَيۡهِمۡ وَلَا ٱلضَّآلِّينَ",
+          "tafseer": []
+        }
+      ]
+    },
+    {
+      "number": 112,
+      "name_ar": "سُوْرَةُ الْاِخْلَاصِ",
+      "name_en": "Al-Ikhlaas",
+      "ayahs_count": 4,
+      "ayahs": [
+        {
+          "number": 1,
+          "number_in_surah": 1,
+          "arabic_text": "قُلۡ هُوَ ٱللَّهُ أَحَدٌ",
+          "tafseer": []
+        },
+        {
+          "number": 2,
+          "number_in_surah": 2,
+          "arabic_text": "ٱللَّهُ ٱلصَّمَدُ",
+          "tafseer": []
+        },
+        {
+          "number": 3,
+          "number_in_surah": 3,
+          "arabic_text": "لَمۡ يَلِدۡ وَلَمۡ يُولَدۡ",
+          "tafseer": []
+        },
+        {
+          "number": 4,
+          "number_in_surah": 4,
+          "arabic_text": "وَلَمۡ يَكُن لَّهُۥ كُفُوًا أَحَدُۢ",
+          "tafseer": []
+        }
+      ]
+    }
+  ]
+}
