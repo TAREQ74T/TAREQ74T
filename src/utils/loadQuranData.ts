@@ -1,3 +1,5 @@
+import quranDataUrl from '../data/quran_full.json?url'
+
 export interface TafseerEntry {
   tafseer_id: string
   text: string
@@ -22,11 +24,9 @@ export interface QuranData {
   surahs: Surah[]
 }
 
-import quranSample from '../data/quran_sample.json'
-
 function assert(condition: unknown, message: string): asserts condition {
   if (!condition) {
-    throw new Error(`quran_sample.json: ${message}`)
+    throw new Error(`quran_full.json: ${message}`)
   }
 }
 
@@ -34,7 +34,7 @@ function validate(data: unknown): QuranData {
   assert(typeof data === 'object' && data !== null, 'البيانات يجب أن تكون كائناً')
   const root = data as Record<string, unknown>
 
-  assert(Array.isArray(root.surahs) && root.surahs.length > 0, 'حقل surahs مفقود أو فارغ')
+  assert(Array.isArray(root.surahs) && root.surahs.length === 114, 'حقل surahs يجب أن يضم 114 سورة')
   const surahs = (root.surahs as unknown[]).map((surahRaw, index) => {
     assert(typeof surahRaw === 'object' && surahRaw !== null, `سورة ${index + 1}: بنية غير صالحة`)
     const surah = surahRaw as Record<string, unknown>
@@ -81,6 +81,9 @@ function validate(data: unknown): QuranData {
     }
   })
 
+  const totalAyahs = surahs.reduce((sum, surah) => sum + surah.ayahs.length, 0)
+  assert(totalAyahs === 6236, `مجموع الآيات يجب أن يكون 6236، والموجود ${totalAyahs}`)
+
   return { surahs }
 }
 
@@ -90,7 +93,11 @@ export async function loadQuranData(): Promise<QuranData> {
   if (cached) {
     return cached
   }
-  const data = validate(quranSample)
+  const response = await fetch(quranDataUrl)
+  if (!response.ok) {
+    throw new Error(`تعذر تحميل ملف البيانات (${response.status})`)
+  }
+  const data = validate(await response.json())
   cached = data
   return data
 }
