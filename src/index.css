@@ -764,11 +764,409 @@ body {
   font-size: 0.85rem;
 }
 
+/* Prayer times & Hijri date panel */
+.prayer-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.hijri-card {
+  border: 1px solid #e4dfd2;
+  border-radius: 0.75rem;
+  background: #ffffff;
+  padding: 0.7rem 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+:root[data-theme='dark'] .hijri-card {
+  background: #16201b;
+  border-color: #2c3a33;
+}
+
+.hijri-date-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.step-btn {
+  flex: 0 0 auto;
+  width: 1.9rem;
+  height: 1.9rem;
+  border: 1px solid var(--green-700);
+  background: transparent;
+  color: var(--green-700);
+  border-radius: 0.4rem;
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  font: inherit;
+}
+
+.step-btn:hover:not(:disabled) {
+  background: var(--green-700);
+  color: #ffffff;
+}
+
+.step-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.hijri-date {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  text-align: center;
+}
+
+.hijri-date__label {
+  font-size: 0.72rem;
+  color: #7a7568;
+}
+
+.hijri-date__value {
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: var(--ink);
+}
+
+.hijri-badge {
+  align-self: center;
+  font-size: 0.72rem;
+  color: #ffffff;
+  background: var(--green-700);
+  border-radius: 999px;
+  padding: 0.15rem 0.55rem;
+}
+
+.hijri-badge[data-direction='minus'] {
+  background: #b3261e;
+}
+
+.reset-link {
+  align-self: center;
+  border: none;
+  background: transparent;
+  color: var(--green-700);
+  font: inherit;
+  font-size: 0.78rem;
+  cursor: pointer;
+  padding: 0.1rem 0.25rem;
+  text-decoration: underline;
+}
+
+.hijri-limit-note {
+  margin: 0;
+  font-size: 0.75rem;
+  color: #b3261e;
+  text-align: center;
+}
+
+.hijri-date__fallback {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #b3261e;
+  text-align: center;
+}
+
+.prayer-panel__toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  width: 100%;
+  border: 1px solid var(--green-700);
+  background: var(--green-100);
+  color: var(--green-900);
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.92rem;
+  font-weight: bold;
+}
+
+.prayer-panel__toggle-icon {
+  font-size: 0.7rem;
+}
+
+.prayer-panel__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-height: 420px;
+  overflow-y: auto;
+}
+
+/* Location */
+.location-box {
+  border: 1px solid #e4dfd2;
+  border-radius: 0.5rem;
+  background: #ffffff;
+  padding: 0.6rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+:root[data-theme='dark'] .location-box {
+  background: #16201b;
+  border-color: #2c3a33;
+}
+
+.location-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.location-row__label {
+  color: var(--green-700);
+  font-weight: bold;
+}
+
+.location-row__value {
+  color: var(--ink);
+}
+
+.location-row__hint {
+  color: #7a7568;
+}
+
+.location-msg {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #7a7568;
+}
+
+.location-msg--error {
+  color: #b3261e;
+}
+
+.location-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.location-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.location-form__field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+}
+
+.location-form__field input {
+  width: 7rem;
+  padding: 0.35rem 0.5rem;
+  border: 1px solid #d8d3c5;
+  border-radius: 0.4rem;
+  background: #ffffff;
+  color: inherit;
+  font: inherit;
+  font-size: 0.85rem;
+}
+
+:root[data-theme='dark'] .location-form__field input {
+  background: #1a2520;
+  border-color: #2c3a33;
+}
+
+.location-form__actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.location-current-time {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  border-top: 1px dashed #e4dfd2;
+  padding-top: 0.4rem;
+}
+
+:root[data-theme='dark'] .location-current-time {
+  border-top-color: #2c3a33;
+}
+
+.location-current-time__label {
+  color: #7a7568;
+}
+
+.location-current-time__value {
+  color: var(--green-700);
+  font-weight: bold;
+}
+
+/* Prayer list */
+.prayer-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.prayer-row {
+  border: 1px solid #e4dfd2;
+  border-radius: 0.5rem;
+  background: #ffffff;
+  overflow: hidden;
+}
+
+:root[data-theme='dark'] .prayer-row {
+  background: #16201b;
+  border-color: #2c3a33;
+}
+
+.prayer-row[data-next='true'] {
+  border-color: var(--gold);
+}
+
+.prayer-row[data-adjusted='true'] {
+  border-color: var(--green-700);
+}
+
+.prayer-row__main {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  border: none;
+  background: transparent;
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  text-align: right;
+}
+
+.prayer-row__name {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: var(--green-900);
+}
+
+:root[data-theme='dark'] .prayer-row__name {
+  color: var(--green-700);
+}
+
+.prayer-next-badge {
+  font-size: 0.65rem;
+  color: #ffffff;
+  background: var(--gold);
+  border-radius: 999px;
+  padding: 0.1rem 0.45rem;
+  font-weight: normal;
+}
+
+.prayer-row__times {
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+}
+
+.prayer-row__time {
+  font-size: 1.05rem;
+  font-weight: bold;
+  color: var(--ink);
+}
+
+.prayer-row[data-adjusted='true'] .prayer-row__time {
+  color: var(--green-700);
+}
+
+.prayer-row__original {
+  font-size: 0.7rem;
+  color: #9a9589;
+  text-decoration: line-through;
+}
+
+:root[data-theme='dark'] .prayer-row__original {
+  color: #6b746f;
+}
+
+.prayer-edit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.35rem 0.5rem 0.5rem;
+  border-top: 1px dashed #e4dfd2;
+}
+
+:root[data-theme='dark'] .prayer-edit {
+  border-top-color: #2c3a33;
+}
+
+.prayer-edit__value {
+  min-width: 5.5rem;
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--green-700);
+  font-weight: bold;
+}
+
+/* Method & madhab */
+.prayer-method-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.prayer-method-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.8rem;
+  color: var(--green-700);
+  font-weight: bold;
+}
+
+.prayer-method-field select {
+  padding: 0.4rem 0.5rem;
+  border: 1px solid #d8d3c5;
+  border-radius: 0.4rem;
+  background: #ffffff;
+  color: inherit;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: normal;
+}
+
+:root[data-theme='dark'] .prayer-method-field select {
+  background: #1a2520;
+  border-color: #2c3a33;
+}
+
+.prayer-reset-btn {
+  align-self: stretch;
+}
+
 @media (max-width: 768px) {
   .quran-page {
     flex-direction: column;
   }
-
   .sidebar {
     flex: 0 0 auto;
     width: 100%;

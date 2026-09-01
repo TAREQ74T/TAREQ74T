@@ -8,6 +8,7 @@ import { SurahList } from '../components/quran/SurahList'
 import { AyahViewer } from '../components/quran/AyahViewer'
 import { TafseerPanel } from '../components/quran/TafseerPanel'
 import { SearchBar } from '../components/quran/SearchBar'
+import { PrayerTimesPanel } from '../components/prayer-times/PrayerTimesPanel'
 import { fixTanweenDisplay } from '../utils/fixTanweenDisplay'
 
 interface QuranPageProps {
@@ -126,6 +127,7 @@ export function QuranPage({ onOpenSettings }: QuranPageProps) {
   return (
     <div className="quran-page">
       <aside className="sidebar">
+        <PrayerTimesPanel />
         <h2 className="sidebar-title">السور</h2>
         <SearchBar quranData={{ surahs } as QuranData} onNavigate={handleSearchNavigate} />
         <div className="surah-list-scroll">
