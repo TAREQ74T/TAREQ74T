@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef } from 'react'
 import type { Surah } from '../../utils/loadQuranData'
 import { fixTanweenDisplay } from '../../utils/fixTanweenDisplay'
+import { AyahMarker } from './AyahMarker'
 
 const ARABIC_DIGITS = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩']
 
@@ -95,19 +96,29 @@ export function AyahViewer({
               }}
             >
               <div className="ayah-actions">
-                <button
-                  type="button"
-                  className={`bookmark-btn${bookmarked ? ' is-active' : ''}`}
-                  aria-label={
-                    bookmarked
-                      ? `إزالة الإشارة المرجعية للآية ${toArabicDigits(ayah.number_in_surah)}`
-                      : `إضافة إشارة مرجعية للآية ${toArabicDigits(ayah.number_in_surah)}`
-                  }
-                  aria-pressed={bookmarked}
-                  onClick={() => onToggleBookmark(surah.number, ayah.number_in_surah)}
-                >
-                  {bookmarked ? '★' : '☆'}
-                </button>
+                <span className="bookmark-wrap">
+                  <button
+                    type="button"
+                    className={`bookmark-btn${bookmarked ? ' is-active' : ''}`}
+                    aria-label={
+                      bookmarked
+                        ? `إزالة الإشارة المرجعية للآية ${toArabicDigits(ayah.number_in_surah)}`
+                        : `إضافة إشارة مرجعية للآية ${toArabicDigits(ayah.number_in_surah)}`
+                    }
+                    title={
+                      bookmarked
+                        ? 'إزالة إشارة مرجعية'
+                        : 'إضافة إشارة مرجعية'
+                    }
+                    aria-pressed={bookmarked}
+                    onClick={() => onToggleBookmark(surah.number, ayah.number_in_surah)}
+                  >
+                    {bookmarked ? '★' : '☆'}
+                  </button>
+                  <span className="bookmark-tip" role="tooltip">
+                    {bookmarked ? 'إزالة إشارة مرجعية' : 'إضافة إشارة مرجعية'}
+                  </span>
+                </span>
               </div>
               <button
                 type="button"
@@ -117,14 +128,7 @@ export function AyahViewer({
               >
                 <span className="ayah-text">
                   <span>{fixTanweenDisplay(ayah.arabic_text)}</span>
-                  <span
-                    className="ayah-number"
-                    role="note"
-                    aria-label={`نهاية الآية ${toArabicDigits(ayah.number_in_surah)}`}
-                  >
-                    {'\u06DD'}
-                    {toArabicDigits(ayah.number_in_surah)}
-                  </span>
+                  <AyahMarker ayahNumber={ayah.number_in_surah} className="ayah-number" />
                 </span>
               </button>
             </article>

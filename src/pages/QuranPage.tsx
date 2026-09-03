@@ -127,7 +127,29 @@ export function QuranPage({ onOpenSettings }: QuranPageProps) {
   return (
     <div className="quran-page">
       <aside className="sidebar">
-        <PrayerTimesPanel />
+        <div className="sidebar__toolbar">
+          <button
+            type="button"
+            className="sidebar-gear-btn"
+            aria-label="الإعدادات"
+            title="الإعدادات"
+            onClick={onOpenSettings}
+          >
+            <svg
+              className="sidebar-gear-btn__icon"
+              viewBox="0 0 24 24"
+              width="18"
+              height="18"
+              aria-hidden="true"
+            >
+              <path
+                fill="currentColor"
+                d="M12 8.5A3.5 3.5 0 1 0 12 15.5 3.5 3.5 0 0 0 12 8.5Zm8.43 4.04a7.9 7.9 0 0 0 0-.8l1.8-1.4a.5.5 0 0 0 .12-.64l-1.7-2.95a.5.5 0 0 0-.6-.22l-2.13.86a7.9 7.9 0 0 0-.69-.4l-.32-2.27a.5.5 0 0 0-.5-.43H12.5a.5.5 0 0 0-.5.43l-.32 2.27a7.9 7.9 0 0 0-.69.4l-2.13-.86a.5.5 0 0 0-.6.22L6.56 7.7a.5.5 0 0 0 .12.64l1.8 1.4a7.9 7.9 0 0 0 0 .8l-1.8 1.4a.5.5 0 0 0-.12.64l1.7 2.95a.5.5 0 0 0 .6.22l2.13-.86c.22.14.45.28.69.4l.32 2.27a.5.5 0 0 0 .5.43h3.41a.5.5 0 0 0 .5-.43l.32-2.27a7.9 7.9 0 0 0 .69-.4l2.13.86a.5.5 0 0 0 .6-.22l1.7-2.95a.5.5 0 0 0-.12-.64l-1.8-1.4Z"
+              />
+            </svg>
+          </button>
+        </div>
+        <PrayerTimesPanel defaultExpanded={false} />
         <h2 className="sidebar-title">السور</h2>
         <SearchBar quranData={{ surahs } as QuranData} onNavigate={handleSearchNavigate} />
         <div className="surah-list-scroll">
@@ -137,9 +159,6 @@ export function QuranPage({ onOpenSettings }: QuranPageProps) {
             onSelect={handleSurahSelect}
           />
         </div>
-        <button type="button" className="sidebar-settings-btn" onClick={onOpenSettings}>
-          الإعدادات
-        </button>
       </aside>
       <main className="content">
         {currentSurah ? (

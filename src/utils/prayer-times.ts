@@ -6,6 +6,10 @@ import {
 } from 'adhan'
 import type { PrayerKey } from '../storage/adjustments'
 import { PRAYER_KEYS } from '../storage/adjustments'
+import {
+  clampUtcOffsetHours,
+  type TimezoneMode,
+} from '../storage/settings'
 
 export type CalculationMethodName = keyof typeof CalculationMethod
 
@@ -52,15 +56,35 @@ export function longitudeOffsetMinutes(longitude: number): number {
   return Math.round(longitude / 15) * 60
 }
 
+export function effectiveUtcOffsetMinutes(
+  coords: GeoCoords,
+  mode: TimezoneMode,
+  manualUtcOffsetHours: number,
+): number {
+  if (mode === 'manual') {
+    return clampUtcOffsetHours(manualUtcOffsetHours) * 60
+  }
+  return longitudeOffsetMinutes(coords.longitude)
+}
+
 export function locationNowShiftMinutes(longitude: number, base: Date): number {
   const deviceOffset = -base.getTimezoneOffset()
   const locationOffset = longitudeOffsetMinutes(longitude)
   return locationOffset - deviceOffset
 }
 
-function locationCalendarDate(coords: GeoCoords, base: Date): Date {
+export function localTimeShiftMinutes(utcOffsetMinutes: number, base: Date): number {
   const deviceOffset = -base.getTimezoneOffset()
-  const locationOffset = longitudeOffsetMinutes(coords.longitude)
+  return utcOffsetMinutes - deviceOffset
+}
+
+function locationCalendarDate(
+  coords: GeoCoords,
+  base: Date,
+  utcOffsetMinutes?: number,
+): Date {
+  const deviceOffset = -base.getTimezoneOffset()
+  const locationOffset = utcOffsetMinutes ?? longitudeOffsetMinutes(coords.longitude)
   return new Date(base.getTime() + (locationOffset - deviceOffset) * 60_000)
 }
 
@@ -87,11 +111,12 @@ export function computePrayerTimes(
   date: Date,
   method: CalculationMethodName = 'MuslimWorldLeague',
   madhab: string = 'shafi',
+  utcOffsetMinutes?: number,
 ): Record<PrayerKey, Date> {
   const coordinates = new Coordinates(coords.latitude, coords.longitude)
   const params = CalculationMethod[method]()
   params.madhab = madhab === 'hanafi' ? Madhab.Hanafi : Madhab.Shafi
-  const locationDate = locationCalendarDate(coords, date)
+  const locationDate = locationCalendarDate(coords, date, utcOffsetMinutes)
   const times = new PrayerTimes(coordinates, locationDate, params)
   const result = {} as Record<PrayerKey, Date>
   for (const key of PRAYER_KEYS) {
@@ -107,6 +132,7 @@ export function getNextPrayer(
   now: Date,
   method: CalculationMethodName = 'MuslimWorldLeague',
   madhab: string = 'shafi',
+  utcOffsetMinutes?: number,
 ): { key: PrayerKey; time: Date; isTomorrow: boolean } | null {
   for (const key of PRAYER_KEYS) {
     if (times[key].getTime() > now.getTime()) {
@@ -115,7 +141,13 @@ export function getNextPrayer(
   }
   const tomorrow = new Date(now)
   tomorrow.setDate(tomorrow.getDate() + 1)
-  const tomorrowTimes = computePrayerTimes(coords, tomorrow, method, madhab)
+  const tomorrowTimes = computePrayerTimes(
+    coords,
+    tomorrow,
+    method,
+    madhab,
+    utcOffsetMinutes,
+  )
   return { key: 'fajr', time: tomorrowTimes.fajr, isTomorrow: true }
 }
 

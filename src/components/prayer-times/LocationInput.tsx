@@ -1,14 +1,19 @@
 import { useState } from 'react'
 import type { UseLocationResult } from '../../hooks/useLocation'
-import { formatPrayerTime, locationNowShiftMinutes } from '../../utils/prayer-times'
+import { formatPrayerTime, localTimeShiftMinutes } from '../../utils/prayer-times'
+
 interface LocationInputProps {
   location: UseLocationResult
+  utcOffsetMinutes?: number
 }
 
-export function LocationInput({ location }: LocationInputProps) {
+export function LocationInput({ location, utcOffsetMinutes }: LocationInputProps) {
   const [lat, setLat] = useState('')
   const [lng, setLng] = useState('')
   const [editing, setEditing] = useState(false)
+
+  const effectiveUtcOffsetMinutes =
+    utcOffsetMinutes ?? Math.round(location.coords.longitude / 15) * 60
 
   const handleSave = () => {
     const latitude = Number(lat)
@@ -104,7 +109,7 @@ export function LocationInput({ location }: LocationInputProps) {
         <span className="location-current-time__value" data-testid="current-time">
           {formatPrayerTime(
             new Date(),
-            locationNowShiftMinutes(location.coords.longitude, new Date()),
+            localTimeShiftMinutes(effectiveUtcOffsetMinutes, new Date()),
           )}
         </span>
       </div>

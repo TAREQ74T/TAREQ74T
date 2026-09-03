@@ -109,6 +109,25 @@ body {
   overflow-y: auto;
   flex: 1;
   min-height: 0;
+  scrollbar-width: thin;
+  scrollbar-color: var(--green-700) transparent;
+}
+
+.surah-list-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.surah-list-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.surah-list-scroll::-webkit-scrollbar-thumb {
+  background: var(--green-700);
+  border-radius: 3px;
+}
+
+:root[data-theme='dark'] .surah-list-scroll::-webkit-scrollbar-thumb {
+  background: #3fa37e;
 }
 
 .surah-list ul {
@@ -186,19 +205,28 @@ body {
   color: #b9cdc3;
 }
 
-.sidebar-settings-btn {
+.sidebar__toolbar {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.sidebar-gear-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
   border: 1px solid var(--green-700);
   background: transparent;
   color: var(--green-700);
   border-radius: 0.5rem;
-  padding: 0.55rem 0.75rem;
   cursor: pointer;
-  font: inherit;
-  font-size: 0.95rem;
+  line-height: 1;
+  padding: 0;
   transition: background 0.15s ease, color 0.15s ease;
 }
 
-.sidebar-settings-btn:hover {
+.sidebar-gear-btn:hover {
   background: var(--green-700);
   color: #ffffff;
 }
@@ -267,6 +295,38 @@ body {
   inset-inline-start: 0;
 }
 
+.bookmark-wrap {
+  position: relative;
+  display: inline-flex;
+}
+
+.bookmark-tip {
+  position: absolute;
+  top: 100%;
+  inset-inline-start: 0;
+  margin-top: 0.35rem;
+  white-space: nowrap;
+  background: var(--green-900);
+  color: #ffffff;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  border-radius: 0.35rem;
+  padding: 0.25rem 0.55rem;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-3px);
+  transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s;
+  z-index: 30;
+  pointer-events: none;
+}
+
+.bookmark-wrap:hover .bookmark-tip,
+.bookmark-btn:focus-visible + .bookmark-tip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
 .bookmark-btn {
   border: none;
   background: transparent;
@@ -274,7 +334,21 @@ body {
   color: #b8b3a6;
   cursor: pointer;
   line-height: 1;
-  padding: 0.25rem;
+  padding: 0.35rem;
+  min-width: 2rem;
+  min-height: 2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.35rem;
+}
+
+.bookmark-btn:hover {
+  background: var(--green-100);
+}
+
+:root[data-theme='dark'] .bookmark-btn:hover {
+  background: #1f2d26;
 }
 
 .bookmark-btn.is-active {
@@ -311,11 +385,47 @@ body {
   word-spacing: 0.1em;
 }
 
-.ayah-number {
-  font-size: 1.3rem;
-  color: var(--green-700);
-  margin-inline-start: 0.4rem;
-  white-space: nowrap;
+.ayah-marker {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.3rem;
+  height: 2.3rem;
+  margin-inline-start: 0.45rem;
+  vertical-align: middle;
+  line-height: 1;
+}
+
+.ayah-marker__ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 1.5px solid var(--green-700);
+  box-shadow:
+    inset 0 0 0 2px #ffffff,
+    inset 0 0 0 3.5px var(--gold);
+}
+
+.ayah-marker__number {
+  position: relative;
+  z-index: 1;
+  font-size: 0.95rem;
+  font-weight: bold;
+  color: var(--green-900);
+}
+
+:root[data-theme='dark'] .ayah-marker__ring {
+  background: #16201b;
+  border-color: #3fa37e;
+  box-shadow:
+    inset 0 0 0 2px #16201b,
+    inset 0 0 0 3.5px #d4af37;
+}
+
+:root[data-theme='dark'] .ayah-marker__number {
+  color: #e6e1d6;
 }
 
 .status {
@@ -794,16 +904,16 @@ body {
 
 .step-btn {
   flex: 0 0 auto;
-  width: 1.9rem;
-  height: 1.9rem;
+  width: 2.1rem;
+  height: 2.1rem;
   border: 1px solid var(--green-700);
   background: transparent;
   color: var(--green-700);
   border-radius: 0.4rem;
-  font-size: 1.1rem;
+  font-size: 0.9rem;
   line-height: 1;
   cursor: pointer;
-  font: inherit;
+  font-family: inherit;
 }
 
 .step-btn:hover:not(:disabled) {
@@ -812,7 +922,7 @@ body {
 }
 
 .step-btn:disabled {
-  opacity: 0.35;
+  opacity: 0.6;
   cursor: not-allowed;
 }
 
@@ -882,25 +992,87 @@ body {
   gap: 0.5rem;
   width: 100%;
   border: 1px solid var(--green-700);
-  background: var(--green-100);
-  color: var(--green-900);
-  border-radius: 0.5rem;
-  padding: 0.5rem 0.75rem;
+  background: #ffffff;
+  color: inherit;
+  border-radius: 0.75rem;
+  padding: 0.5rem 0.7rem;
   cursor: pointer;
-  font: inherit;
-  font-size: 0.92rem;
+  font-family: inherit;
+  font-size: 0.9rem;
+  text-align: right;
+}
+
+:root[data-theme='dark'] .prayer-panel__toggle {
+  background: #16201b;
+  border-color: #3fa37e;
+}
+
+.prayer-panel__toggle-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  min-width: 0;
+}
+
+.prayer-panel__date-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.prayer-panel__date-label {
+  flex-shrink: 0;
+  font-size: 0.68rem;
+  color: #7a7568;
+}
+
+.prayer-panel__date-value {
+  font-size: 0.85rem;
   font-weight: bold;
+  color: var(--green-900);
+  line-height: 1.5;
+  overflow-wrap: break-word;
+}
+
+.prayer-panel__next-row {
+  display: flex;
+}
+
+.prayer-panel__toggle-next {
+  font-size: 0.75rem;
+  color: var(--green-700);
+  font-weight: bold;
+  background: var(--green-100);
+  border-radius: 999px;
+  padding: 0.12rem 0.55rem;
 }
 
 .prayer-panel__toggle-icon {
+  align-self: center;
+  flex-shrink: 0;
   font-size: 0.7rem;
+  color: var(--green-700);
+}
+
+:root[data-theme='dark'] .prayer-panel__date-label {
+  color: #a9b8b1;
+}
+
+:root[data-theme='dark'] .prayer-panel__date-value {
+  color: #3fa37e;
+}
+
+:root[data-theme='dark'] .prayer-panel__toggle-next {
+  color: #5fce9e;
+  background: #1c2b26;
 }
 
 .prayer-panel__body {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  max-height: 420px;
+  max-height: 440px;
   overflow-y: auto;
 }
 
@@ -1161,6 +1333,379 @@ body {
 
 .prayer-reset-btn {
   align-self: stretch;
+}
+
+/* Dark mode contrast fixes (BC-004 open item #2) */
+:root[data-theme='dark'] .surah-name-en {
+  color: #a9b8b1;
+}
+
+:root[data-theme='dark'] .surah-meta {
+  color: #a9b8b1;
+}
+
+:root[data-theme='dark'] .hijri-date__label {
+  color: #a9b8b1;
+}
+
+:root[data-theme='dark'] .search-results__empty {
+  color: #a9b8b1;
+}
+
+:root[data-theme='dark'] .status {
+  color: #a9b8b1;
+}
+
+:root[data-theme='dark'] .location-row__hint {
+  color: #a9b8b1;
+}
+
+:root[data-theme='dark'] .location-current-time__label {
+  color: #a9b8b1;
+}
+
+:root[data-theme='dark'] .prayer-row__original {
+  color: #8a958e;
+}
+
+:root[data-theme='dark'] .step-btn {
+  border-color: #3fa37e;
+  color: #5fce9e;
+  background: #1c2b26;
+}
+
+:root[data-theme='dark'] .step-btn:hover:not(:disabled) {
+  background: #3fa37e;
+  color: #0a241c;
+}
+
+:root[data-theme='dark'] .step-btn:disabled {
+  opacity: 1;
+  color: #8a958e;
+  border-color: #3a4640;
+  background: #16201b;
+}
+
+/* Qibla compass */
+.qibla-compass {
+  border: 1px solid #e4dfd2;
+  border-radius: 0.75rem;
+  background: #ffffff;
+  padding: 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  align-items: center;
+}
+
+:root[data-theme='dark'] .qibla-compass {
+  background: #16201b;
+  border-color: #2c3a33;
+}
+
+.qibla-compass__title {
+  margin: 0;
+  font-size: 1.05rem;
+  color: var(--green-700);
+}
+
+.qibla-compass__dial-wrap {
+  display: flex;
+  justify-content: center;
+}
+
+.qibla-compass__dial {
+  position: relative;
+  width: 210px;
+  height: 210px;
+  border-radius: 50%;
+  border: 2px solid var(--green-700);
+  background: radial-gradient(circle, var(--green-100) 0%, transparent 72%);
+}
+
+:root[data-theme='dark'] .qibla-compass__dial {
+  border-color: #3fa37e;
+  background: radial-gradient(circle, #1c2b26 0%, transparent 72%);
+}
+
+.qibla-compass__tick {
+  position: absolute;
+  left: 50%;
+  top: 10px;
+  width: 2px;
+  height: 12px;
+  margin-left: -1px;
+  background: var(--green-700);
+  transform-origin: 50% 95px;
+  border-radius: 1px;
+}
+
+:root[data-theme='dark'] .qibla-compass__tick {
+  background: #3fa37e;
+}
+
+.qibla-compass__needle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 0;
+  transform-origin: 50% 0;
+}
+
+.qibla-compass__needle-tip {
+  position: absolute;
+  left: -10px;
+  top: -72px;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 72px solid var(--gold);
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.35));
+}
+
+:root[data-theme='dark'] .qibla-compass__needle-tip {
+  border-bottom-color: #d4af37;
+}
+
+.qibla-compass__dir {
+  position: absolute;
+  font-size: 0.95rem;
+  font-weight: bold;
+  color: var(--green-900);
+}
+
+:root[data-theme='dark'] .qibla-compass__dir {
+  color: #e6e1d6;
+}
+
+.qibla-compass__dir--n {
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.qibla-compass__dir--e {
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+}
+
+.qibla-compass__dir--s {
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.qibla-compass__dir--w {
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+}
+
+.qibla-compass__readout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.qibla-compass__bearing {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: var(--green-700);
+}
+
+.qibla-compass__heading {
+  font-size: 0.8rem;
+  color: #7a7568;
+}
+
+:root[data-theme='dark'] .qibla-compass__heading {
+  color: #aebbb5;
+}
+
+.qibla-compass__status {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #7a7568;
+}
+
+.qibla-compass__status.is-active {
+  color: var(--green-700);
+  font-weight: bold;
+}
+
+.qibla-compass__error {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #b3261e;
+  text-align: center;
+}
+
+.qibla-compass__manual {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  width: 100%;
+  align-items: center;
+  border-top: 1px dashed #e4dfd2;
+  padding-top: 0.75rem;
+}
+
+:root[data-theme='dark'] .qibla-compass__manual {
+  border-top-color: #2c3a33;
+}
+
+.qibla-compass__field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  width: 100%;
+  font-size: 0.82rem;
+  color: var(--green-700);
+}
+
+.qibla-compass__field input[type='range'] {
+  flex: 1;
+  accent-color: var(--green-700);
+}
+
+.qibla-compass__field input[type='number'] {
+  width: 6rem;
+  padding: 0.35rem 0.5rem;
+  border: 1px solid #d8d3c5;
+  border-radius: 0.4rem;
+  background: #ffffff;
+  color: inherit;
+  font: inherit;
+  font-size: 0.85rem;
+}
+
+:root[data-theme='dark'] .qibla-compass__field input[type='number'] {
+  background: #1a2520;
+  border-color: #2c3a33;
+}
+
+.qibla-compass__manual-note {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--ink);
+}
+
+/* Settings: timezone */
+.timezone-mode-options {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.timezone-manual {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  border-top: 1px dashed #e4dfd2;
+  padding-top: 0.6rem;
+}
+
+:root[data-theme='dark'] .timezone-manual {
+  border-top-color: #2c3a33;
+}
+
+.timezone-manual input[type='range'] {
+  accent-color: var(--green-700);
+}
+
+.timezone-preview {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  border-top: 1px dashed #e4dfd2;
+  padding-top: 0.5rem;
+}
+
+:root[data-theme='dark'] .timezone-preview {
+  border-top-color: #2c3a33;
+}
+
+.timezone-preview__label {
+  color: #7a7568;
+}
+
+:root[data-theme='dark'] .timezone-preview__label {
+  color: #a9b8b1;
+}
+
+.timezone-preview__value {
+  color: var(--green-700);
+  font-weight: bold;
+}
+
+/* Settings: prayer adjustments editor */
+.prayer-adjust-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.prayer-adjust-editor__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.prayer-adjust-editor__row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  border: 1px solid #e4dfd2;
+  border-radius: 0.5rem;
+  background: #ffffff;
+  padding: 0.45rem 0.75rem;
+}
+
+:root[data-theme='dark'] .prayer-adjust-editor__row {
+  background: #16201b;
+  border-color: #2c3a33;
+}
+
+.prayer-adjust-editor__name {
+  flex: 1;
+  min-width: 0;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: var(--green-900);
+}
+
+:root[data-theme='dark'] .prayer-adjust-editor__name {
+  color: #3fa37e;
+}
+
+.prayer-adjust-editor__value {
+  min-width: 4.5rem;
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--green-700);
+  font-weight: bold;
+}
+
+.prayer-adjust-editor__time {
+  min-width: 3rem;
+  text-align: left;
+  font-size: 0.85rem;
+  color: var(--ink);
+}
+
+.prayer-adjust-editor__reset {
+  align-self: stretch;
+  margin-top: 0.25rem;
 }
 
 @media (max-width: 768px) {

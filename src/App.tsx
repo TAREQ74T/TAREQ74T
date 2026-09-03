@@ -16,7 +16,8 @@ function parseHash(): Route {
 
 export default function App() {
   const [route, setRoute] = useState<Route>(parseHash)
-  const { settings, setFontSize, setTheme } = useSettings()
+  const { settings, setFontSize, setTheme, setTimezoneMode, setManualUtcOffsetHours } =
+    useSettings()
   const { surahs, isLoading, error } = useQuran()
 
   useEffect(() => {
@@ -52,6 +53,8 @@ export default function App() {
           settings={settings}
           onFontSizeChange={setFontSize}
           onThemeChange={setTheme}
+          onTimezoneModeChange={setTimezoneMode}
+          onManualUtcOffsetChange={setManualUtcOffsetHours}
           quranData={!isLoading && !error ? { surahs } : null}
           onNavigate={navigateToAyah}
           onBack={openQuran}

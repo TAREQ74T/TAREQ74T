@@ -28,6 +28,7 @@ export interface UsePrayerTimesResult {
 
 export function usePrayerTimes(
   coords: GeoCoords,
+  utcOffsetMinutes?: number,
 ): UsePrayerTimesResult {
   const [method, setMethod] = useState<CalculationMethodName>('MuslimWorldLeague')
   const [madhab, setMadhab] = useState<'shafi' | 'hanafi'>('shafi')
@@ -50,8 +51,8 @@ export function usePrayerTimes(
   }, [])
 
   const times = useMemo<Record<PrayerKey, Date>>(
-    () => computePrayerTimes(coords, now, method, madhab),
-    [coords, now, method, madhab],
+    () => computePrayerTimes(coords, now, method, madhab, utcOffsetMinutes),
+    [coords, now, method, madhab, utcOffsetMinutes],
   )
 
   const adjustedTimes = useMemo<Record<PrayerKey, Date>>(
@@ -60,8 +61,9 @@ export function usePrayerTimes(
   )
 
   const nextPrayer = useMemo(
-    () => getNextPrayer(coords, adjustedTimes, now, method, madhab),
-    [coords, adjustedTimes, now, method, madhab],
+    () =>
+      getNextPrayer(coords, adjustedTimes, now, method, madhab, utcOffsetMinutes),
+    [coords, adjustedTimes, now, method, madhab, utcOffsetMinutes],
   )
 
   const setAdjustment = useCallback((key: PrayerKey, minutes: number) => {

@@ -1,18 +1,31 @@
 import { useCallback, useEffect, useState } from 'react'
+import {
+  readManualUtcOffsetHours,
+  readTimezoneMode,
+  resetTimezone as resetStoredTimezone,
+  writeManualUtcOffsetHours,
+  writeTimezoneMode,
+  type TimezoneMode,
+} from '../storage/settings'
 
 export type FontSize = 'small' | 'medium' | 'large'
 export type Theme = 'light' | 'dark'
+export type { TimezoneMode } from '../storage/settings'
 
 const STORAGE_KEY = 'mushaf-al-huda:settings'
 
 export interface Settings {
   fontSize: FontSize
   theme: Theme
+  timezoneMode: TimezoneMode
+  manualUtcOffsetHours: number
 }
 
 const DEFAULTS: Settings = {
   fontSize: 'medium',
   theme: 'light',
+  timezoneMode: 'auto',
+  manualUtcOffsetHours: 0,
 }
 
 function isFontSize(value: unknown): value is FontSize {
@@ -23,7 +36,7 @@ function isTheme(value: unknown): value is Theme {
   return value === 'light' || value === 'dark'
 }
 
-function readSettings(): Settings {
+function readBaseSettings(): Pick<Settings, 'fontSize' | 'theme'> {
   try {
     const raw = localStorage.getItem(STORAGE_KEY)
     if (!raw) {
@@ -43,11 +56,22 @@ function readSettings(): Settings {
   }
 }
 
+function readSettings(): Settings {
+  return {
+    ...readBaseSettings(),
+    timezoneMode: readTimezoneMode(),
+    manualUtcOffsetHours: readManualUtcOffsetHours(),
+  }
+}
+
 export interface UseSettingsResult {
   settings: Settings
   setFontSize: (fontSize: FontSize) => void
   setTheme: (theme: Theme) => void
   toggleTheme: () => void
+  setTimezoneMode: (mode: TimezoneMode) => void
+  setManualUtcOffsetHours: (hours: number) => void
+  resetTimezone: () => void
 }
 
 export function useSettings(): UseSettingsResult {
@@ -55,10 +79,15 @@ export function useSettings(): UseSettingsResult {
 
   useEffect(() => {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(settings))
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({ fontSize: settings.fontSize, theme: settings.theme }),
+      )
     } catch {
       // تجاهل أخطاء التخزين المحلي
     }
+    writeTimezoneMode(settings.timezoneMode)
+    writeManualUtcOffsetHours(settings.manualUtcOffsetHours)
 
     const root = document.documentElement
     root.dataset.theme = settings.theme
@@ -80,5 +109,25 @@ export function useSettings(): UseSettingsResult {
     }))
   }, [])
 
-  return { settings, setFontSize, setTheme, toggleTheme }
+  const setTimezoneMode = useCallback((timezoneMode: TimezoneMode) => {
+    setSettings((previous) => ({ ...previous, timezoneMode }))
+  }, [])
+
+  const setManualUtcOffsetHours = useCallback((manualUtcOffsetHours: number) => {
+    setSettings((previous) => ({ ...previous, manualUtcOffsetHours }))
+  }, [])
+
+  const resetTimezone = useCallback(() => {
+    setSettings((previous) => ({ ...previous, ...resetStoredTimezone() }))
+  }, [])
+
+  return {
+    settings,
+    setFontSize,
+    setTheme,
+    toggleTheme,
+    setTimezoneMode,
+    setManualUtcOffsetHours,
+    resetTimezone,
+  }
 }
