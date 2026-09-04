@@ -1,0 +1,35 @@
+{
+  "script": "dark-mode",
+  "preview": "http://localhost:5199",
+  "timestamp": "2026-09-04T16:39:59.206Z",
+  "result": "PASS",
+  "passed": 5,
+  "failed": 0,
+  "checks": [
+    {
+      "name": "ليلي: تفعيل الثيم يضبط data-theme=dark",
+      "pass": true,
+      "info": "dark"
+    },
+    {
+      "name": "ليلي: الثيم يُحفظ بعد reload",
+      "pass": true,
+      "info": "dark"
+    },
+    {
+      "name": "ليلي: نصوص الواجهة مقروءة (تباين ≥ 4.0 على خلفية داكنة)",
+      "pass": true,
+      "info": "sidebar-title=5.69 surah-name-en=7.66 surah-name=15.80 prayer-panel__toggle=12.82 ayah-text=12.82"
+    },
+    {
+      "name": "نهاري: العودة للثيم الفاتح تعمل",
+      "pass": true,
+      "info": "light"
+    },
+    {
+      "name": "نهاري: الخلفية فاتحة بعد العودة",
+      "pass": true,
+      "info": "bgLum=0.96"
+    }
+  ]
+}

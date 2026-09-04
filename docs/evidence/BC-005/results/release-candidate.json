@@ -1,0 +1,60 @@
+{
+  "script": "release-candidate",
+  "preview": "http://localhost:5199",
+  "timestamp": "2026-09-04T16:40:20.176Z",
+  "result": "PASS",
+  "passed": 10,
+  "failed": 0,
+  "checks": [
+    {
+      "name": "PWA: dist/index.html موجود",
+      "pass": true,
+      "info": ""
+    },
+    {
+      "name": "PWA: dist/sw.js موجود",
+      "pass": true,
+      "info": ""
+    },
+    {
+      "name": "PWA: dist/manifest.webmanifest موجود",
+      "pass": true,
+      "info": ""
+    },
+    {
+      "name": "PWA: أصول index.html (js/css) موجودة على القرص",
+      "pass": true,
+      "info": "/assets/index-DTDZiZ24.js, /assets/index-qSQdUIiC.css"
+    },
+    {
+      "name": "PWA: بيانات quran_full ضمن assets",
+      "pass": true,
+      "info": "quran_full-MkkPssIL.json"
+    },
+    {
+      "name": "PWA: بيانات tafseer_full ضمن assets",
+      "pass": true,
+      "info": "tafseer_full-Bb4tiHMA.json"
+    },
+    {
+      "name": "PWA: خط القرآن (ttf) ضمن assets",
+      "pass": true,
+      "info": "kfgqpc-BDn9SRFf.ttf"
+    },
+    {
+      "name": "PWA: sw.js يسبق تخزين ملفات البيانات (precache)",
+      "pass": true,
+      "info": "مدخلات precache: 13"
+    },
+    {
+      "name": "المعاينة: http://localhost:5199 تستجيب 200",
+      "pass": true,
+      "info": "HTTP 200"
+    },
+    {
+      "name": "التجميد: لا تغيير على كود المنتج/البيانات منذ المرشح 314efe3",
+      "pass": true,
+      "info": "نظيف"
+    }
+  ]
+}

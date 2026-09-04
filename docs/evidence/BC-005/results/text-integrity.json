@@ -1,0 +1,105 @@
+{
+  "script": "text-integrity",
+  "preview": "http://localhost:5199",
+  "timestamp": "2026-09-04T16:12:42.392Z",
+  "result": "PASS",
+  "passed": 19,
+  "failed": 0,
+  "checks": [
+    {
+      "name": "البصمة: quran_full.json = بصمة الإصدار 1.0",
+      "pass": true,
+      "info": "f7cacc22267e50e4cc62dd510e0a399744e0cebea560722ab3193368ac3c3557"
+    },
+    {
+      "name": "البصمة: tafseer_full.json = بصمة الإصدار 1.0",
+      "pass": true,
+      "info": "f413bdcab2845ff264f0c851e73bdd1ea49cb5076aabada831cdc535f0207086"
+    },
+    {
+      "name": "البنية: 114 سورة",
+      "pass": true,
+      "info": ""
+    },
+    {
+      "name": "البنية: ترقيم السور 1..114 متسلسل",
+      "pass": true,
+      "info": ""
+    },
+    {
+      "name": "البنية: حقول السورة متوقعة",
+      "pass": true,
+      "info": ""
+    },
+    {
+      "name": "البنية: مجموع الآيات = 6236",
+      "pass": true,
+      "info": "6236"
+    },
+    {
+      "name": "البنية: ترقيم الآيات متسلسل داخل كل سورة",
+      "pass": true,
+      "info": ""
+    },
+    {
+      "name": "البنية: لا آية فارغة",
+      "pass": true,
+      "info": ""
+    },
+    {
+      "name": "النص المخزّن: لا يحتوي U+06DD (نهاية آية) إطلاقاً — الحل عرض فقط",
+      "pass": true,
+      "info": "0 آية"
+    },
+    {
+      "name": "النص المخزّن: U+08Fx حاضرة كما في المصدر (لا تطبيع في التخزين)",
+      "pass": true,
+      "info": "3518 آية"
+    },
+    {
+      "name": "المصدر: نسخة الملفات مطابقة للمرجع المسجّل",
+      "pass": true,
+      "info": "50be57e66e80… / 44bd3c056492…"
+    },
+    {
+      "name": "المقارنة: لا اختلاف نصي خارج القائمة البيضاء {97:1}",
+      "pass": true,
+      "info": "97:1"
+    },
+    {
+      "name": "الرقعة المتعمّدة: 97:1 تبدأ بـ«إنا أنزلناه» بلا بسملة مدمجة",
+      "pass": true,
+      "info": "إِنَّآ أَنزَلۡنَٰهُ فِي لَيۡلَةِ ٱلۡق"
+    },
+    {
+      "name": "الحرف U+06DE (۞ بداية ربع الحزب): موجود في المصدر الأصلي حرفياً (أصيل — Advisory)",
+      "pass": true,
+      "info": "199 آية، 0 منها مختلف عن المصدر — علامات أحزاب أصلية"
+    },
+    {
+      "name": "المقارنة: أسماء السور بلا اختلاف خارج {99}",
+      "pass": true,
+      "info": "name_ar diff=99 name_en=0 counts=0"
+    },
+    {
+      "name": "الرقعة المتعمّدة: سورة 99 name_ar = «الزلزلة»",
+      "pass": true,
+      "info": "سُوْرَةُ الزِّلْزَلَةِ"
+    },
+    {
+      "name": "الفصل: normalizeArabic تُستخدم في طبقة البحث فقط (وليس في عرض النص)",
+      "pass": true,
+      "info": "src/components/quran/SearchBar.tsx , src/utils/normalizeArabic.ts"
+    },
+    {
+      "name": "الفصل: fixTanweenDisplay مقصورة على طبقة العرض",
+      "pass": true,
+      "info": "src/components/quran/AyahViewer.tsx , src/components/quran/SearchBar.tsx , src/pages/QuranPage.tsx , src/utils/fixTanweenDisplay.ts"
+    },
+    {
+      "name": "AyahMarker: مكوّن عرضي خالص — لا استيراد، لا خطافات، لا مخازن، لا تعديل",
+      "pass": true,
+      "info": "دائرة CSS + رقم number_in_surah فقط"
+    }
+  ]
+}
