@@ -10,6 +10,8 @@ import { useHijriDate } from '../hooks/useHijriDate'
 import { LocationInput } from '../components/prayer-times/LocationInput'
 import { PrayerAdjustmentsEditor } from '../components/prayer-times/PrayerAdjustmentsEditor'
 import { HijriDateDisplay } from '../components/prayer-times/HijriDateDisplay'
+import { NotificationsSettings } from '../components/settings/NotificationsSettings'
+import type { UseNotificationsResult } from '../hooks/useNotifications'
 import { effectiveUtcOffsetMinutes, formatPrayerTime, localTimeShiftMinutes } from '../utils/prayer-times'
 import { UTC_OFFSET_MAX, UTC_OFFSET_MIN } from '../storage/settings'
 import type { QuranData, Surah } from '../utils/loadQuranData'
@@ -31,6 +33,8 @@ interface SettingsPageProps {
   onManualUtcOffsetChange: (hours: number) => void
   quranData: QuranData | null
   onNavigate: (surahNumber: number, ayahNumber: number | null) => void
+  onOpenAbout: () => void
+  notifications: UseNotificationsResult
   onBack: () => void
 }
 
@@ -42,6 +46,8 @@ export function SettingsPage({
   onManualUtcOffsetChange,
   quranData,
   onNavigate,
+  onOpenAbout,
+  notifications,
   onBack,
 }: SettingsPageProps) {
   const { bookmarks, removeBookmark, clearBookmarks } = useBookmarks()
@@ -168,6 +174,7 @@ export function SettingsPage({
 
       <FontSizeControl fontSize={settings.fontSize} onChange={onFontSizeChange} />
       <ThemeToggle theme={settings.theme} onChange={onThemeChange} />
+      <NotificationsSettings notifications={notifications} />
 
       <section className="setting-group">
         <h3 className="setting-group__title">آخر موضع قراءة</h3>
@@ -193,6 +200,21 @@ export function SettingsPage({
         ) : (
           <p className="progress-info">لا يوجد موضع قراءة محفوظ بعد.</p>
         )}
+      </section>
+
+      <section className="setting-group">
+        <h3 className="setting-group__title">حول التطبيق</h3>
+        <p className="progress-info">
+          معلومات المصحف وآيتان مستخرجتان آلياً من المصدر.
+        </p>
+        <button
+          type="button"
+          className="btn"
+          data-testid="open-about"
+          onClick={onOpenAbout}
+        >
+          فتح حول التطبيق
+        </button>
       </section>
 
       <section className="setting-group">

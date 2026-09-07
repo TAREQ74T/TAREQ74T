@@ -271,10 +271,22 @@ async function main() {
     unexpectedNormalize.length === 0 && normalizeUsers.length === 2,
     normalizeUsers.join(' , ') || '—',
   )
+  // القائمة البيضاء الموثّقة لمستخدمي fixTanweenDisplay (طبقة العرض فقط؛
+  // quranSelectors أداة عرض تخدم صفحة «حول التطبيق» وتطبّق التسوية قبل الاستخراج،
+  // وليست طبقة بحث/تخزين). أي ملف جديد يستورد الدالة = فشل فوري.
+  const fixAllow = [
+    'src/utils/fixTanweenDisplay.ts',
+    'src/components/quran/AyahViewer.tsx',
+    'src/components/quran/SearchBar.tsx',
+    'src/pages/QuranPage.tsx',
+    'src/components/about/AboutScreen.tsx',
+    'src/utils/quranSelectors.ts',
+  ]
+  const unexpectedFix = fixUsers.filter((f) => !fixAllow.includes(f))
   rep.check(
-    'الفصل: fixTanweenDisplay مقصورة على طبقة العرض',
-    fixUsers.length >= 2 && fixUsers.length <= 4,
-    fixUsers.join(' , '),
+    'الفصل: fixTanweenDisplay مقصورة على طبقة العرض (قائمة بيضاء موثّقة)',
+    unexpectedFix.length === 0 && fixUsers.length === fixAllow.length,
+    fixUsers.join(' , ') || '—',
   )
 
   // نقاء AyahMarker (حل عرض فقط — لا تعديل، لا تخزين)
