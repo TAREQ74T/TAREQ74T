@@ -69,7 +69,6 @@ const analyze = () =>
     }
     const samples = [
       '.sidebar-title',
-      '.surah-name-en',
       '.surah-name',
       '.prayer-panel__toggle',
       '.ayah-text',

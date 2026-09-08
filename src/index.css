@@ -185,24 +185,13 @@ body {
   flex-shrink: 0;
 }
 
-.surah-names {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-}
-
 .surah-name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-size: 1rem;
-}
-
-.surah-name-en {
-  font-size: 0.75rem;
-  color: #7a7568;
-  font-family: 'Segoe UI', Tahoma, sans-serif;
-}
-
-.surah-item.is-active .surah-name-en {
-  color: #b9cdc3;
 }
 
 .sidebar__toolbar {
@@ -214,15 +203,16 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2rem;
-  height: 2rem;
+  width: 2.25rem;
+  height: 2.25rem;
   border: 1px solid var(--green-700);
-  background: transparent;
+  background: var(--green-100);
   color: var(--green-700);
-  border-radius: 0.5rem;
+  border-radius: 0.6rem;
   cursor: pointer;
   line-height: 1;
   padding: 0;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   transition: background 0.15s ease, color 0.15s ease;
 }
 
@@ -1336,10 +1326,6 @@ body {
 }
 
 /* Dark mode contrast fixes (BC-004 open item #2) */
-:root[data-theme='dark'] .surah-name-en {
-  color: #a9b8b1;
-}
-
 :root[data-theme='dark'] .surah-meta {
   color: #a9b8b1;
 }
@@ -1746,7 +1732,11 @@ body {
   align-items: center;
   justify-content: center;
   gap: 0.6rem;
-  background: var(--green-900);
+  background-color: var(--green-900);
+  background-image:
+    radial-gradient(760px 420px at 84% -10%, rgba(201, 162, 39, 0.2), transparent 62%),
+    radial-gradient(620px 460px at 6% 116%, rgba(212, 175, 55, 0.1), transparent 58%),
+    linear-gradient(150deg, #082a20 0%, #103a2c 55%, #1c4a36 100%);
   color: #ffffff;
   cursor: pointer;
   transition: opacity 0.25s ease;
@@ -1758,12 +1748,42 @@ body {
   opacity: 0;
 }
 
+.splash-screen__badge {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 150px;
+  height: 150px;
+  margin-bottom: 0.5rem;
+  pointer-events: none;
+}
+
+.splash-screen__badge::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(232, 220, 192, 0.2);
+  box-shadow:
+    0 0 26px rgba(201, 162, 39, 0.16),
+    inset 0 0 26px rgba(201, 162, 39, 0.08);
+}
+
+.splash-screen__badge::after {
+  content: '';
+  position: absolute;
+  inset: 9px;
+  border-radius: 50%;
+  border: 1px dashed rgba(201, 162, 39, 0.32);
+}
+
 .splash-screen__icon {
+  position: relative;
+  z-index: 1;
   width: 88px;
   height: 88px;
   border-radius: 1.2rem;
   box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.12);
-  margin-bottom: 0.5rem;
 }
 
 .splash-screen__name {
@@ -1847,19 +1867,30 @@ body {
   justify-content: center;
   gap: 0.6rem;
   width: 60%;
-  color: var(--green-700);
 }
 
 .about-ornament::before,
 .about-ornament::after {
   content: '';
   flex: 1;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--green-700));
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--green-700) 0%, rgba(201, 162, 39, 0.9) 55%, transparent 100%);
 }
 
 .about-ornament::after {
-  background: linear-gradient(270deg, transparent, var(--green-700));
+  background: linear-gradient(270deg, var(--green-700) 0%, rgba(201, 162, 39, 0.9) 55%, transparent 100%);
+}
+
+.about-ornament__gem {
+  width: 0.5rem;
+  height: 0.5rem;
+  flex-shrink: 0;
+  transform: rotate(45deg);
+  border: 1.5px solid var(--gold);
+  border-radius: 2px;
+  background: var(--green-100);
+  box-shadow: 0 0 4px rgba(201, 162, 39, 0.25);
 }
 
 .about-credit {

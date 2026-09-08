@@ -26,7 +26,9 @@ export function SplashScreen() {
         }
       }}
     >
-      <img className="splash-screen__icon" src="/app-icon.svg" alt="" />
+      <div className="splash-screen__badge" aria-hidden="true">
+        <img className="splash-screen__icon" src="/app-icon.svg" alt="" />
+      </div>
       <h1 className="splash-screen__name" data-testid="splash-name">
         مصحف الهدى
       </h1>

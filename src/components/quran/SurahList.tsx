@@ -18,10 +18,7 @@ export function SurahList({ surahs, currentNumber, onSelect }: SurahListProps) {
               onClick={() => onSelect(surah.number)}
             >
               <span className="surah-number">{surah.number}</span>
-              <span className="surah-names">
-                <span className="surah-name">{surah.name_ar}</span>
-                <span className="surah-name-en">{surah.name_en}</span>
-              </span>
+              <span className="surah-name">{surah.name_ar}</span>
             </button>
           </li>
         ))}

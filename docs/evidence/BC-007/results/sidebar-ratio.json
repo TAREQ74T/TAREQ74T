@@ -1,0 +1,15 @@
+{
+  "script": "sidebar-ratio",
+  "preview": "http://localhost:5199",
+  "timestamp": "2026-09-08T19:42:45.084Z",
+  "result": "PASS",
+  "passed": 1,
+  "failed": 0,
+  "checks": [
+    {
+      "name": "الشريط: نسبة قائمة السور ≥ 60% في العرض الافتراضي",
+      "pass": true,
+      "info": "483/772px = 62.56%"
+    }
+  ]
+}

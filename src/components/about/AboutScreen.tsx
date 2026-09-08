@@ -63,7 +63,9 @@ export function AboutScreen({ onBack }: AboutScreenProps) {
             {fixTanweenDisplay(snippets[0].text)}
           </p>
 
-          <span className="about-ornament" aria-hidden="true" />
+          <span className="about-ornament" aria-hidden="true">
+            <span className="about-ornament__gem" />
+          </span>
 
           <p className="about-dua" data-testid="about-ayah-2">
             {fixTanweenDisplay(snippets[1].text)}
