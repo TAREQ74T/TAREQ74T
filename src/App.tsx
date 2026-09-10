@@ -2,12 +2,13 @@ import { useCallback, useEffect, useState } from 'react'
 import { useSettings } from './hooks/useSettings'
 import { QuranPage } from './pages/QuranPage'
 import { SettingsPage } from './pages/SettingsPage'
+import { AdhkarPage } from './pages/AdhkarPage'
 import { AboutScreen } from './components/about/AboutScreen'
 import { SplashScreen } from './components/splash/SplashScreen'
 import { useQuran } from './hooks/useQuran'
 import { useNotifications } from './hooks/useNotifications'
 
-type Route = 'quran' | 'settings' | 'about'
+type Route = 'quran' | 'settings' | 'about' | 'adhkar'
 
 function parseHash(): Route {
   const hash = window.location.hash
@@ -16,6 +17,9 @@ function parseHash(): Route {
   }
   if (hash === '#/about') {
     return 'about'
+  }
+  if (hash === '#/adhkar') {
+    return 'adhkar'
   }
   return 'quran'
 }
@@ -43,6 +47,10 @@ export default function App() {
 
   const openAbout = useCallback(() => {
     window.location.hash = '#/about'
+  }, [])
+
+  const openAdhkar = useCallback(() => {
+    window.location.hash = '#/adhkar'
   }, [])
 
   const openQuran = useCallback(() => {
@@ -75,8 +83,10 @@ export default function App() {
         />
       ) : route === 'about' ? (
         <AboutScreen onBack={openQuran} />
+      ) : route === 'adhkar' ? (
+        <AdhkarPage onBack={openQuran} />
       ) : (
-        <QuranPage onOpenSettings={openSettings} />
+        <QuranPage onOpenSettings={openSettings} onOpenAdhkar={openAdhkar} />
       )}
     </div>
   )

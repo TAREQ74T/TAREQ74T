@@ -1,0 +1,155 @@
+{
+  "script": "bc008-adhkar",
+  "preview": "http://localhost:5199",
+  "timestamp": "2026-09-09T22:48:27.040Z",
+  "result": "PASS",
+  "passed": 29,
+  "failed": 0,
+  "checks": [
+    {
+      "name": "مصدر: adhkar-source.json مطابق بايتًا-ببايت للتسجيل sha256",
+      "pass": true,
+      "info": "7affdd9c1356f66f"
+    },
+    {
+      "name": "مصدر: لا وجود EF BF BD على مستوى البايت",
+      "pass": true,
+      "info": ""
+    },
+    {
+      "name": "مصدر: مصفوفة عليا من 132 بابًا",
+      "pass": true,
+      "info": "len=132"
+    },
+    {
+      "name": "مصدر: الباب id=27 موجود باسمه الحرفي",
+      "pass": true,
+      "info": "أذكار الصباح والمساء"
+    },
+    {
+      "name": "مستخرج: لا مفاتيح transliteration/audio/filename",
+      "pass": true,
+      "info": ""
+    },
+    {
+      "name": "مستخرج: خالٍ تمامًا من U+FFFD (بايت ونص)",
+      "pass": true,
+      "info": ""
+    },
+    {
+      "name": "مستخرج: adhkar.json مطابق للتسجيل sha256",
+      "pass": true,
+      "info": "bd4d38c9dcef1a0c"
+    },
+    {
+      "name": "مستخرج: مفاتيح المستوى الأعلى = id, category, items فقط",
+      "pass": true,
+      "info": ""
+    },
+    {
+      "name": "مستخرج: 24 عنصرًا",
+      "pass": true,
+      "info": "n=24"
+    },
+    {
+      "name": "مستخرج: كل عنصر مفاتيحه id, text, count فقط",
+      "pass": true,
+      "info": "items=24"
+    },
+    {
+      "name": "مستخرج: كل النصوص غير فارغة",
+      "pass": true,
+      "info": ""
+    },
+    {
+      "name": "مستخرج: نصوص الـ24 مطابقة حرفيًا لنظيرها في adhkar-source.json",
+      "pass": true,
+      "info": ""
+    },
+    {
+      "name": "مستخرج: لا نص فارغ/تالف في أي عنصر",
+      "pass": true,
+      "info": ""
+    },
+    {
+      "name": "توثيق: commit_sha حاضر في الوثيقة",
+      "pass": true,
+      "info": ""
+    },
+    {
+      "name": "توثيق: download_url المثبّت حاضر",
+      "pass": true,
+      "info": ""
+    },
+    {
+      "name": "توثيق: sha256 للنسختين مسجّلان",
+      "pass": true,
+      "info": ""
+    },
+    {
+      "name": "توثيق: نص ترخيص MIT مرفق",
+      "pass": true,
+      "info": ""
+    },
+    {
+      "name": "نزاهة: quran_full.json دون أي تعديل",
+      "pass": true,
+      "info": "clean"
+    },
+    {
+      "name": "واجهة: لا fetch/http لاستيراد الأذكار وقت التشغيل",
+      "pass": true,
+      "info": ""
+    },
+    {
+      "name": "واجهة: استيراد من adhkar.json المحلي",
+      "pass": true,
+      "info": ""
+    },
+    {
+      "name": "واجهة: زر «الأذكار» ظاهر بجانب زر الإعدادات",
+      "pass": true,
+      "info": "adhkar=\"الأذكار\" gear=true"
+    },
+    {
+      "name": "شاشة: العنوان = «أذكار الصباح والمساء» وترويسة «الأذكار»",
+      "pass": true,
+      "info": "الأذكار / أذكار الصباح والمساء"
+    },
+    {
+      "name": "شاشة: 24 بطاقة ذكر",
+      "pass": true,
+      "info": "cards=24"
+    },
+    {
+      "name": "شاشة: لا حالة خطأ ولا نص فارغ",
+      "pass": true,
+      "info": ""
+    },
+    {
+      "name": "شاشة: أول ذكر مطابق حرفيًا للمصدر (بداية النص)",
+      "pass": true,
+      "info": "len=442"
+    },
+    {
+      "name": "شاشة: زر العودة يعيد إلى شاشة القراءة",
+      "pass": true,
+      "info": ""
+    },
+    {
+      "name": "شاشة: المسار المباشر #/adhkar يعرض القائمة",
+      "pass": true,
+      "info": "cards=24"
+    },
+    {
+      "name": "ليلي: بطاقات الأذكار بخلفية داكنة ونص فاتح",
+      "pass": true,
+      "info": "bg=rgb(22, 32, 27)"
+    },
+    {
+      "name": "ضيقة 390px: لا تجاوز أفقي والقائمة عمودية",
+      "pass": true,
+      "info": "scroll-gap=0"
+    }
+  ]
+}

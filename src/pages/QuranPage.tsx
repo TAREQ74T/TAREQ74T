@@ -13,6 +13,7 @@ import { fixTanweenDisplay } from '../utils/fixTanweenDisplay'
 
 interface QuranPageProps {
   onOpenSettings: () => void
+  onOpenAdhkar: () => void
 }
 
 interface NavigationTarget {
@@ -33,7 +34,7 @@ function parseNavigationHash(): NavigationTarget | null {
   return { surahNumber, ayahNumber }
 }
 
-export function QuranPage({ onOpenSettings }: QuranPageProps) {
+export function QuranPage({ onOpenSettings, onOpenAdhkar }: QuranPageProps) {
   const { surahs, currentSurah, isLoading, error, selectSurah } = useQuran()
   const { isLoading: isTafseerLoading, error: tafseerError, getTafseer } = useTafseer()
   const { isBookmarked, toggleBookmark } = useBookmarks()
@@ -128,6 +129,15 @@ export function QuranPage({ onOpenSettings }: QuranPageProps) {
     <div className="quran-page">
       <aside className="sidebar">
         <div className="sidebar__toolbar">
+          <button
+            type="button"
+            className="sidebar-adhkar-btn"
+            aria-label="الأذكار"
+            title="الأذكار"
+            onClick={onOpenAdhkar}
+          >
+            الأذكار
+          </button>
           <button
             type="button"
             className="sidebar-gear-btn"
