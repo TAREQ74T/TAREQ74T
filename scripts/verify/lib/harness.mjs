@@ -76,6 +76,34 @@ export async function openPage({ viewport } = {}) {
   return { browser, page, errors }
 }
 
+/**
+ * انتظار شاشة البداية بحد أقصى 500ms (تختفي تلقائيًا خلال ~1.8s).
+ * تعيد true إن كانت ظاهرة، false إن لم تظهر أو اختفت — بلا افتراض.
+ */
+export async function awaitSplash(page, timeout = 500) {
+  try {
+    await page.locator('[data-testid="splash-screen"]').waitFor({ state: 'visible', timeout })
+    return true
+  } catch {
+    return false
+  }
+}
+
+/**
+ * تخطّي شاشة البداية: انتظار ≤500ms، والضغط إن ظهرت، ثم انتظار جاهزية الشاشة ≤15s.
+ * readySelector=null لإعادة تحميل لا تكون فيها قائمة السور موجودة (مثل صفحة الإعدادات).
+ */
+export async function skipSplash(page, readySelector = '.surah-item') {
+  if (await awaitSplash(page)) {
+    const splash = page.locator('[data-testid="splash-screen"]')
+    await splash.click({ timeout: 2000 }).catch(() => {})
+    await splash.waitFor({ state: 'detached', timeout: 3000 }).catch(() => {})
+  }
+  if (readySelector) {
+    await page.waitForSelector(readySelector, { timeout: 15000 })
+  }
+}
+
 const ARABIC_DIGITS = '٠١٢٣٤٥٦٧٨٩'
 export function toAsciiDigits(value) {
   return String(value).replace(/[٠-٩]/g, (d) => String(ARABIC_DIGITS.indexOf(d)))

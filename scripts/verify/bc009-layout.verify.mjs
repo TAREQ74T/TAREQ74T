@@ -6,15 +6,9 @@
  * يعمل على المعاينة الحية (dist) — لا يعدّل أي كود.
  */
 
-import { openPage, makeReporter } from './lib/harness.mjs'
+import { openPage, makeReporter, skipSplash } from './lib/harness.mjs'
 
 const rep = makeReporter('bc009-layout')
-
-async function skipSplash(page) {
-  await page.waitForSelector('[data-testid="splash-screen"]', { timeout: 15000 })
-  await page.click('[data-testid="splash-screen"]')
-  await page.waitForSelector('.surah-item', { timeout: 15000 })
-}
 
 async function setTheme(page, theme) {
   await page.evaluate((t) => {

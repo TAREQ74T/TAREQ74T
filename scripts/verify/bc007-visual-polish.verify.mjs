@@ -7,7 +7,7 @@
 import { readFileSync } from 'node:fs'
 import { resolve, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { openPage, makeReporter } from './lib/harness.mjs'
+import { openPage, awaitSplash, makeReporter } from './lib/harness.mjs'
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..')
 const pkg = JSON.parse(readFileSync(resolve(ROOT, 'package.json'), 'utf8'))
@@ -18,9 +18,9 @@ const rep = makeReporter('bc007-visual-polish')
 const { browser, page, errors } = await openPage({ viewport: { width: 1440, height: 900 } })
 
 await page.goto(process.env.PREVIEW_URL || 'http://localhost:5199', {
-  waitUntil: 'networkidle',
+  waitUntil: 'domcontentloaded',
 })
-await page.waitForSelector('[data-testid="splash-screen"]', { timeout: 15000 })
+await awaitSplash(page)
 
 // قراءة splash دفعة واحدة قبل الاختفاء التلقائي (1.8 ثانية)
 const splash = await page.evaluate(() => {

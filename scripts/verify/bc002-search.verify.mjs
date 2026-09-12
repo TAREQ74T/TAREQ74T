@@ -3,7 +3,7 @@
  * يعمل على المعاينة الحية (dist نهائي) — لا يعدّل أي كود.
  */
 
-import { openPage, shotPath, makeReporter, toAsciiDigits } from './lib/harness.mjs'
+import { openPage, shotPath, makeReporter, skipSplash, toAsciiDigits } from './lib/harness.mjs'
 
 const SELECTOR = '#quran-search'
 
@@ -25,6 +25,7 @@ rep.check('المعاينة: الصفحة الرئيسية تُفتح', true, 'l
 await page.goto(process.env.PREVIEW_URL || 'http://localhost:5199', {
   waitUntil: 'networkidle',
 })
+await skipSplash(page)
 await page.waitForSelector(SELECTOR, { timeout: 15000 })
 
 async function doSearch(term) {

@@ -3,7 +3,7 @@
  * يعمل على المعاينة الحية — لا يعدّل أي كود.
  */
 
-import { openPage, shotPath, makeReporter } from './lib/harness.mjs'
+import { openPage, shotPath, makeReporter, skipSplash } from './lib/harness.mjs'
 
 const rep = makeReporter('dark-mode')
 const { browser, page, errors } = await openPage()
@@ -92,6 +92,7 @@ const analyze = () =>
 await page.goto(process.env.PREVIEW_URL || 'http://localhost:5199', {
   waitUntil: 'networkidle',
 })
+await skipSplash(page)
 await page.waitForSelector('.quran-page, .sidebar', { timeout: 15000 })
 
 // تفعيل الوضع الليلي عبر الإعدادات
@@ -108,6 +109,7 @@ await page.screenshot({ path: shotPath('bc005-dark-settings') })
 
 // الحفظ بعد reload (تظل الصفحة على الإعدادات بعد إعادة التحميل)
 await page.reload({ waitUntil: 'networkidle' })
+await skipSplash(page, null)
 await page.waitForSelector('.settings-page', { timeout: 15000 })
 await page.waitForTimeout(300)
 const persisted = await page.evaluate(() => document.documentElement.dataset.theme || 'light')

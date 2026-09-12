@@ -3,7 +3,7 @@
  * يعمل على المعاينة الحية — لا يعدّل أي كود.
  */
 
-import { openPage, shotPath, makeReporter } from './lib/harness.mjs'
+import { openPage, shotPath, makeReporter, skipSplash } from './lib/harness.mjs'
 
 const rep = makeReporter('sidebar-ratio')
 const { browser, page, errors } = await openPage()
@@ -11,6 +11,7 @@ const { browser, page, errors } = await openPage()
 await page.goto(process.env.PREVIEW_URL || 'http://localhost:5199', {
   waitUntil: 'networkidle',
 })
+await skipSplash(page)
 await page.waitForSelector('.sidebar', { timeout: 15000 })
 await page.waitForSelector('.surah-list-scroll', { timeout: 15000 })
 await page.waitForTimeout(600)

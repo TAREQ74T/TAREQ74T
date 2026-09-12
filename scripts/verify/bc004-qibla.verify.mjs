@@ -3,7 +3,7 @@
  * يعمل على المعاينة الحية — لا يعدّل أي كود.
  */
 
-import { openPage, shotPath, makeReporter, parseClockMinutes, toAsciiDigits } from './lib/harness.mjs'
+import { openPage, shotPath, makeReporter, parseClockMinutes, skipSplash, toAsciiDigits } from './lib/harness.mjs'
 
 const rep = makeReporter('bc004-qibla')
 const { browser, page, errors } = await openPage()
@@ -15,6 +15,7 @@ const EXTERNAL_MARGIN = 0.5
 await page.goto(process.env.PREVIEW_URL || 'http://localhost:5199', {
   waitUntil: 'networkidle',
 })
+await skipSplash(page)
 await page.waitForSelector('.quran-page, .sidebar', { timeout: 15000 })
 await page.click('[aria-label="الإعدادات"]').catch(() => {})
 await page.waitForSelector('.settings-page', { timeout: 8000 })
@@ -84,6 +85,7 @@ await page.waitForTimeout(300)
 // الموقع تضمن انعكاس اللاذقية على البوصلة (إعادة تركيب المكوّن).
 await setLocation(35.53, 35.79)
 await page.reload({ waitUntil: 'networkidle' })
+await skipSplash(page, null)
 await page.waitForSelector('[data-testid="qibla-bearing"]', { timeout: 8000 })
 await page.waitForTimeout(400)
 const bearingText = (await page.textContent('[data-testid="qibla-bearing"]').catch(() => '')).trim()

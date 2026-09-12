@@ -9,7 +9,7 @@ import { readFileSync } from 'node:fs'
 import { resolve, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { execFileSync } from 'node:child_process'
-import { openPage, makeReporter } from './lib/harness.mjs'
+import { openPage, makeReporter, skipSplash } from './lib/harness.mjs'
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..')
 const rep = makeReporter('bc008-adhkar')
@@ -124,9 +124,7 @@ rep.check('واجهة: استيراد من adhkar.json المحلي', /from\s+['
 // ---------- فحوص DOM على المعاينة الحية ----------
 const { browser, page, errors } = await openPage({ viewport: { width: 1440, height: 900 } })
 await page.goto(process.env.PREVIEW_URL || 'http://localhost:5199', { waitUntil: 'networkidle' })
-await page.waitForSelector('[data-testid="splash-screen"]', { timeout: 15000 })
-await page.click('[data-testid="splash-screen"]')
-await page.waitForSelector('.surah-item', { timeout: 15000 })
+await skipSplash(page)
 
 const toolbar = await page.evaluate(() => {
   const adhkarBtn = document.querySelector('.sidebar-adhkar-btn')

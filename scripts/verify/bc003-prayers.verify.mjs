@@ -3,7 +3,7 @@
  * يعمل على المعاينة الحية — لا يعدّل أي كود.
  */
 
-import { openPage, shotPath, makeReporter, parseClockMinutes, toAsciiDigits } from './lib/harness.mjs'
+import { openPage, shotPath, makeReporter, parseClockMinutes, skipSplash, toAsciiDigits } from './lib/harness.mjs'
 
 const rep = makeReporter('bc003-prayers')
 const { browser, page, errors } = await openPage()
@@ -11,6 +11,7 @@ const { browser, page, errors } = await openPage()
 await page.goto(process.env.PREVIEW_URL || 'http://localhost:5199', {
   waitUntil: 'networkidle',
 })
+await skipSplash(page)
 await page.waitForSelector('.quran-page, .sidebar', { timeout: 15000 })
 
 async function openSettings() {
@@ -36,6 +37,7 @@ const badge = await page.evaluate(() => {
 rep.check('هجري: إزاحة +1 تُظهر الشارة وتغيّر اليوم', badge.includes('+1') && hijriPlusOne !== hijriInitial, `شارة=${badge}`)
 
 await page.reload({ waitUntil: 'networkidle' })
+await skipSplash(page, null)
 await page.waitForTimeout(400)
 await openSettings()
 await page.waitForSelector('[data-testid="hijri-date"]', { timeout: 8000 })
@@ -97,6 +99,7 @@ await page.waitForTimeout(250)
 const val15 = await readFajrVal()
 rep.check('أوقات: +15 دقيقة مطبقة', val15 === '+15 دقيقة', val15)
 await page.reload({ waitUntil: 'networkidle' })
+await skipSplash(page, null)
 await page.waitForTimeout(400)
 await openSettings()
 await page.waitForSelector('[data-prayer="fajr"]', { timeout: 8000 })
