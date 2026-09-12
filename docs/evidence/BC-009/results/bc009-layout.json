@@ -1,0 +1,90 @@
+{
+  "script": "bc009-layout",
+  "preview": "http://localhost:5199",
+  "timestamp": "2026-09-12T16:13:08.040Z",
+  "result": "PASS",
+  "passed": 16,
+  "failed": 0,
+  "checks": [
+    {
+      "name": "قائمة light 1440: سورة واحدة لكل صف (114 صفًا)",
+      "pass": true,
+      "info": "count=114 rows=114 maxPerRow=1"
+    },
+    {
+      "name": "آيات light 1440: العنصر block وjustify فعّالة",
+      "pass": true,
+      "info": "display=block align=justify"
+    },
+    {
+      "name": "آيات light 1440: كل الأسطر = عرض الحاوية عدا الأخير",
+      "pass": true,
+      "info": "content=810 lines=[810,810,810,336] maxDiff=0"
+    },
+    {
+      "name": "نجمة light 1440: لا تراكب مع أول سطر",
+      "pass": true,
+      "info": "overlap=false"
+    },
+    {
+      "name": "قائمة light 390: سورة واحدة لكل صف (114 صفًا)",
+      "pass": true,
+      "info": "count=114 rows=114 maxPerRow=1"
+    },
+    {
+      "name": "آيات light 390: العنصر block وjustify فعّالة",
+      "pass": true,
+      "info": "display=block align=justify"
+    },
+    {
+      "name": "آيات light 390: كل الأسطر = عرض الحاوية عدا الأخير",
+      "pass": true,
+      "info": "content=276 lines=[276,276,276,276,276,276,276,276,102] maxDiff=0"
+    },
+    {
+      "name": "نجمة light 390: لا تراكب مع أول سطر",
+      "pass": true,
+      "info": "overlap=false"
+    },
+    {
+      "name": "قائمة dark 1440: سورة واحدة لكل صف (114 صفًا)",
+      "pass": true,
+      "info": "count=114 rows=114 maxPerRow=1"
+    },
+    {
+      "name": "آيات dark 1440: العنصر block وjustify فعّالة",
+      "pass": true,
+      "info": "display=block align=justify"
+    },
+    {
+      "name": "آيات dark 1440: كل الأسطر = عرض الحاوية عدا الأخير",
+      "pass": true,
+      "info": "content=810 lines=[810,810,810,336] maxDiff=0"
+    },
+    {
+      "name": "نجمة dark 1440: لا تراكب مع أول سطر",
+      "pass": true,
+      "info": "overlap=false"
+    },
+    {
+      "name": "قائمة dark 390: سورة واحدة لكل صف (114 صفًا)",
+      "pass": true,
+      "info": "count=114 rows=114 maxPerRow=1"
+    },
+    {
+      "name": "آيات dark 390: العنصر block وjustify فعّالة",
+      "pass": true,
+      "info": "display=block align=justify"
+    },
+    {
+      "name": "آيات dark 390: كل الأسطر = عرض الحاوية عدا الأخير",
+      "pass": true,
+      "info": "content=276 lines=[276,276,276,276,276,276,276,276,102] maxDiff=0"
+    },
+    {
+      "name": "نجمة dark 390: لا تراكب مع أول سطر",
+      "pass": true,
+      "info": "overlap=false"
+    }
+  ]
+}

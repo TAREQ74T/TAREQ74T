@@ -139,6 +139,10 @@ body {
   gap: 0.5rem;
 }
 
+.surah-list ul > li {
+  width: 100%;
+}
+
 .surah-item {
   display: flex;
   align-items: center;
@@ -390,13 +394,14 @@ body {
 }
 
 .ayah-text {
+  display: block;
   margin: 0;
   font-size: var(--ayah-font-size);
-  line-height: 2.3;
+  line-height: 2.1;
   color: var(--ink);
   text-align: justify;
-  text-align-last: center;
   word-spacing: 0.1em;
+  padding-inline-start: 2.5rem;
 }
 
 .ayah-marker {
@@ -1729,12 +1734,7 @@ body {
   }
 
   .surah-list-scroll {
-    max-height: 260px;
-  }
-
-  .surah-list ul {
-    flex-direction: row;
-    flex-wrap: wrap;
+    max-height: 50vh;
   }
 
   .ayah-text {

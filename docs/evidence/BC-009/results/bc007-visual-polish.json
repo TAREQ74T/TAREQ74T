@@ -1,0 +1,85 @@
+{
+  "script": "bc007-visual-polish",
+  "preview": "http://localhost:5199",
+  "timestamp": "2026-09-11T23:14:31.816Z",
+  "result": "PASS",
+  "passed": 15,
+  "failed": 0,
+  "checks": [
+    {
+      "name": "splash: يعرض الاسم والوسم ورقم الإصدار",
+      "pass": true,
+      "info": "مصحف الهدى | الإصدار 1.1.0"
+    },
+    {
+      "name": "splash: بدون GIF نهائيًا",
+      "pass": true,
+      "info": "/app-icon.svg"
+    },
+    {
+      "name": "splash: خلفية متدرجة (linear + radial) مع لون ثابت احتياطي",
+      "pass": true,
+      "info": "radial-gradient(760px 420px at 84% -10%, rgba(201, 162, 39, 0.2), rgba(0, 0, 0, "
+    },
+    {
+      "name": "splash: زخرفة CSS حول الأيقونة وpointer-events:none",
+      "pass": true,
+      "info": "badge=true pe=none"
+    },
+    {
+      "name": "splash: يُتخطى بالنقر ويختفي",
+      "pass": true,
+      "info": ""
+    },
+    {
+      "name": "قائمة: 114 سورة في القائمة",
+      "pass": true,
+      "info": "rows=114"
+    },
+    {
+      "name": "قائمة: كل سورة سطر واحد فقط {1:114}",
+      "pass": true,
+      "info": "{\"1\":114}"
+    },
+    {
+      "name": "قائمة: لا عنصر name-en ولا عمود التكديس في القائمة",
+      "pass": true,
+      "info": "name-en=0 surah-names=0"
+    },
+    {
+      "name": "قائمة: حماية ellipsis مفعّلة (nowrap + hidden)",
+      "pass": true,
+      "info": "ws=nowrap of=hidden to=ellipsis"
+    },
+    {
+      "name": "الإعدادات: زر ترس ذو خلفية مرئية وحدود ومسار SVG",
+      "pass": true,
+      "info": "bg=rgb(231, 241, 236) size=36x36"
+    },
+    {
+      "name": "بحث: name_en يظهر في نتائج البحث بالحروف اللاتينية",
+      "pass": true,
+      "info": "Al-Faatiha"
+    },
+    {
+      "name": "About: الآيتان حاضِرتان دون تغيير (غير فارغتين)",
+      "pass": true,
+      "info": "l1=33 l2=46"
+    },
+    {
+      "name": "About: فاصل زخرفي بحبيبة وسطية وتدرج متعدد الألوان",
+      "pass": true,
+      "info": "gem=true bg=linear-gradient(90deg, rgb(28, 106, 79) 0%, rgba(201, 162, 3"
+    },
+    {
+      "name": "About: سطر الإنشاء ورقم الإصدار كما هما",
+      "pass": true,
+      "info": "رقم الإصدار: 1.1.0"
+    },
+    {
+      "name": "ضيقة 390px: كل سورة تبقى سطرًا واحدًا {1:114}",
+      "pass": true,
+      "info": "{\"1\":114}"
+    }
+  ]
+}
