@@ -59,6 +59,7 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  padding-bottom: 4.75rem;
 }
 
 .app-header {
@@ -96,7 +97,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  max-height: calc(100vh - 8rem);
+  max-height: calc(100vh - 12rem);
 }
 
 .sidebar-title {
@@ -198,57 +199,6 @@ body {
   font-size: 1rem;
 }
 
-.sidebar__toolbar {
-  display: flex;
-  justify-content: flex-end;
-  gap: 0.45rem;
-}
-
-.sidebar-gear-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.25rem;
-  height: 2.25rem;
-  border: 1px solid var(--green-700);
-  background: var(--green-100);
-  color: var(--green-700);
-  border-radius: 0.6rem;
-  cursor: pointer;
-  line-height: 1;
-  padding: 0;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-  transition: background 0.15s ease, color 0.15s ease;
-}
-
-.sidebar-gear-btn:hover {
-  background: var(--green-700);
-  color: #ffffff;
-}
-
-.sidebar-adhkar-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 2.25rem;
-  border: 1px solid var(--green-700);
-  background: var(--green-100);
-  color: var(--green-700);
-  border-radius: 0.6rem;
-  padding: 0.2rem 0.6rem;
-  cursor: pointer;
-  line-height: 1.4;
-  font: inherit;
-  font-size: 0.95rem;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-  transition: background 0.15s ease, color 0.15s ease;
-}
-
-.sidebar-adhkar-btn:hover {
-  background: var(--green-700);
-  color: #ffffff;
-}
-
 .content {
   flex: 1;
   min-width: 0;
@@ -256,7 +206,7 @@ body {
   border: 1px solid #e4dfd2;
   border-radius: 0.75rem;
   padding: 1.25rem;
-  max-height: calc(100vh - 8rem);
+  max-height: calc(100vh - 12rem);
   overflow-y: auto;
 }
 
@@ -2044,3 +1994,80 @@ body {
   text-align: justify;
   color: var(--ink);
 }
+
+/* ===== Prayer page (BC-010 Phase 1) ===== */
+.prayer-page {
+  flex: 1;
+  max-width: 720px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.settings-about-btn {
+  align-self: center;
+}
+
+/* ===== Bottom navigation (BC-010 Phase 1) ===== */
+.bottom-nav {
+  position: fixed;
+  inset-inline: 0;
+  bottom: 0;
+  z-index: 900;
+  display: flex;
+  background: #ffffff;
+  border-top: 1px solid #e4dfd2;
+  box-shadow: 0 -1px 6px rgba(0, 0, 0, 0.06);
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+:root[data-theme='dark'] .bottom-nav {
+  background: #121a17;
+  border-top-color: #2c3a33;
+}
+
+.bottom-nav__tab {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  min-height: 4.25rem;
+  padding: 0.45rem 0.25rem;
+  text-decoration: none;
+  color: #7a7568;
+  font: inherit;
+  font-size: 0.72rem;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.bottom-nav__tab:hover {
+  background: var(--green-100);
+}
+
+:root[data-theme='dark'] .bottom-nav__tab {
+  color: #a9b8b1;
+}
+
+.bottom-nav__tab.is-active {
+  color: var(--green-700);
+  font-weight: bold;
+}
+
+:root[data-theme='dark'] .bottom-nav__tab.is-active {
+  color: #5fce9e;
+}
+
+.bottom-nav__icon {
+  display: inline-flex;
+  line-height: 0;
+}
+
+.bottom-nav__label {
+  line-height: 1;
+}
+

@@ -126,24 +126,22 @@ const { browser, page, errors } = await openPage({ viewport: { width: 1440, heig
 await page.goto(process.env.PREVIEW_URL || 'http://localhost:5199', { waitUntil: 'networkidle' })
 await skipSplash(page)
 
-const toolbar = await page.evaluate(() => {
-  const adhkarBtn = document.querySelector('.sidebar-adhkar-btn')
-  const gearBtn = document.querySelector('.sidebar-gear-btn')
-  const svgIcon = document.querySelector('.sidebar-adhkar-btn svg')
+const nav = await page.evaluate(() => {
+  const adhkarTab = document.querySelector('[data-testid="nav-adhkar"]')
+  const settingsTab = document.querySelector('[data-testid="nav-settings"]')
   return {
-    adhkarText: adhkarBtn?.textContent?.trim() || '',
-    gearPresent: !!gearBtn,
-    gearSvg: !!gearBtn?.querySelector('svg'),
-    iconlessText: adhkarBtn && !svgIcon,
+    adhkarText: adhkarTab?.textContent?.trim() || '',
+    settingsPresent: !!settingsTab,
+    adhkarSvg: !!adhkarTab?.querySelector('svg'),
   }
 })
 rep.check(
-  'واجهة: زر «الأذكار» ظاهر بجانب زر الإعدادات',
-  toolbar.adhkarText.includes('الأذكار') && toolbar.gearPresent,
-  `adhkar="${toolbar.adhkarText}" gear=${toolbar.gearPresent}`,
+  'واجهة: تبويب «الأذكار» ظاهر في الشريط السفلي بجانب «الإعدادات»',
+  nav.adhkarText.includes('الأذكار') && nav.settingsPresent && nav.adhkarSvg,
+  `adhkar="${nav.adhkarText}" settings=${nav.settingsPresent}`,
 )
 
-await page.click('.sidebar-adhkar-btn')
+await page.click('[data-testid="nav-adhkar"]')
 await page.waitForSelector('.adhkar-screen', { timeout: 10000 })
 
 const screen = await page.evaluate(() => {

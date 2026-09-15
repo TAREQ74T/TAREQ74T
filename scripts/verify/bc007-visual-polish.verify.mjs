@@ -123,22 +123,28 @@ rep.check(
   `ws=${list.whiteSpace} of=${list.overflow} to=${list.textOverflow}`,
 )
 
-// زر الإعدادات — وضوح في النهاري
-const gear = await page.evaluate(() => {
-  const el = document.querySelector('.sidebar-gear-btn')
-  if (!el) return null
-  const cs = getComputedStyle(el)
+// Bottom Nav — ثابت أسفل + 4 تبويبات بأيقونات SVG نظيفة
+const nav = await page.evaluate(() => {
+  const el = document.querySelector('.bottom-nav')
+  const tabs = [...document.querySelectorAll('[data-testid^="nav-"]')]
   return {
-    bg: cs.backgroundColor,
-    border: cs.borderColor,
-    size: `${Math.round(el.getBoundingClientRect().width)}x${Math.round(el.getBoundingClientRect().height)}`,
-    iconPath: !!el.querySelector('svg path'),
+    present: !!el,
+    position: el ? getComputedStyle(el).position : '',
+    bottom: el ? getComputedStyle(el).bottom : '',
+    count: tabs.length,
+    labels: tabs.map((t) => t.textContent.trim()),
+    svgCount: tabs.filter((t) => t.querySelector('svg')).length,
   }
 })
 rep.check(
-  'الإعدادات: زر ترس ذو خلفية مرئية وحدود ومسار SVG',
-  gear != null && gear.bg !== 'rgba(0, 0, 0, 0)' && gear.border !== 'rgba(0, 0, 0, 0)' && gear.iconPath,
-  `bg=${gear?.bg} size=${gear?.size}`,
+  'التنقل: شريط سفلي ثابت بأربع تبويبات وأيقونات SVG',
+  nav.present &&
+    nav.position === 'fixed' &&
+    nav.bottom === '0px' &&
+    nav.count === 4 &&
+    nav.svgCount === 4 &&
+    ['القرآن', 'الصلاة', 'الأذكار', 'الإعدادات'].every((label) => nav.labels.includes(label)),
+  `pos=${nav.position} bottom=${nav.bottom} tabs=${nav.count} svg=${nav.svgCount} labels=${nav.labels.join(',')}`,
 )
 
 // الاسم الإنجليزي يبقى في نتائج البحث (غير محذوف من الوظيفة)
@@ -157,7 +163,7 @@ await page.fill('#quran-search', '')
 await page.waitForTimeout(150)
 
 // About — فاصل زخرفي دون تغيير نصوص/إصدار
-await page.click('[aria-label="الإعدادات"]')
+await page.click('[data-testid="nav-settings"]')
 await page.waitForSelector('.settings-page', { timeout: 10000 })
 await page.click('[data-testid="open-about"]')
 await page.waitForSelector('[data-testid="about-ayah-1"]', { timeout: 10000 })
@@ -194,6 +200,8 @@ rep.check(
   about.versionText,
 )
 await page.click('.settings-back-btn')
+await page.waitForSelector('.settings-page', { timeout: 10000 })
+await page.click('[data-testid="nav-quran"]')
 await page.waitForSelector('.quran-page', { timeout: 10000 })
 
 // شاشة ضيقة — لا تكسير ولا أسطر متعددة

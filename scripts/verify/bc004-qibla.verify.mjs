@@ -17,7 +17,7 @@ await page.goto(process.env.PREVIEW_URL || 'http://localhost:5199', {
 })
 await skipSplash(page)
 await page.waitForSelector('.quran-page, .sidebar', { timeout: 15000 })
-await page.click('[aria-label="الإعدادات"]').catch(() => {})
+await page.click('[data-testid="nav-settings"]').catch(() => {})
 await page.waitForSelector('.settings-page', { timeout: 8000 })
 
 async function setLocation(lat, lng) {
@@ -81,11 +81,11 @@ await page.click('[data-testid="tz-auto"]')
 await page.waitForTimeout(300)
 
 // ---- 2) القبلة من اللاذقية 35.53, 35.79 → ~165° مقابل المرجع الخارجي 164.9 ----
-// ملاحظة: QiblaCompass يقرأ موقعه الخاص عند التحميل؛ إعادة تحميل الصفحة بعد حفظ
-// الموقع تضمن انعكاس اللاذقية على البوصلة (إعادة تركيب المكوّن).
+// ملاحظة: QiblaCompass يقرأ موقعه عند التركيب؛ الانتقال إلى تبويب الصلاة بعد حفظ
+// الموقع يعيد تركيب المكوّن داخل PrayerPage فينعكس الموقع على البوصلة.
 await setLocation(35.53, 35.79)
-await page.reload({ waitUntil: 'networkidle' })
-await skipSplash(page, null)
+await page.click('[data-testid="nav-prayer"]')
+await page.waitForSelector('[data-testid="prayer-page"]', { timeout: 8000 })
 await page.waitForSelector('[data-testid="qibla-bearing"]', { timeout: 8000 })
 await page.waitForTimeout(400)
 const bearingText = (await page.textContent('[data-testid="qibla-bearing"]').catch(() => '')).trim()
@@ -122,6 +122,8 @@ rep.check(
 )
 
 // ---- 3) خطوة الدقيقة مع الحصر ±30 (محرر الإعدادات) ----
+await page.click('[data-testid="nav-settings"]')
+await page.waitForSelector('.settings-page', { timeout: 8000 })
 const fajrRow = page.locator('[data-prayer="fajr"]').first()
 await fajrRow.scrollIntoViewIfNeeded()
 await page.waitForTimeout(250)

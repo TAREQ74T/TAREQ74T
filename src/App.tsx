@@ -1,25 +1,31 @@
 import { useCallback, useEffect, useState } from 'react'
 import { useSettings } from './hooks/useSettings'
 import { QuranPage } from './pages/QuranPage'
+import { PrayerPage } from './pages/PrayerPage'
 import { SettingsPage } from './pages/SettingsPage'
 import { AdhkarPage } from './pages/AdhkarPage'
-import { AboutScreen } from './components/about/AboutScreen'
+import { AboutPage } from './pages/AboutPage'
+import { BottomNav } from './components/nav/BottomNav'
+import type { NavRoute } from './components/nav/BottomNav'
 import { SplashScreen } from './components/splash/SplashScreen'
 import { useQuran } from './hooks/useQuran'
 import { useNotifications } from './hooks/useNotifications'
 
-type Route = 'quran' | 'settings' | 'about' | 'adhkar'
+type Route = NavRoute | 'about'
 
 function parseHash(): Route {
   const hash = window.location.hash
-  if (hash === '#/settings') {
-    return 'settings'
-  }
-  if (hash === '#/about') {
-    return 'about'
+  if (hash === '#/prayer') {
+    return 'prayer'
   }
   if (hash === '#/adhkar') {
     return 'adhkar'
+  }
+  if (hash === '#/settings/about') {
+    return 'about'
+  }
+  if (hash === '#/settings') {
+    return 'settings'
   }
   return 'quran'
 }
@@ -46,11 +52,7 @@ export default function App() {
   }, [])
 
   const openAbout = useCallback(() => {
-    window.location.hash = '#/about'
-  }, [])
-
-  const openAdhkar = useCallback(() => {
-    window.location.hash = '#/adhkar'
+    window.location.hash = '#/settings/about'
   }, [])
 
   const openQuran = useCallback(() => {
@@ -60,6 +62,8 @@ export default function App() {
   const navigateToAyah = useCallback((surahNumber: number, ayahNumber: number | null) => {
     window.location.hash = `#/surah/${surahNumber}${ayahNumber != null ? `/${ayahNumber}` : ''}`
   }, [])
+
+  const navActive: NavRoute = route === 'about' ? 'settings' : route
 
   return (
     <div className="app" dir="rtl">
@@ -82,12 +86,15 @@ export default function App() {
           onBack={openQuran}
         />
       ) : route === 'about' ? (
-        <AboutScreen onBack={openQuran} />
+        <AboutPage onBack={openSettings} />
+      ) : route === 'prayer' ? (
+        <PrayerPage />
       ) : route === 'adhkar' ? (
         <AdhkarPage onBack={openQuran} />
       ) : (
-        <QuranPage onOpenSettings={openSettings} onOpenAdhkar={openAdhkar} />
+        <QuranPage />
       )}
+      <BottomNav active={navActive} />
     </div>
   )
 }

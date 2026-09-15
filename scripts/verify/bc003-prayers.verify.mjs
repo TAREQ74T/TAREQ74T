@@ -15,7 +15,7 @@ await skipSplash(page)
 await page.waitForSelector('.quran-page, .sidebar', { timeout: 15000 })
 
 async function openSettings() {
-  await page.click('[aria-label="الإعدادات"]').catch(() => {})
+  await page.click('[data-testid="nav-settings"]').catch(() => {})
   await page.waitForSelector('.settings-page', { timeout: 8000 })
   await page.waitForTimeout(300)
 }
@@ -120,23 +120,21 @@ const methodOk = await page.evaluate(() => {
 })
 rep.check('أوقات: قائمة طريقة الحساب والمذهب موجودة', methodOk)
 
-// ---- اللوحة الرئيسية: ملخص مطوي (هجري + القادمة) والصفوف عند التوسعة ----
-await page.click('.settings-back-btn').catch(() => {})
-await page.waitForSelector('.quran-page', { timeout: 8000 })
+// ---- تبويب الصلاة: ملخص اللوحة (هجري + القادمة) والصفوف (موسّعة افتراضيًا) ----
+await page.click('[data-testid="nav-prayer"]')
+await page.waitForSelector('[data-testid="prayer-page"]', { timeout: 8000 })
 await page.waitForTimeout(500)
 const summary = await page.evaluate(() => {
   const h = document.querySelector('[data-testid="panel-hijri"]')
   const n = document.querySelector('[data-testid="panel-next"]')
   return { h: h ? h.textContent.trim() : '', n: n ? n.textContent.trim() : '' }
 })
-rep.check('اللوحة: مطوية افتراضياً وتعرض ملخصاً (هجري + القادمة)', summary.h.length > 0 && summary.n.length > 0, JSON.stringify(summary))
+rep.check('اللوحة: تعرض ملخصاً (هجري + القادمة) في تبويب الصلاة', summary.h.length > 0 && summary.n.length > 0, JSON.stringify(summary))
 await page.screenshot({ path: shotPath('bc005-panel-summary') })
 
-await page.click('[data-testid="prayer-panel-toggle"]').catch(() => {})
-await page.waitForTimeout(400)
 const rows = await page.$$eval('[data-testid^="time-"]', (els) => els.map((e) => e.textContent.trim()))
 const timeOk = rows.length >= 5 && rows.every((t) => parseClockMinutes(t) != null)
-rep.check('اللوحة: صفوف الصلوات تعرض أوقاتاً صالحة عند التوسعة', timeOk, `${rows.length} صفوف`)
+rep.check('اللوحة: صفوف الصلوات تعرض أوقاتاً صالحة (موسّعة افتراضيًا)', timeOk, `${rows.length} صفوف`)
 
 rep.addErrors(errors, 'bc003-prayers')
 const code = rep.finish()

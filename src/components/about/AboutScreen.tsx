@@ -6,6 +6,7 @@ import { APP_VERSION } from '../../utils/version'
 
 interface AboutScreenProps {
   onBack: () => void
+  backLabel?: string
 }
 
 /**
@@ -13,7 +14,7 @@ interface AboutScreenProps {
  * الإسراء 17:24)، مستخرجَين آلياً من quran_full.json عبر getAyahPart دون أي
  * نص مكتوب يدوياً، ثم سطر الإنشاء ثم رقم الإصدار (يُقرأ من package.json).
  */
-export function AboutScreen({ onBack }: AboutScreenProps) {
+export function AboutScreen({ onBack, backLabel = '← العودة إلى القراءة' }: AboutScreenProps) {
   const [snippets, setSnippets] = useState<AboutSnippet[] | null>(null)
   const [error, setError] = useState<string | null>(null)
 
@@ -45,7 +46,7 @@ export function AboutScreen({ onBack }: AboutScreenProps) {
       <header className="settings-page__header">
         <h2>حول التطبيق</h2>
         <button type="button" className="settings-back-btn" onClick={onBack}>
-          ← العودة إلى القراءة
+          {backLabel}
         </button>
       </header>
 

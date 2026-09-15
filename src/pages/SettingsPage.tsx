@@ -3,7 +3,6 @@ import { useReadingProgress } from '../hooks/useReadingProgress'
 import type { Settings, FontSize, Theme, TimezoneMode } from '../hooks/useSettings'
 import { FontSizeControl } from '../components/settings/FontSizeControl'
 import { ThemeToggle } from '../components/settings/ThemeToggle'
-import { QiblaCompass } from '../components/qibla/QiblaCompass'
 import { useLocation } from '../hooks/useLocation'
 import { usePrayerTimes } from '../hooks/usePrayerTimes'
 import { useHijriDate } from '../hooks/useHijriDate'
@@ -79,8 +78,6 @@ export function SettingsPage({
           ← العودة إلى القراءة
         </button>
       </header>
-
-      <QiblaCompass />
 
       <section className="setting-group">
         <h3 className="setting-group__title">الموقع</h3>
@@ -202,20 +199,14 @@ export function SettingsPage({
         )}
       </section>
 
-      <section className="setting-group">
-        <h3 className="setting-group__title">حول التطبيق</h3>
-        <p className="progress-info">
-          معلومات المصحف وآيتان مستخرجتان آلياً من المصدر.
-        </p>
-        <button
-          type="button"
-          className="btn"
-          data-testid="open-about"
-          onClick={onOpenAbout}
-        >
-          فتح حول التطبيق
-        </button>
-      </section>
+      <button
+        type="button"
+        className="btn btn--ghost settings-about-btn"
+        data-testid="open-about"
+        onClick={onOpenAbout}
+      >
+        حول التطبيق
+      </button>
 
       <section className="setting-group">
         <h3 className="setting-group__title">الإشارات المرجعية ({bookmarks.length})</h3>
