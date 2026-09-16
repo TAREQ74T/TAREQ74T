@@ -1,0 +1,50 @@
+{
+  "script": "bc010a-nav",
+  "preview": "http://localhost:5199",
+  "timestamp": "2026-09-16T08:51:24.148Z",
+  "result": "PASS",
+  "passed": 8,
+  "failed": 0,
+  "checks": [
+    {
+      "name": "التنقل: شريط سفلي ثابت أسفل الشاشة بأربع تبويبات",
+      "pass": true,
+      "info": "pos=fixed bottom=0px tabs=4 svg=4 labels=القرآن,الصلاة,الأذكار,الإعدادات"
+    },
+    {
+      "name": "القرآن: الشريط الجانبي فقط (بلا ترس/أذكار/لوحة صلاة) والتبويب نشط",
+      "pass": true,
+      "info": "{\"quran\":true,\"sidebar\":true,\"gear\":false,\"adhkar\":false,\"panel\":false,\"active\":true}"
+    },
+    {
+      "name": "الصلاة: وقت الصلاة + القبلة داخل التبويب بلا شريط جانبي",
+      "pass": true,
+      "info": "{\"page\":true,\"panel\":true,\"qibla\":true,\"sidebar\":false}"
+    },
+    {
+      "name": "الأذكار: تبويب الأذكار يعرض شاشة الأذكار",
+      "pass": true,
+      "info": "cards=24"
+    },
+    {
+      "name": "الإعدادات: التبويب يعرض الإعدادات (بلا قبلة) مع مدخل «حول»",
+      "pass": true,
+      "info": "{\"page\":true,\"qibla\":false,\"aboutBtn\":true}"
+    },
+    {
+      "name": "#/settings/about: صفحة «حول» الفرعية تعمل",
+      "pass": true,
+      "info": "{\"screen\":true,\"hash\":\"#/settings/about\"}"
+    },
+    {
+      "name": "حول: زر العودة يعيد إلى #/settings",
+      "pass": true,
+      "info": "#/settings"
+    },
+    {
+      "name": "الشريط الجانبي: يظهر في تبويب القرآن فقط",
+      "pass": true,
+      "info": "0 خارج القرآن"
+    }
+  ]
+}

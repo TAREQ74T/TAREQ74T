@@ -1,0 +1,40 @@
+{
+  "script": "bc010b-palettes",
+  "preview": "http://localhost:5199",
+  "timestamp": "2026-09-16T08:38:52.202Z",
+  "result": "PASS",
+  "passed": 6,
+  "failed": 0,
+  "checks": [
+    {
+      "name": "#/palette-preview: الصفحة تعمل وتُظهر اسم اللوحة ورموزها",
+      "pass": true,
+      "info": "الأذكار · ABakery/Cafe (#63)نهاري"
+    },
+    {
+      "name": "التبديل: 6 تركيبات (قسم × لوحة) تعمل وتعرض الشاشة الحقيقية بلا خطأ",
+      "pass": true,
+      "info": "6/6"
+    },
+    {
+      "name": "أزرار التحكم: التبويب النشط يتميّز بخلفية + لون + وزن",
+      "pass": true,
+      "info": "{\"section\":{\"bg\":\"rgb(67, 56, 202)\",\"idleBg\":\"rgba(0, 0, 0, 0)\",\"color\":\"rgb(255, 255, 255)\",\"idleColor\":\"rgb(30, 25, 91)\",\"weight\":\"700\",\"idleWeight\":\"400\"},\"palette\":{\"bg\":\"rgb(67, 56, 202)\",\"idleBg\":\"rgba(0, 0, 0, 0)\",\"color\":\"rgb(255, 255, 255)\",\"idleColor\":\"rgb(30, 25, 91)\",\"weight\":\"700\",\"idleWeight\":\"400\"},\"mode\":{\"bg\":\"rgb(67, 56, 202)\",\"idleBg\":\"rgba(0, 0, 0, 0)\",\"color\":\"rgb(255, 255, 255)\",\"idleColor\":\"rgb(30, 25, 91)\",\"weight\":\"700\",\"idleWeight\":\"400\"}}"
+    },
+    {
+      "name": "BottomNav: مدمج داخل المعاينة والتبويب النشط بخلفية + لون + وزن",
+      "pass": true,
+      "info": "{\"inPreview\":true,\"position\":\"fixed\",\"bg\":\"rgb(239, 218, 173)\",\"idleBg\":\"rgba(0, 0, 0, 0)\",\"color\":\"rgb(146, 64, 14)\",\"idleColor\":\"rgb(160, 110, 70)\",\"weight\":\"700\",\"idleWeight\":\"400\"}"
+    },
+    {
+      "name": "اللوحات: سطح مختلف فعليًا لكل من A/B/C (نهاري وليلي)",
+      "pass": true,
+      "info": "3 ألوان مميزة × وضعين"
+    },
+    {
+      "name": "الوضعان: نهاري ≠ ليلي (تبديل فعلي)",
+      "pass": true,
+      "info": "rgb(254, 243, 199) vs rgb(20, 9, 2)"
+    }
+  ]
+}
