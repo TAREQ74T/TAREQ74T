@@ -16,7 +16,7 @@
 - اتجاه المكتبة: Warm brown + cream white
 - سبب الاختيار: الاتجاه الأساسي المطلوب: بني دافئ + كريمي — الأقرب إلى «المخطوطة الدافئة».
 
-| الوضع | paper | card | ink | muted | border | strong | primary | soft | gold | onPrimary |
+| الوضع | paper | card | ink | muted | border | strong | primary | soft | accent | onPrimary |
 |---|---|---|---|---|---|---|---|---|---|---|
 | نهاري | `#FEF3C7` | `#FFFFFF` | `#78350F` | `#A06E46` | `#FDE68A` | `#92400E` | `#92400E` | `#EFDAAD` | `#92400E` | `#FFFFFF` |
 | ليلي | `#140902` | `#200E03` | `#E4D7CF` | `#A69991` | `#3A302A` | `#AF744F` | `#9E5529` | `#3A1A06` | `#92400E` | `#FFFFFF` |
@@ -27,7 +27,7 @@
 - اتجاه المكتبة: Caring teal + warm orange
 - سبب الاختيار: اتجاه بارد هادئ (تركوازي) — تباين لوني كامل مع الأساسي البني، ومختلف عن البديل البنفسجي.
 
-| الوضع | paper | card | ink | muted | border | strong | primary | soft | gold | onPrimary |
+| الوضع | paper | card | ink | muted | border | strong | primary | soft | accent | onPrimary |
 |---|---|---|---|---|---|---|---|---|---|---|
 | نهاري | `#F0FDFA` | `#FFFFFF` | `#134E4A` | `#55827F` | `#99F6E4` | `#0B7970` | `#0D9488` | `#D0EEEA` | `#EA580C` | `#021614` |
 | ليلي | `#021513` | `#03211E` | `#D0DCDB` | `#92A09F` | `#2A3A39` | `#0D9488` | `#0D9488` | `#053B36` | `#EA580C` | `#021614` |
@@ -38,7 +38,7 @@
 - اتجاه المكتبة: Spiritual purple + warm gold
 - سبب الاختيار: اتجاه روحاني بنفسجي + ذهبي دافئ — محور لوني معاكس للأساسي، ويوحي بالتعبد.
 
-| الوضع | paper | card | ink | muted | border | strong | primary | soft | gold | onPrimary |
+| الوضع | paper | card | ink | muted | border | strong | primary | soft | accent | onPrimary |
 |---|---|---|---|---|---|---|---|---|---|---|
 | نهاري | `#FAF5FF` | `#FFFFFF` | `#4C1D95` | `#805EB5` | `#DDD6FE` | `#7C3AED` | `#7C3AED` | `#E8DBFC` | `#A16207` | `#FFFFFF` |
 | ليلي | `#110821` | `#1B0D34` | `#DBD2EA` | `#9E95AE` | `#373045` | `#9965F1` | `#7F3EED` | `#31175E` | `#A16207` | `#FFFFFF` |
@@ -51,7 +51,7 @@
 - اتجاه المكتبة: Professional navy + blue CTA
 - سبب الاختيار: الاتجاه الأساسي المطلوب: كحلي مهني + أزرق — «سماء الليل» الرسمية المتزنة.
 
-| الوضع | paper | card | ink | muted | border | strong | primary | soft | gold | onPrimary |
+| الوضع | paper | card | ink | muted | border | strong | primary | soft | accent | onPrimary |
 |---|---|---|---|---|---|---|---|---|---|---|
 | نهاري | `#F8FAFC` | `#FFFFFF` | `#020617` | `#4C4F5C` | `#E2E8F0` | `#0F172A` | `#0F172A` | `#D7DADF` | `#0369A1` | `#FFFFFF` |
 | ليلي | `#020306` | `#030509` | `#CCCDD1` | `#8F9094` | `#2A2B2E` | `#797D88` | `#616672` | `#060911` | `#0369A1` | `#FFFFFF` |
@@ -62,10 +62,10 @@
 - اتجاه المكتبة: Time amber + night indigo on dark
 - سبب الاختيار: اتجاه دافئ عنبري على ليل داكن — يربط بصريًا بأوقات الصلاة والشمس.
 
-| الوضع | paper | card | ink | muted | border | strong | primary | soft | gold | onPrimary |
+| الوضع | paper | card | ink | muted | border | strong | primary | soft | accent | onPrimary |
 |---|---|---|---|---|---|---|---|---|---|---|
 | نهاري | `#F4F4FE` | `#FDFDFF` | `#623603` | `#8E6F4E` | `#CDCDD5` | `#9E5704` | `#C36B05` | `#F0E2DB` | `#6366F1` | `#1D1001` |
-| ليلي | `#0F172A` | `#192134` | `#FFFFFF` | `#B7B9BF` | `#353C4C` | `#D97706` | `#D97706` | `#4C341F` | `#6366F1` | `#211201` |
+| ليلي | `#171F3E` | `#22294B` | `#FFFFFF` | `#B7B9BF` | `#353C4C` | `#D97706` | `#D97706` | `#4C341F` | `#6366F1` | `#211201` |
 
 ### C (بديلة) — Sleep Tracker `#142`
 
@@ -73,10 +73,18 @@
 - اتجاه المكتبة: Night indigo + dream violet on dark
 - سبب الاختيار: اتجاه نيلي/بنفسجي تأملي — ليل هادئ مختلف عن الكحلي الأساسي وعن العنبري.
 
-| الوضع | paper | card | ink | muted | border | strong | primary | soft | gold | onPrimary |
+| الوضع | paper | card | ink | muted | border | strong | primary | soft | accent | onPrimary |
 |---|---|---|---|---|---|---|---|---|---|---|
 | نهاري | `#F6F1FE` | `#FDFCFF` | `#1E195B` | `#5F5A8C` | `#CFCAD5` | `#4338CA` | `#4338CA` | `#DDD7F7` | `#7C3AED` | `#FFFFFF` |
-| ليلي | `#0F172A` | `#192134` | `#FFFFFF` | `#B7B9BF` | `#353C4C` | `#837CDC` | `#675ED4` | `#1F215A` | `#7C3AED` | `#FFFFFF` |
+| ليلي | `#1C1B41` | `#27254E` | `#FFFFFF` | `#B7B9BF` | `#353C4C` | `#837CDC` | `#675ED4` | `#1F215A` | `#7C3AED` | `#FFFFFF` |
+
+## ملاحظات المرحلة 2b
+
+- أُعيدت تسمية التوكن `gold` إلى `accent` في `palettes.ts` لأنه لون تمييز القسم وليس ذهبيًا حرفيًا؛ و`--gold` في `:root` (عنبري إسلامي للزخارف) لم يُلمس. في المعاينة يُمرَّر `--section-accent` بدل تجاوز `--gold`.
+- وضع الصلاة الليلي للوحتين B و C: أُضيف tint خفيف على `paper` و`card` فقط بالخلط `mix(a,b,t)=a*(1-t)+b*t` على قنوات RGB:
+  - B: `paper = mix(#0F172A, #6366F1, 0.10) = #171F3E`، `card = mix(#192134, #6366F1, 0.12) = #22294B`.
+  - C: `paper = mix(#0F172A, #7C3AED, 0.12) = #1C1B41`، `card = mix(#192134, #7C3AED, 0.14) = #27254E`.
+  - لم يُمَس ink/muted/border/strong/primary/soft/accent.
 
 ## كيف يرى طارق اللوحات
 
@@ -86,4 +94,4 @@
 - التبويب النشط: خلفية + لون + وزن.
 - الأدلة: `docs/evidence/BC-010/palettes/` — 12 لقطة (`{قسم}-{وضع}-{لوحة}.png`).
 
-آخر تحديث: BC-010 المرحلة 2.
+آخر تحديث: BC-010 المرحلة 2b.

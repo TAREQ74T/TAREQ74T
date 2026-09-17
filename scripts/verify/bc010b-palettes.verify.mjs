@@ -148,23 +148,53 @@ rep.check(
   JSON.stringify(navStyle),
 )
 
-// 5) اللوحات الثلاث مختلفة فعليًا (سطح مختلف لكل لوحة) في الوضعين
-const distinct = []
-for (const mode of MODES) {
-  const surfaces = []
+// 5) اللوحات الثلاث مختلفة فعليًا (3 أسطح مميزة لكل قسم × وضع) + tint ليلي لصلاة B/C
+async function surfacesOf(sectionKey, mode) {
+  const list = []
   for (const id of PALETTES) {
-    await select('adhkar', id, mode)
-    const paper = await page.evaluate(() =>
-      getComputedStyle(document.querySelector('.palette-preview')).backgroundColor,
+    await select(sectionKey, id, mode)
+    list.push(
+      await page.evaluate(() =>
+        getComputedStyle(document.querySelector('.palette-preview')).backgroundColor,
+      ),
     )
-    surfaces.push(paper)
   }
-  if (new Set(surfaces).size !== 3) distinct.push(`${mode}: ${surfaces.join(',')}`)
+  return list
+}
+
+const NEUTRAL_DARK = 'rgb(15, 23, 42)' // #0F172A — سطح الليل الأساسي قبل tint
+const surfaces = { adhkar: {}, prayer: {} }
+for (const section of SECTIONS) {
+  for (const mode of MODES) {
+    surfaces[section.key][mode] = await surfacesOf(section.key, mode)
+  }
+}
+
+const badSurfaces = []
+for (const section of SECTIONS) {
+  for (const mode of MODES) {
+    if (new Set(surfaces[section.key][mode]).size !== 3) {
+      badSurfaces.push(`${section.key}/${mode}: ${surfaces[section.key][mode].join(',')}`)
+    }
+  }
 }
 rep.check(
-  'اللوحات: سطح مختلف فعليًا لكل من A/B/C (نهاري وليلي)',
-  distinct.length === 0,
-  distinct.join(' | ') || '3 ألوان مميزة × وضعين',
+  'الأذكار: سطح مختلف فعليًا لكل من A/B/C (نهاري وليلي)',
+  new Set(surfaces.adhkar.light).size === 3 && new Set(surfaces.adhkar.dark).size === 3,
+  badSurfaces.filter((v) => v.startsWith('adhkar')).join(' | ') || '3 ألوان مميزة × وضعين',
+)
+rep.check(
+  'الصلاة: سطح مختلف فعليًا لكل من A/B/C (نهاري وليلي)',
+  new Set(surfaces.prayer.light).size === 3 && new Set(surfaces.prayer.dark).size === 3,
+  badSurfaces.filter((v) => v.startsWith('prayer')).join(' | ') || '3 ألوان مميزة × وضعين',
+)
+
+const prayerDark = surfaces.prayer.dark
+const tinted = prayerDark[1] !== NEUTRAL_DARK && prayerDark[2] !== NEUTRAL_DARK && prayerDark[1] !== prayerDark[2]
+rep.check(
+  'الصلاة ليلي: سطح B/C مُضوّى (tint) خارج الرمادي المحايد #0F172A',
+  tinted,
+  `B=${prayerDark[1]} C=${prayerDark[2]}`,
 )
 
 // 6) الوضعان مختلفان (خلفية نهاري ≠ ليلي)

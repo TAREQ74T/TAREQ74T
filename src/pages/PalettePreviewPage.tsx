@@ -23,7 +23,7 @@ function tokenStyle(tokens: PaletteTokens): CSSProperties {
     '--green-900': tokens.strong,
     '--green-700': tokens.primary,
     '--green-100': tokens.soft,
-    '--gold': tokens.gold,
+    '--section-accent': tokens.accent,
     '--surface': tokens.card,
     '--border-soft': tokens.border,
     '--muted-strong': tokens.muted,
@@ -124,7 +124,7 @@ export function PalettePreviewPage() {
         <ul className="palette-preview__legend" aria-label="ألوان اللوحة">
           {[
             ['الأساسي', tokens.primary],
-            ['الذهبي', tokens.gold],
+            ['accent القسم', tokens.accent],
             ['الورق', tokens.paper],
             ['الحبر', tokens.ink],
           ].map(([label, color]) => (

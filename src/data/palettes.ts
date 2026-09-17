@@ -11,7 +11,7 @@ export interface PaletteTokens {
   strong: string
   primary: string
   soft: string
-  gold: string
+  accent: string
   onPrimary: string
 }
 
@@ -45,7 +45,7 @@ export const PALETTES: Palette[] = [
       strong: '#92400E',
       primary: '#92400E',
       soft: '#EFDAAD',
-      gold: '#92400E',
+      accent: '#92400E',
       onPrimary: '#FFFFFF',
     },
     dark: {
@@ -57,7 +57,7 @@ export const PALETTES: Palette[] = [
       strong: '#AF744F',
       primary: '#9E5529',
       soft: '#3A1A06',
-      gold: '#92400E',
+      accent: '#92400E',
       onPrimary: '#FFFFFF',
     },
   },
@@ -78,7 +78,7 @@ export const PALETTES: Palette[] = [
       strong: '#0B7970',
       primary: '#0D9488',
       soft: '#D0EEEA',
-      gold: '#EA580C',
+      accent: '#EA580C',
       onPrimary: '#021614',
     },
     dark: {
@@ -90,7 +90,7 @@ export const PALETTES: Palette[] = [
       strong: '#0D9488',
       primary: '#0D9488',
       soft: '#053B36',
-      gold: '#EA580C',
+      accent: '#EA580C',
       onPrimary: '#021614',
     },
   },
@@ -111,7 +111,7 @@ export const PALETTES: Palette[] = [
       strong: '#7C3AED',
       primary: '#7C3AED',
       soft: '#E8DBFC',
-      gold: '#A16207',
+      accent: '#A16207',
       onPrimary: '#FFFFFF',
     },
     dark: {
@@ -123,7 +123,7 @@ export const PALETTES: Palette[] = [
       strong: '#9965F1',
       primary: '#7F3EED',
       soft: '#31175E',
-      gold: '#A16207',
+      accent: '#A16207',
       onPrimary: '#FFFFFF',
     },
   },
@@ -144,7 +144,7 @@ export const PALETTES: Palette[] = [
       strong: '#0F172A',
       primary: '#0F172A',
       soft: '#D7DADF',
-      gold: '#0369A1',
+      accent: '#0369A1',
       onPrimary: '#FFFFFF',
     },
     dark: {
@@ -156,7 +156,7 @@ export const PALETTES: Palette[] = [
       strong: '#797D88',
       primary: '#616672',
       soft: '#060911',
-      gold: '#0369A1',
+      accent: '#0369A1',
       onPrimary: '#FFFFFF',
     },
   },
@@ -177,19 +177,19 @@ export const PALETTES: Palette[] = [
       strong: '#9E5704',
       primary: '#C36B05',
       soft: '#F0E2DB',
-      gold: '#6366F1',
+      accent: '#6366F1',
       onPrimary: '#1D1001',
     },
     dark: {
-      paper: '#0F172A',
-      card: '#192134',
+      paper: '#171F3E',
+      card: '#22294B',
       ink: '#FFFFFF',
       muted: '#B7B9BF',
       border: '#353C4C',
       strong: '#D97706',
       primary: '#D97706',
       soft: '#4C341F',
-      gold: '#6366F1',
+      accent: '#6366F1',
       onPrimary: '#211201',
     },
   },
@@ -210,19 +210,19 @@ export const PALETTES: Palette[] = [
       strong: '#4338CA',
       primary: '#4338CA',
       soft: '#DDD7F7',
-      gold: '#7C3AED',
+      accent: '#7C3AED',
       onPrimary: '#FFFFFF',
     },
     dark: {
-      paper: '#0F172A',
-      card: '#192134',
+      paper: '#1C1B41',
+      card: '#27254E',
       ink: '#FFFFFF',
       muted: '#B7B9BF',
       border: '#353C4C',
       strong: '#837CDC',
       primary: '#675ED4',
       soft: '#1F215A',
-      gold: '#7C3AED',
+      accent: '#7C3AED',
       onPrimary: '#FFFFFF',
     },
   },
