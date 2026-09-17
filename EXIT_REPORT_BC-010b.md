@@ -107,6 +107,22 @@
 
 ---
 
+## أثر معروف مقبول (Deferred Technical Debt)
+
+- useQuran يحمّل quran_full.json كاملًا (~5MB) + parse + validate عند أول زيارة لأي route، بما فيها #/palette-preview.
+- مقبول لأن #/palette-preview صفحة مؤقتة تُحذف في Phase 3.
+- الدين التقني يسقط تلقائيًا عند حذف الصفحة.
+
+## تذكير تنفيذي لـPhase 3
+
+عند حذف #/palette-preview، يجب:
+- حذف src/pages/PalettePreviewPage.tsx
+- حذف src/data/palettes.ts
+- إزالة route من src/App.tsx
+- التحقق: grep -rn "palette-preview\|palettes" src/ → صفر نتائج
+
+---
+
 ## نتائج الفحوص (fresh — هذا التشغيل)
 
 | الفحص | النتيجة |

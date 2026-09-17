@@ -30,6 +30,8 @@
 - BC-011: Splash redesign
 - BC-012 (V2): صور المصحف — تنزيل عند الطلب
 - BC-013: APK V1.0
+- Phase 3: حذف #/palette-preview + palettes.ts + إسقاط دين
+  useQuran المؤجل (تذكير في EXIT_REPORT_BC-010b).
 
 ## قرارات موثقة
 - التطبيق يعمل بلا إنترنت 100% (JSON مدمج)
