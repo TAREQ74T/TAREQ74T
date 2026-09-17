@@ -170,6 +170,8 @@
 WATHEEQ_BC-010b.1: rename gold→accent + prayer B/C dark tint + verify prayer
 ```
 
+- BC-010b.2: a4b86e6 — fix palette preview theme override
+
 ---
 
 ## ⚠️ توقف إلزامي
