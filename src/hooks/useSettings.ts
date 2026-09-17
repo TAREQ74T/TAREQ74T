@@ -74,7 +74,11 @@ export interface UseSettingsResult {
   resetTimezone: () => void
 }
 
-export function useSettings(): UseSettingsResult {
+export interface UseSettingsOptions {
+  applyTheme?: boolean
+}
+
+export function useSettings({ applyTheme = true }: UseSettingsOptions = {}): UseSettingsResult {
   const [settings, setSettings] = useState<Settings>(readSettings)
 
   useEffect(() => {
@@ -90,9 +94,11 @@ export function useSettings(): UseSettingsResult {
     writeManualUtcOffsetHours(settings.manualUtcOffsetHours)
 
     const root = document.documentElement
-    root.dataset.theme = settings.theme
+    if (applyTheme) {
+      root.dataset.theme = settings.theme
+    }
     root.dataset.fontSize = settings.fontSize
-  }, [settings])
+  }, [settings, applyTheme])
 
   const setFontSize = useCallback((fontSize: FontSize) => {
     setSettings((previous) => ({ ...previous, fontSize }))

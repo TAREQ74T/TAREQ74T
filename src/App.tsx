@@ -37,7 +37,7 @@ function parseHash(): Route {
 export default function App() {
   const [route, setRoute] = useState<Route>(parseHash)
   const { settings, setFontSize, setTheme, setTimezoneMode, setManualUtcOffsetHours } =
-    useSettings()
+    useSettings({ applyTheme: route !== 'palette-preview' })
   const { surahs, isLoading, error } = useQuran()
   const notifications = useNotifications()
 

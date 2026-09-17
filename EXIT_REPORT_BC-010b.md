@@ -56,16 +56,41 @@
 
 ---
 
+## مراجعة 2b.2 — إصلاح عيب بصري حرج (كشفه الفحص البشري)
+
+**العَرَض.**
+على هاتف يحمل `localStorage` بقيمة `theme='dark'`، كانت بطاقات الصلاة في `#/palette-preview` تظهر بخلفية داكنة خضراء `#16201b` بدل سطح اللوحة، والنص غير مقروء في الوضعين.
+
+**السبب الجذري.**
+`App.tsx` يستدعي `useSettings()`، وهي تطبّق `data-theme` على `<html>` داخل effect. ترتيب تنفيذ effects في React تصاعدي من الأعمق إلى الأعلى، فتعمل effects الأبناء (ومنها `PalettePreviewPage` التي تثبّت `'light'`) **قبل** effect الأب في `App`. فعند وجود `theme='dark'` في التخزين كان effect الأب يكتب `data-theme='dark'` بعد الابن، فتقفز قواعد `:root[data-theme='dark']` (مثل `.hijri-card { background: #16201b }`) على متغيّرات اللوحة المحلية فتغلبها.
+
+**الحل (ملفان).**
+1. `src/hooks/useSettings.ts` — خيار اختياري `{ applyTheme?: boolean } = { applyTheme: true }`؛ عند `false` لا يُطبَّق `data-theme` في الـeffect، وأُضيف `applyTheme` إلى deps. بقية السلوك (حفظ التخزين، `dataset.fontSize`) دون تغيير، والافتراضي `true` يُبقي كل المستهلكين الآخرين كما هم.
+2. `src/App.tsx` — `useSettings({ applyTheme: route !== 'palette-preview' })`، فيمتنع الأب عن فرض الثيم أثناء المعاينة ويفرضه طبيعيًا خارجها.
+
+`src/pages/PalettePreviewPage.tsx` كان **مطابقًا أصلًا** للمطلوب (يحفظ قيمة `data-theme` السابقة، يضبط `'light'`، ويعيدها/يحذف السمة عند الإزالة) فلم يُعدَّل. `PrayerTimesPanel` يستدعي `useSettings()` أيضًا، لكن effect الخاص بالصفحة الأب يعمل بعده فيحسم `'light'` — والإصلاح يمنع الأب الأعلى من نقضه.
+
+**الأثر خارج المعاينة:** صفر — خيار جديد افتراضيه `true`، والمعاينة هي المسار الوحيد الذي يمرّر `false`.
+
+**دليل الإصلاح (إعادة إنتاج مباشرة).**
+- بسكربت Playwright يضبط `mushaf-al-huda:settings` إلى `theme='dark'` ثم يفتح `#/palette-preview`:
+  - الصلاة: `data-theme=light`، `.palette-preview` = `rgb(248,250,252)`، `.hijri-card` = `rgb(255,255,255)` (سطح اللوحة).
+  - الأذكار: `data-theme=light`، `.palette-preview` = `rgb(254,243,199)`، `.adhkar-card` = `rgb(255,255,255)`.
+- إثبات الفخّ: فرض `data-theme='dark'` يدويًا على `<html>` يُعيد `.hijri-card` إلى `rgb(22,32,27)` = `#16201b` — أي أن الإصلاح (إبقاء `light`) هو ما يمنعه.
+
+---
+
 ## الملفات
 
 **جديدة:**
 - `src/data/palettes.ts` — تعريف اللوحات الست (tokens نهاري/ليلي + الاسم الأصلي + الرمز + السبب).
 - `src/pages/PalettePreviewPage.tsx` — صفحة المعاينة التفاعلية.
-- `scripts/verify/bc010b-palettes.verify.mjs` — مدقّق المرحلة (6 فحوص + 12 لقطة).
+- `scripts/verify/bc010b-palettes.verify.mjs` — مدقّق المرحلة (8 فحوص + 12 لقطة).
 - `docs/PalettesBC010.md` — تقرير اللوحات.
 
 **معدَّلة:**
-- `src/App.tsx` — route `#/palette-preview` (return مبكر بلا header/splash/BottomNav مكرر).
+- `src/App.tsx` — route `#/palette-preview` (return مبكر بلا header/splash/BottomNav مكرر) + تمرير `applyTheme: route !== 'palette-preview'`.
+- `src/hooks/useSettings.ts` — خيار `applyTheme` لمنع فرض `data-theme` أثناء المعاينة.
 - `src/index.css` — أنماط المعاينة + إعادة توجيه أسطح إلى متغيّرات بـfallback + التبويب النشط بخلفية.
 
 ---
