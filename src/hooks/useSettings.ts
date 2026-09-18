@@ -1,8 +1,10 @@
 import { useCallback, useEffect, useState } from 'react'
 import {
+  readHapticsEnabled,
   readManualUtcOffsetHours,
   readTimezoneMode,
   resetTimezone as resetStoredTimezone,
+  writeHapticsEnabled,
   writeManualUtcOffsetHours,
   writeTimezoneMode,
   type TimezoneMode,
@@ -19,6 +21,7 @@ export interface Settings {
   theme: Theme
   timezoneMode: TimezoneMode
   manualUtcOffsetHours: number
+  hapticsEnabled: boolean
 }
 
 const DEFAULTS: Settings = {
@@ -26,6 +29,7 @@ const DEFAULTS: Settings = {
   theme: 'light',
   timezoneMode: 'auto',
   manualUtcOffsetHours: 0,
+  hapticsEnabled: true,
 }
 
 function isFontSize(value: unknown): value is FontSize {
@@ -61,6 +65,7 @@ function readSettings(): Settings {
     ...readBaseSettings(),
     timezoneMode: readTimezoneMode(),
     manualUtcOffsetHours: readManualUtcOffsetHours(),
+    hapticsEnabled: readHapticsEnabled(),
   }
 }
 
@@ -71,6 +76,7 @@ export interface UseSettingsResult {
   toggleTheme: () => void
   setTimezoneMode: (mode: TimezoneMode) => void
   setManualUtcOffsetHours: (hours: number) => void
+  setHapticsEnabled: (enabled: boolean) => void
   resetTimezone: () => void
 }
 
@@ -92,6 +98,7 @@ export function useSettings({ applyTheme = true }: UseSettingsOptions = {}): Use
     }
     writeTimezoneMode(settings.timezoneMode)
     writeManualUtcOffsetHours(settings.manualUtcOffsetHours)
+    writeHapticsEnabled(settings.hapticsEnabled)
 
     const root = document.documentElement
     if (applyTheme) {
@@ -123,6 +130,10 @@ export function useSettings({ applyTheme = true }: UseSettingsOptions = {}): Use
     setSettings((previous) => ({ ...previous, manualUtcOffsetHours }))
   }, [])
 
+  const setHapticsEnabled = useCallback((hapticsEnabled: boolean) => {
+    setSettings((previous) => ({ ...previous, hapticsEnabled }))
+  }, [])
+
   const resetTimezone = useCallback(() => {
     setSettings((previous) => ({ ...previous, ...resetStoredTimezone() }))
   }, [])
@@ -134,6 +145,7 @@ export function useSettings({ applyTheme = true }: UseSettingsOptions = {}): Use
     toggleTheme,
     setTimezoneMode,
     setManualUtcOffsetHours,
+    setHapticsEnabled,
     resetTimezone,
   }
 }

@@ -30,6 +30,7 @@ interface SettingsPageProps {
   onThemeChange: (theme: Theme) => void
   onTimezoneModeChange: (mode: TimezoneMode) => void
   onManualUtcOffsetChange: (hours: number) => void
+  onHapticsChange: (enabled: boolean) => void
   quranData: QuranData | null
   onNavigate: (surahNumber: number, ayahNumber: number | null) => void
   onOpenAbout: () => void
@@ -43,6 +44,7 @@ export function SettingsPage({
   onThemeChange,
   onTimezoneModeChange,
   onManualUtcOffsetChange,
+  onHapticsChange,
   quranData,
   onNavigate,
   onOpenAbout,
@@ -171,6 +173,28 @@ export function SettingsPage({
 
       <FontSizeControl fontSize={settings.fontSize} onChange={onFontSizeChange} />
       <ThemeToggle theme={settings.theme} onChange={onThemeChange} />
+
+      <section className="setting-group" data-testid="haptics-group">
+        <h3 className="setting-group__title">القبلة</h3>
+        <div className="notif-row">
+          <span className="notif-row__label">
+            اهتزاز عند الوصول
+            <small>اهتزاز خفيف عند محاذاة اتجاه القبلة</small>
+          </span>
+          <button
+            type="button"
+            role="switch"
+            aria-checked={settings.hapticsEnabled}
+            aria-label="تفعيل اهتزاز القبلة"
+            data-testid="haptics-toggle"
+            className={`switch${settings.hapticsEnabled ? ' is-on' : ''}`}
+            onClick={() => onHapticsChange(!settings.hapticsEnabled)}
+          >
+            <span className="switch__thumb" />
+          </button>
+        </div>
+      </section>
+
       <NotificationsSettings notifications={notifications} />
 
       <section className="setting-group">

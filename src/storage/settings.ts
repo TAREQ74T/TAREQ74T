@@ -2,6 +2,7 @@ export type TimezoneMode = 'auto' | 'manual'
 
 export const TIMEZONE_MODE_KEY = 'mushaf-al-huda:timezoneMode'
 export const MANUAL_UTC_OFFSET_KEY = 'mushaf-al-huda:manualUtcOffset'
+export const HAPTICS_KEY = 'mushaf-al-huda:haptics'
 
 export const UTC_OFFSET_MIN = -12
 export const UTC_OFFSET_MAX = 14
@@ -69,4 +70,24 @@ export function resetTimezone(): { mode: TimezoneMode; hours: number } {
   writeTimezoneMode('auto')
   writeManualUtcOffsetHours(0)
   return { mode: 'auto', hours: 0 }
+}
+
+export function readHapticsEnabled(): boolean {
+  try {
+    const raw = localStorage.getItem(HAPTICS_KEY)
+    if (raw === null) {
+      return true
+    }
+    return JSON.parse(raw) === true
+  } catch {
+    return true
+  }
+}
+
+export function writeHapticsEnabled(enabled: boolean): void {
+  try {
+    localStorage.setItem(HAPTICS_KEY, JSON.stringify(enabled === true))
+  } catch {
+    // تجاهل أخطاء التخزين المحلي
+  }
 }

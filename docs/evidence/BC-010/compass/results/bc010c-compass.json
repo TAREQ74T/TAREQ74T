@@ -1,0 +1,45 @@
+{
+  "script": "bc010c-compass",
+  "preview": "http://localhost:5199",
+  "timestamp": "2026-09-18T16:08:21.484Z",
+  "result": "PASS",
+  "passed": 7,
+  "failed": 0,
+  "checks": [
+    {
+      "name": "البنية: قبلة بطلة برمز كعبة + شمال مرجعي + وردة + مؤشر انحراف",
+      "pass": true,
+      "info": "{\"compass\":true,\"kaaba\":true,\"north\":true,\"rose\":true,\"align\":true,\"deviation\":true}"
+    },
+    {
+      "name": "المؤشر: انحراف 40° → «ليس الاتجاه» (رمادي is-far)",
+      "pass": true,
+      "info": "qibla-compass__align is-far | ٤٠° يمينًا"
+    },
+    {
+      "name": "المؤشر: انحراف 10° → «اقترب» (أصفر is-near) + «10° يمينًا»",
+      "pass": true,
+      "info": "qibla-compass__align is-near | ١٠° يمينًا"
+    },
+    {
+      "name": "المؤشر: انحراف 0° → «الاتجاه صحيح ✓» (أخضر is-aligned)",
+      "pass": true,
+      "info": "qibla-compass__align is-aligned | على الاتجاه"
+    },
+    {
+      "name": "الاهتزاز: نبضة واحدة عند الوصول إلى الاتجاه",
+      "pass": true,
+      "info": "[30]"
+    },
+    {
+      "name": "الإعدادات: مفتاح الاهتزاز يبدأ مفعّلًا ثم يُطفأ ويُحفظ",
+      "pass": true,
+      "info": "قبل=true بعد=false مخزّن=false"
+    },
+    {
+      "name": "الاهتزاز المعطَّل: الوصول لا يُطلق أي نبضة",
+      "pass": true,
+      "info": "[]"
+    }
+  ]
+}

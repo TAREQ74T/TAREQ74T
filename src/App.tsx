@@ -36,8 +36,14 @@ function parseHash(): Route {
 
 export default function App() {
   const [route, setRoute] = useState<Route>(parseHash)
-  const { settings, setFontSize, setTheme, setTimezoneMode, setManualUtcOffsetHours } =
-    useSettings({ applyTheme: route !== 'palette-preview' })
+  const {
+    settings,
+    setFontSize,
+    setTheme,
+    setTimezoneMode,
+    setManualUtcOffsetHours,
+    setHapticsEnabled,
+  } = useSettings({ applyTheme: route !== 'palette-preview' })
   const { surahs, isLoading, error } = useQuran()
   const notifications = useNotifications()
 
@@ -87,6 +93,7 @@ export default function App() {
           onThemeChange={setTheme}
           onTimezoneModeChange={setTimezoneMode}
           onManualUtcOffsetChange={setManualUtcOffsetHours}
+          onHapticsChange={setHapticsEnabled}
           quranData={!isLoading && !error ? { surahs } : null}
           onNavigate={navigateToAyah}
           onOpenAbout={openAbout}
@@ -96,7 +103,7 @@ export default function App() {
       ) : route === 'about' ? (
         <AboutPage onBack={openSettings} />
       ) : route === 'prayer' ? (
-        <PrayerPage />
+        <PrayerPage hapticsEnabled={settings.hapticsEnabled} />
       ) : route === 'adhkar' ? (
         <AdhkarPage onBack={openQuran} />
       ) : (
