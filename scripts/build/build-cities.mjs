@@ -201,7 +201,10 @@ async function main() {
         'country_ar: Natural Earth NAME_AR عبر ISO_A2/ISO_A2_EH (استُخدم ISO_A2_EH لـTW). ' +
         'الأقاليم غير الممثلة في NE (BQ, CC, CX, GF, GP, MQ, RE, SJ, YT) أُخذت من ' +
         'GeoNames alternateNamesV2 (isolanguage=ar، مستوى الدولة). ' +
-        'ar=null يعني عدم توفر اسم عربي معتمد ضمن المصدر؛ الاسم اللاتيني في n. id = geonameid.',
+        'ar=null يعني عدم توفر اسم عربي معتمد ضمن المصدر؛ الاسم اللاتيني في n. id = geonameid. ' +
+        'مفاتيح منطقة _meta الفعلية = 12 (قمة المستوى = 9، + مفتاح _meta نفسه + 2 متداخلة في arabic_coverage). ' +
+        'فارق raw↔chunk = 65,565 بايت: 65,504 نزع تنصيص المفاتيح + 89 تقصير أرقام − 28 غلاف الوحدة = 61 صافي متبقٍّ ' +
+        '(ليس تحويل " → `؛ ذلك محايد حجميًا).',
     },
     cities,
   }
