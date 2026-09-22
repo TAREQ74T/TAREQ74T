@@ -1,0 +1,50 @@
+{
+  "script": "bc010c-cities",
+  "preview": "http://localhost:5199",
+  "timestamp": "2026-09-22T10:12:21.412Z",
+  "result": "PASS",
+  "passed": 8,
+  "failed": 0,
+  "checks": [
+    {
+      "name": "البيانات الوصفية: المصدر والترخيص والإسناد وsha256 وcount",
+      "pass": true,
+      "info": "{\"source\":\"GeoNames cities1000\",\"license\":\"CC BY 4.0\",\"count\":4677}"
+    },
+    {
+      "name": "عدد السجلات ≥ 4,500",
+      "pass": true,
+      "info": "count=4677"
+    },
+    {
+      "name": "كل سجل يحوي n/ar/lat/lon/cc/country_ar صالحة",
+      "pass": true,
+      "info": "غير مكتمل=0"
+    },
+    {
+      "name": "تغطية الأسماء العربية ≥ 67%",
+      "pass": true,
+      "info": "3172/4677 = 67.8%"
+    },
+    {
+      "name": "البحث يجد «اللاذقية»",
+      "pass": true,
+      "info": "لاذقيةLatakiaسوريا"
+    },
+    {
+      "name": "منسدلة الدولة تعرض 22 دولة عربية",
+      "pass": true,
+      "info": "عدد الخيارات العربية=22"
+    },
+    {
+      "name": "اختيار مدينة يضبط lat/lon في localStorage",
+      "pass": true,
+      "info": "{\"latitude\":35.5313,\"longitude\":35.7909}"
+    },
+    {
+      "name": "صفر أخطاء console",
+      "pass": true,
+      "info": "clean"
+    }
+  ]
+}

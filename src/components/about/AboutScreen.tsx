@@ -78,6 +78,12 @@ export function AboutScreen({ onBack, backLabel = '← العودة إلى ال�
           <p className="about-version" data-testid="about-version">
             رقم الإصدار: {APP_VERSION}
           </p>
+          <p className="about-credit about-credit--cities" data-testid="about-cities-attribution">
+            بيانات المدن: GeoNames (CC BY 4.0) —{' '}
+            <a href="https://www.geonames.org/" target="_blank" rel="noreferrer">
+              geonames.org
+            </a>
+          </p>
         </section>
       )}
     </div>

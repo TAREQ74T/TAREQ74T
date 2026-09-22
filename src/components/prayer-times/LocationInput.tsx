@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import type { UseLocationResult } from '../../hooks/useLocation'
 import { formatPrayerTime, localTimeShiftMinutes } from '../../utils/prayer-times'
+import { CityPicker } from '../cities/CityPicker'
 
 interface LocationInputProps {
   location: UseLocationResult
@@ -45,6 +46,12 @@ export function LocationInput({ location, utcOffsetMinutes }: LocationInputProps
           {location.error} — أدخل الإحداثيات يدوياً أو تابع بمكة المكرمة.
         </p>
       )}
+
+      <CityPicker
+        onSelect={(city) => {
+          location.setManual(city.lat, city.lon)
+        }}
+      />
 
       {!editing ? (
         <div className="location-actions">
