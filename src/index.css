@@ -2228,6 +2228,40 @@ body {
   gap: 1.25rem;
 }
 
+/* ===== Section palettes (BC-010c.3) — light tokens only; not :root ===== */
+:root:not([data-theme='dark']) .adhkar-page,
+:root:not([data-theme='dark']) .adhkar-screen {
+  --paper: #FEF3C7;
+  --card: #FFFFFF;
+  --ink: #78350F;
+  --muted: #A06E46;
+  --border-soft: #FDE68A;
+  --green-900: #92400E;
+  --green-700: #92400E;
+  --green-100: #EFDAAD;
+  --section-accent: #92400E;
+  --surface: var(--card);
+  --muted-strong: var(--muted);
+  background: var(--paper);
+  color: var(--ink);
+}
+
+:root:not([data-theme='dark']) .prayer-page {
+  --paper: #F4F4FE;
+  --card: #FDFDFF;
+  --ink: #623603;
+  --muted: #8E6F4E;
+  --border-soft: #CDCDD5;
+  --green-900: #9E5704;
+  --green-700: #C36B05;
+  --green-100: #F0E2DB;
+  --section-accent: #6366F1;
+  --surface: var(--card);
+  --muted-strong: var(--muted);
+  background: var(--paper);
+  color: var(--ink);
+}
+
 .settings-about-btn {
   align-self: center;
 }
@@ -2292,6 +2326,16 @@ body {
 
 .bottom-nav__label {
   line-height: 1;
+}
+
+:root:not([data-theme='dark']) .bottom-nav[data-active-section="adhkar"] {
+  --green-700: #92400E;
+  --green-100: #EFDAAD;
+}
+
+:root:not([data-theme='dark']) .bottom-nav[data-active-section="prayer"] {
+  --green-700: #C36B05;
+  --green-100: #F0E2DB;
 }
 
 

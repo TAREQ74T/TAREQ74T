@@ -95,7 +95,12 @@ const TABS: NavTab[] = [
 
 export function BottomNav({ active }: BottomNavProps) {
   return (
-    <nav className="bottom-nav" data-testid="bottom-nav" aria-label="التنقل الرئيسي">
+    <nav
+      className="bottom-nav"
+      data-testid="bottom-nav"
+      data-active-section={active}
+      aria-label="التنقل الرئيسي"
+    >
       {TABS.map((tab) => (
         <a
           key={tab.id}
