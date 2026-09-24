@@ -53,6 +53,11 @@ await page.addInitScript(
     if (!('DeviceOrientationEvent' in window)) {
       window.DeviceOrientationEvent = function DeviceOrientationEvent() {}
     }
+    if (typeof DeviceOrientationEvent !== 'undefined') {
+      try {
+        DeviceOrientationEvent.requestPermission = async () => 'granted'
+      } catch {}
+    }
     localStorage.setItem('mushaf-al-huda:location', JSON.stringify({ latitude: lat, longitude: lng }))
     localStorage.setItem('mushaf-al-huda:haptics', 'true')
   },
