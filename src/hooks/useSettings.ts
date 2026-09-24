@@ -80,11 +80,7 @@ export interface UseSettingsResult {
   resetTimezone: () => void
 }
 
-export interface UseSettingsOptions {
-  applyTheme?: boolean
-}
-
-export function useSettings({ applyTheme = true }: UseSettingsOptions = {}): UseSettingsResult {
+export function useSettings(): UseSettingsResult {
   const [settings, setSettings] = useState<Settings>(readSettings)
 
   useEffect(() => {
@@ -101,11 +97,9 @@ export function useSettings({ applyTheme = true }: UseSettingsOptions = {}): Use
     writeHapticsEnabled(settings.hapticsEnabled)
 
     const root = document.documentElement
-    if (applyTheme) {
-      root.dataset.theme = settings.theme
-    }
+    root.dataset.theme = settings.theme
     root.dataset.fontSize = settings.fontSize
-  }, [settings, applyTheme])
+  }, [settings])
 
   const setFontSize = useCallback((fontSize: FontSize) => {
     setSettings((previous) => ({ ...previous, fontSize }))

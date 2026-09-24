@@ -1,7 +1,7 @@
 # 📚 مصحف الهدى — MASTER_INDEX
 
 **Document ID:** WATHEEQ-000
-**Version:** 2.1 — Patch 12: إقفال BC-010 (Phase 0/1/2) + قرارات gold/accent + ملحق Phase 3
+**Version:** 2.2 — Patch 13: إقفال BC-010 Phase 0/1/2/3
 **Status:** 🔒 Locked
 **Governed by:** 000_AI_ENGINEERING_CONSTITUTION_v1.0.md
 **Authority:** Human Architect (طارق)
@@ -72,8 +72,9 @@
 | **BC-010 Phase 0** | MASTER_INDEX + skipSplash | ✅ (fd3d5f7) |
 | **BC-010 Phase 1** | Bottom Nav + About + نقل صلاة/قبلة | ✅ (bc02b18) |
 | **BC-010 Phase 2** | 3+3 palettes + معاينة تفاعلية | ✅ (680318b) |
-| **BC-010 Phase 2b** | rename gold→accent + tint B/C + توسيع فحص | 🟡 قيد التنفيذ |
-| **BC-010 Phase 3** | بوصلة + مدن + تطبيق اللوحة | ⬜ بعد قرار طارق |
+| **BC-010 Phase 2b** | rename gold→accent + tint B/C + توسيع فحص | ✅ (a0f3990 / a4b86e6) |
+| **BC-010 Phase 3** | بوصلة + مدن + تطبيق اللوحة | ✅ (e6b3d16 / e64fa15) |
+| **BC-010** | UI overhaul + palettes + compass + cities | ✅ مكتمل (d048337) |
 | **BC-011** | Splash redesign | ⬜ |
 | **BC-012** | صور المصحف (V2) | 🔵 مؤجل |
 | **BC-013** | APK V1.0 + @capacitor/motion | ⬜ |
@@ -87,6 +88,7 @@
 | **01-10** | 22/8→11/9 | BC-001..BC-008 |
 | **11** | 12/9 | إقفال BC-009 (08b7cf9) |
 | **12** | 17/9 | إقفال BC-010 Phase 0/1/2 — قرارات gold/accent + scoping Phase 3 + qibla needle |
+| **13** | 24/9/2026 | إقفال BC-010 Phase 0/1/2/3 — مرجع قرار: تصعيد c.3 → commit e6b3d16 → تصويت Claude على html[data-theme='dark'] كبديل مقبول + موافقة طارق عبر التفويض الصريح. القاعدة المُدقَّقة: "لا تجاوز :root مباشرة في تطبيق لوحة قسم؛ يُسمح بـhtml[data-theme='dark'] كبادئة selector" |
 
 ---
 

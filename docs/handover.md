@@ -1,15 +1,11 @@
 # مصحف الهدى — Handover
 
-**آخر تحديث:** 2026-09-13
+**آخر تحديث:** 2026-09-24
 
-## الحالة (17/9/2026):
-✅ BC-001..BC-009 مقفلة
-✅ BC-010 Phase 0 (fd3d5f7)
-✅ BC-010 Phase 1 (bc02b18)
-✅ BC-010 Phase 2 (680318b)
-✅ BC-010 Phase 2b (a0f3990 + MASTER_INDEX 37d3bc9)
-🛑 توقف إلزامي — بانتظار قرار طارق البصري على اللوحات الست
-⬜ Phase 3 → BC-011 → BC-012 → BC-013
+## الحالة (24/9/2026):
+✅ BC-001..BC-010 مقفلة
+🛑 BC-010 مغلق رسميًا
+⬜ BC-011 (Splash) → BC-012 (صور) → BC-013 (APK)
 
 ## العقود المقفلة
 | العقد | التاريخ | commit | الوصف |
@@ -24,14 +20,12 @@
 | BC-008 | 11/9 | 03e326d | أذكار الصباح والمساء |
 | BC-009 | 12/9 | 08b7cf9 | إصلاح قائمة السور + محاذاة الآيات |
 | BC-010 Phase 2b.2 | 18/9 | a4b86e6 | fix palette preview theme override |
+| BC-010 | 24/9/2026 | d048337 | إغلاق كامل: UI overhaul + palettes + compass + cities |
 
 ## العقود القادمة
-- BC-010: Bottom Nav + هويات لونية + بوصلة + مدن — قيد التنفيذ
 - BC-011: Splash redesign
 - BC-012 (V2): صور المصحف — تنزيل عند الطلب
 - BC-013: APK V1.0
-- Phase 3: حذف #/palette-preview + palettes.ts + إسقاط دين
-  useQuran المؤجل (تذكير في EXIT_REPORT_BC-010b).
 
 ## قرارات موثقة
 - التطبيق يعمل بلا إنترنت 100% (JSON مدمج)
@@ -40,6 +34,8 @@
 - Skills: مهارة واحدة في الخطة المجانية
 - MASTER_INDEX يُحدّثه طارق فقط
 - handover يُحدّثه المنفذ بمحتوى يوفّره طارق
+- أذكار: لوحة A (Bakery/Cafe #63) | صلاة: لوحة B (Alarm & World Clock #117)
+- `html[data-theme='dark']` بادئة selector مسموحة لتطبيق لوحة قسم
 
 ## حالة V1 (قبل APK)
-المتبقي: BC-010 (UI Overhaul) + BC-011 (Splash) → ثم APK.
+المتبقي: BC-011 (Splash) → ثم APK (BC-013).

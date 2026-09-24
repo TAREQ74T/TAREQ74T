@@ -5,20 +5,16 @@ import { PrayerPage } from './pages/PrayerPage'
 import { SettingsPage } from './pages/SettingsPage'
 import { AdhkarPage } from './pages/AdhkarPage'
 import { AboutPage } from './pages/AboutPage'
-import { PalettePreviewPage } from './pages/PalettePreviewPage'
 import { BottomNav } from './components/nav/BottomNav'
 import type { NavRoute } from './components/nav/BottomNav'
 import { SplashScreen } from './components/splash/SplashScreen'
 import { useQuran } from './hooks/useQuran'
 import { useNotifications } from './hooks/useNotifications'
 
-type Route = NavRoute | 'about' | 'palette-preview'
+type Route = NavRoute | 'about'
 
 function parseHash(): Route {
   const hash = window.location.hash
-  if (hash === '#/palette-preview') {
-    return 'palette-preview'
-  }
   if (hash === '#/prayer') {
     return 'prayer'
   }
@@ -43,7 +39,7 @@ export default function App() {
     setTimezoneMode,
     setManualUtcOffsetHours,
     setHapticsEnabled,
-  } = useSettings({ applyTheme: route !== 'palette-preview' })
+  } = useSettings()
   const { surahs, isLoading, error } = useQuran()
   const notifications = useNotifications()
 
@@ -72,10 +68,6 @@ export default function App() {
   const navigateToAyah = useCallback((surahNumber: number, ayahNumber: number | null) => {
     window.location.hash = `#/surah/${surahNumber}${ayahNumber != null ? `/${ayahNumber}` : ''}`
   }, [])
-
-  if (route === 'palette-preview') {
-    return <PalettePreviewPage />
-  }
 
   const navActive: NavRoute = route === 'about' ? 'settings' : route
 
