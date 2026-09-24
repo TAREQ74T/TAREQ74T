@@ -113,6 +113,17 @@ WATHEEQ_BC-010c.2: 3-tier cities (Tier1 GeoNames + CityPicker)
 
 ---
 
+## مخاطر معروفة
+
+فحص `bc010c-compass` يعتمد على mock صريح لـ
+`DeviceOrientationEvent.requestPermission` في بيئة الاختبار
+(headless). لم يُتحقق ميدانيًا من سلوك التطبيق الفعلي إن
+أرجع متصفح حقيقي قيمة `'prompt'` بدل `'granted'`/`'denied'`
+الثنائية التقليدية. التطبيق قد يحتاج مراجعة لاحقة لمسار
+`useQibla` عند توفر بيانات ميدانية من أجهزة حقيقية.
+
+---
+
 ## ⚠️ توقف
 
 c.2 مكتملة. **لا c.3 ولا c.4 قبل إشارة طارق.**

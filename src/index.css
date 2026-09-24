@@ -2381,6 +2381,16 @@ html[data-theme='dark'] .bottom-nav[data-active-section="prayer"] {
   --green-100: #4C341F;
 }
 
+html[data-theme='dark'] .bottom-nav[data-active-section="adhkar"] .bottom-nav__tab.is-active {
+  color: #9E5529;
+  background: #3A1A06;
+}
+
+html[data-theme='dark'] .bottom-nav[data-active-section="prayer"] .bottom-nav__tab.is-active {
+  color: #D97706;
+  background: #4C341F;
+}
+
 
 /* ===== Palette preview (BC-010 Phase 2, temporary) ===== */
 .palette-preview {
