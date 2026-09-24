@@ -2228,9 +2228,9 @@ body {
   gap: 1.25rem;
 }
 
-/* ===== Section palettes (BC-010c.3) — light tokens only; not :root ===== */
-:root:not([data-theme='dark']) .adhkar-page,
-:root:not([data-theme='dark']) .adhkar-screen {
+/* ===== Section palettes (BC-010c.3b) — A adhkar / B prayer; not :root ===== */
+.adhkar-page,
+.adhkar-screen {
   --paper: #FEF3C7;
   --card: #FFFFFF;
   --ink: #78350F;
@@ -2246,7 +2246,7 @@ body {
   color: var(--ink);
 }
 
-:root:not([data-theme='dark']) .prayer-page {
+.prayer-page {
   --paper: #F4F4FE;
   --card: #FDFDFF;
   --ink: #623603;
@@ -2255,6 +2255,39 @@ body {
   --green-900: #9E5704;
   --green-700: #C36B05;
   --green-100: #F0E2DB;
+  --section-accent: #6366F1;
+  --surface: var(--card);
+  --muted-strong: var(--muted);
+  background: var(--paper);
+  color: var(--ink);
+}
+
+html[data-theme='dark'] .adhkar-page,
+html[data-theme='dark'] .adhkar-screen {
+  --paper: #140902;
+  --card: #200E03;
+  --ink: #E4D7CF;
+  --muted: #A69991;
+  --border-soft: #3A302A;
+  --green-900: #AF744F;
+  --green-700: #9E5529;
+  --green-100: #3A1A06;
+  --section-accent: #92400E;
+  --surface: var(--card);
+  --muted-strong: var(--muted);
+  background: var(--paper);
+  color: var(--ink);
+}
+
+html[data-theme='dark'] .prayer-page {
+  --paper: #171F3E;
+  --card: #22294B;
+  --ink: #FFFFFF;
+  --muted: #B7B9BF;
+  --border-soft: #353C4C;
+  --green-900: #D97706;
+  --green-700: #D97706;
+  --green-100: #4C341F;
   --section-accent: #6366F1;
   --surface: var(--card);
   --muted-strong: var(--muted);
@@ -2328,14 +2361,24 @@ body {
   line-height: 1;
 }
 
-:root:not([data-theme='dark']) .bottom-nav[data-active-section="adhkar"] {
+.bottom-nav[data-active-section="adhkar"] {
   --green-700: #92400E;
   --green-100: #EFDAAD;
 }
 
-:root:not([data-theme='dark']) .bottom-nav[data-active-section="prayer"] {
+.bottom-nav[data-active-section="prayer"] {
   --green-700: #C36B05;
   --green-100: #F0E2DB;
+}
+
+html[data-theme='dark'] .bottom-nav[data-active-section="adhkar"] {
+  --green-700: #9E5529;
+  --green-100: #3A1A06;
+}
+
+html[data-theme='dark'] .bottom-nav[data-active-section="prayer"] {
+  --green-700: #D97706;
+  --green-100: #4C341F;
 }
 
 
