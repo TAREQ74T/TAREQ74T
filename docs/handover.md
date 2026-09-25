@@ -20,7 +20,7 @@
 | BC-008 | 11/9 | 03e326d | أذكار الصباح والمساء |
 | BC-009 | 12/9 | 08b7cf9 | إصلاح قائمة السور + محاذاة الآيات |
 | BC-010 Phase 2b.2 | 18/9 | a4b86e6 | fix palette preview theme override |
-| BC-010 | 24/9/2026 | d048337 | إغلاق كامل: UI overhaul + palettes + compass + cities |
+| BC-010 | 24/9/2026 | 928c95a | إغلاق كامل: UI overhaul + palettes + compass + cities |
 
 ## العقود القادمة
 - BC-011: Splash redesign

@@ -19,7 +19,7 @@
 | c.3 | 15a8b73 | fix compass verifier env |
 | c.3 | e6b3d16 | apply A/B via `html[data-theme]` |
 | c.3 | e64fa15 | dark-mode active tab per section |
-| c.4 | d048337 | remove preview + finalize |
+| c.4 | 928c95a | remove preview + finalize |
 
 ---
 

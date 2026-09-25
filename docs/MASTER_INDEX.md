@@ -74,7 +74,7 @@
 | **BC-010 Phase 2** | 3+3 palettes + معاينة تفاعلية | ✅ (680318b) |
 | **BC-010 Phase 2b** | rename gold→accent + tint B/C + توسيع فحص | ✅ (a0f3990 / a4b86e6) |
 | **BC-010 Phase 3** | بوصلة + مدن + تطبيق اللوحة | ✅ (e6b3d16 / e64fa15) |
-| **BC-010** | UI overhaul + palettes + compass + cities | ✅ مكتمل (d048337) |
+| **BC-010** | UI overhaul + palettes + compass + cities | ✅ مكتمل (928c95a) |
 | **BC-011** | Splash redesign | ⬜ |
 | **BC-012** | صور المصحف (V2) | 🔵 مؤجل |
 | **BC-013** | APK V1.0 + @capacitor/motion | ⬜ |
