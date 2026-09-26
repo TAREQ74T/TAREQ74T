@@ -38,6 +38,8 @@ const splash = await page.evaluate(() => {
     tagline: tagline?.textContent?.trim() || '',
     iconSrc: icon?.getAttribute('src') || '',
     hasGifImg: !!el.querySelector('img[src$=".gif"], img[src*=".gif?"]'),
+    hasBadgeSvg: !!document.querySelector('.splash-screen__badge svg'),
+    hasExternalImg: !!el.querySelector('img[src^="http://"], img[src^="https://"]'),
     backgroundImage: cs.backgroundImage,
     badgePresent: !!badge,
     badgePointerEvents: badge ? getComputedStyle(badge).pointerEvents : '',
@@ -51,7 +53,11 @@ rep.check(
     splash.versionText.includes(APP_VERSION),
   `${splash?.nameText} | ${splash?.versionText}`,
 )
-rep.check('splash: بدون GIF نهائيًا', splash != null && !splash.hasGifImg && !/\.gif/i.test(splash.iconSrc), splash?.iconSrc)
+rep.check(
+  'splash: بدون GIF نهائيًا',
+  splash != null && splash.hasBadgeSvg && !splash.hasGifImg && !splash.hasExternalImg,
+  '<svg> موجود + لا img.gif + لا img خارجي',
+)
 rep.check(
   'splash: خلفية متدرجة (linear + radial) مع لون ثابت احتياطي',
   splash != null &&
