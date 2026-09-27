@@ -264,11 +264,12 @@ async function main() {
   const expectedNormalizeUsers = [
     'src/utils/normalizeArabic.ts',
     'src/components/quran/SearchBar.tsx',
+    'src/components/cities/CityPicker.tsx',
   ]
   const unexpectedNormalize = normalizeUsers.filter((f) => !expectedNormalizeUsers.includes(f))
   rep.check(
     'الفصل: normalizeArabic تُستخدم في طبقة البحث فقط (وليس في عرض النص)',
-    unexpectedNormalize.length === 0 && normalizeUsers.length === 2,
+    unexpectedNormalize.length === 0 && normalizeUsers.length === 3,
     normalizeUsers.join(' , ') || '—',
   )
   // القائمة البيضاء الموثّقة لمستخدمي fixTanweenDisplay (طبقة العرض فقط؛
