@@ -1,0 +1,17 @@
+PASS | splash: يعرض الاسم والوسم ورقم الإصدار | مصحف الهدى | الإصدار 1.1.0
+FAIL | splash: بدون GIF نهائيًا | <svg> موجود + لا img.gif + لا img خارجي
+PASS | splash: خلفية متدرجة (linear + radial) مع لون ثابت احتياطي | radial-gradient(760px 420px at 84% -10%, rgba(201, 162, 39, 0.2), rgba(0, 0, 0, 
+PASS | splash: زخرفة CSS حول الأيقونة وpointer-events:none | badge=true pe=none
+PASS | splash: يُتخطى بالنقر ويختفي
+PASS | قائمة: 114 سورة في القائمة | rows=114
+PASS | قائمة: كل سورة سطر واحد فقط {1:114} | {"1":114}
+PASS | قائمة: لا عنصر name-en ولا عمود التكديس في القائمة | name-en=0 surah-names=0
+PASS | قائمة: حماية ellipsis مفعّلة (nowrap + hidden) | ws=nowrap of=hidden to=ellipsis
+PASS | التنقل: شريط سفلي ثابت بأربع تبويبات وأيقونات SVG | pos=fixed bottom=0px tabs=4 svg=4 labels=القرآن,الصلاة,الأذكار,الإعدادات
+PASS | بحث: name_en يظهر في نتائج البحث بالحروف اللاتينية | Al-Faatiha
+PASS | About: الآيتان حاضِرتان دون تغيير (غير فارغتين) | l1=33 l2=46
+PASS | About: فاصل زخرفي بحبيبة وسطية وتدرج متعدد الألوان | gem=true bg=linear-gradient(90deg, rgb(28, 106, 79) 0%, rgba(201, 162, 3
+PASS | About: سطر الإنشاء ورقم الإصدار كما هما | رقم الإصدار: 1.1.0
+PASS | ضيقة 390px: كل سورة تبقى سطرًا واحدًا {1:114} | {"1":114}
+
+RESULT: 14 passed, 1 failed

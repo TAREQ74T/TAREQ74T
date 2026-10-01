@@ -72,20 +72,20 @@ export function AboutScreen({ onBack, backLabel = '← العودة إلى ال�
             {fixTanweenDisplay(snippets[1].text)}
           </p>
 
-          <p className="about-credit" data-testid="about-attribution">
-            تم إنشاء التطبيق بفضل الله بواسطة طارق
+          <p className="about-credit about-credit--creator" data-testid="about-attribution">
+            تم إنشاء التطبيق بفضل الله بواسطة طارق طيبة
           </p>
           <p className="about-version" data-testid="about-version">
             رقم الإصدار: {APP_VERSION}
           </p>
-          <p className="about-credit about-credit--cities" data-testid="about-cities-attribution">
-            بيانات المدن: GeoNames (CC BY 4.0) —{' '}
-            <a href="https://www.geonames.org/" target="_blank" rel="noreferrer">
-              geonames.org
-            </a>
-          </p>
         </section>
       )}
+      <p className="about-credit about-credit--cities about-credit--cities-small" data-testid="about-cities-attribution">
+        بيانات المدن: GeoNames (CC BY 4.0) —{' '}
+        <a href="https://www.geonames.org/" target="_blank" rel="noreferrer">
+          geonames.org
+        </a>
+      </p>
     </div>
   )
 }

@@ -1,0 +1,21 @@
+PASS | البصمة: quran_full.json = بصمة الإصدار 1.0 | f7cacc22267e50e4cc62dd510e0a399744e0cebea560722ab3193368ac3c3557
+PASS | البصمة: tafseer_full.json = بصمة الإصدار 1.0 | f413bdcab2845ff264f0c851e73bdd1ea49cb5076aabada831cdc535f0207086
+PASS | البنية: 114 سورة
+PASS | البنية: ترقيم السور 1..114 متسلسل
+PASS | البنية: حقول السورة متوقعة
+PASS | البنية: مجموع الآيات = 6236 | 6236
+PASS | البنية: ترقيم الآيات متسلسل داخل كل سورة
+PASS | البنية: لا آية فارغة
+PASS | النص المخزّن: لا يحتوي U+06DD (نهاية آية) إطلاقاً — الحل عرض فقط | 0 آية
+PASS | النص المخزّن: U+08Fx حاضرة كما في المصدر (لا تطبيع في التخزين) | 3518 آية
+FAIL | المصدر: نسخة الملفات مطابقة للمرجع المسجّل | 13a4668ca04e… / 44bd3c056492…
+PASS | المقارنة: لا اختلاف نصي خارج القائمة البيضاء {97:1} | 0 اختلاف
+PASS | الرقعة المتعمّدة: 97:1 تبدأ بـ«إنا أنزلناه» بلا بسملة مدمجة | إِنَّآ أَنزَلۡنَٰهُ فِي لَيۡلَةِ ٱلۡق
+PASS | الحرف U+06DE (۞ بداية ربع الحزب): موجود في المصدر الأصلي حرفياً (أصيل — Advisory) | 199 آية، 0 منها مختلف عن المصدر — علامات أحزاب أصلية
+PASS | المقارنة: أسماء السور بلا اختلاف خارج {99} | name_ar diff=99 name_en=0 counts=0
+PASS | الرقعة المتعمّدة: سورة 99 name_ar = «الزلزلة» | سُوْرَةُ الزِّلْزَلَةِ
+PASS | الفصل: normalizeArabic تُستخدم في طبقة البحث فقط (وليس في عرض النص) | src/components/cities/CityPicker.tsx , src/components/quran/SearchBar.tsx , src/utils/normalizeArabic.ts
+PASS | الفصل: fixTanweenDisplay مقصورة على طبقة العرض (قائمة بيضاء موثّقة) | src/components/about/AboutScreen.tsx , src/components/quran/AyahViewer.tsx , src/components/quran/SearchBar.tsx , src/pages/QuranPage.tsx , src/utils/fixTanweenDisplay.ts , src/utils/quranSelectors.ts
+PASS | AyahMarker: مكوّن عرضي خالص — لا استيراد، لا خطافات، لا مخازن، لا تعديل | دائرة CSS + رقم number_in_surah فقط
+
+RESULT: 18 passed, 1 failed
