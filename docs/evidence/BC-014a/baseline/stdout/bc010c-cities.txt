@@ -1,0 +1,10 @@
+PASS | البيانات الوصفية: المصدر والترخيص والإسناد وsha256 وcount | {"source":"GeoNames cities1000","license":"CC BY 4.0","count":4677}
+PASS | عدد السجلات ≥ 4,500 | count=4677
+PASS | كل سجل يحوي n/ar/lat/lon/cc/country_ar صالحة | غير مكتمل=0
+PASS | تغطية الأسماء العربية ≥ 67% | 3172/4677 = 67.8%
+PASS | البحث يجد «اللاذقية» | لاذقيةLatakiaسوريا
+PASS | منسدلة الدولة تعرض 22 دولة عربية | عدد الخيارات العربية=22
+PASS | اختيار مدينة يضبط lat/lon في localStorage | {"latitude":35.5313,"longitude":35.7909}
+PASS | صفر أخطاء console | clean
+
+RESULT: 8 passed, 0 failed

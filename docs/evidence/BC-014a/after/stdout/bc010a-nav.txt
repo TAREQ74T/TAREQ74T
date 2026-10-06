@@ -1,0 +1,10 @@
+PASS | التنقل: شريط سفلي ثابت أسفل الشاشة بأربع تبويبات | pos=fixed bottom=0px tabs=4 svg=4 labels=القرآن,الصلاة,الأذكار,الإعدادات
+PASS | القرآن: الشريط الجانبي فقط (بلا ترس/أذكار/لوحة صلاة) والتبويب نشط | {"quran":true,"sidebar":true,"gear":false,"adhkar":false,"panel":false,"active":true}
+PASS | الصلاة: وقت الصلاة + القبلة داخل التبويب بلا شريط جانبي | {"page":true,"panel":true,"qibla":true,"sidebar":false}
+PASS | الأذكار: تبويب الأذكار يعرض شاشة الأذكار | cards=24
+PASS | الإعدادات: التبويب يعرض الإعدادات (بلا قبلة) مع مدخل «حول» | {"page":true,"qibla":false,"aboutBtn":true}
+PASS | #/settings/about: صفحة «حول» الفرعية تعمل | {"screen":true,"hash":"#/settings/about"}
+PASS | حول: زر العودة يعيد إلى #/settings | #/settings
+PASS | الشريط الجانبي: يظهر في تبويب القرآن فقط | 0 خارج القرآن
+
+RESULT: 8 passed, 0 failed

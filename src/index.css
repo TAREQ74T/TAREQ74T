@@ -879,7 +879,7 @@ body {
   background: transparent;
   color: var(--green-700);
   border-radius: 0.4rem;
-  font-size: 0.9rem;
+  font-size: 1.15rem;
   line-height: 1;
   cursor: pointer;
   font-family: inherit;
@@ -910,14 +910,14 @@ body {
 }
 
 .hijri-date__value {
-  font-size: 0.92rem;
+  font-size: 1.2rem;
   line-height: 1.7;
   color: var(--ink);
 }
 
 .hijri-badge {
   align-self: center;
-  font-size: 0.72rem;
+  font-size: 1.5rem;
   color: #ffffff;
   background: var(--green-700);
   border-radius: 999px;
@@ -997,7 +997,7 @@ body {
 }
 
 .prayer-panel__date-value {
-  font-size: 0.85rem;
+  font-size: 1.2rem;
   font-weight: bold;
   color: var(--green-900);
   line-height: 1.5;
@@ -1009,7 +1009,7 @@ body {
 }
 
 .prayer-panel__toggle-next {
-  font-size: 0.75rem;
+  font-size: 1.5rem;
   color: var(--green-700);
   font-weight: bold;
   background: var(--green-100);
@@ -1328,7 +1328,7 @@ body {
 }
 
 .prayer-row__time {
-  font-size: 1.05rem;
+  font-size: 1.35rem;
   font-weight: bold;
   color: var(--ink);
 }

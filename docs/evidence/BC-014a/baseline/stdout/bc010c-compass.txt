@@ -1,0 +1,9 @@
+PASS | البنية: قبلة بطلة برمز كعبة + شمال مرجعي + وردة + مؤشر انحراف | {"compass":true,"kaaba":true,"north":true,"rose":true,"align":true,"deviation":true}
+PASS | المؤشر: انحراف 40° → «ليس الاتجاه» (رمادي is-far) | qibla-compass__align is-far | ٤٠° يمينًا
+PASS | المؤشر: انحراف 10° → «اقترب» (أصفر is-near) + «10° يمينًا» | qibla-compass__align is-near | ١٠° يمينًا
+PASS | المؤشر: انحراف 0° → «الاتجاه صحيح ✓» (أخضر is-aligned) | qibla-compass__align is-aligned | على الاتجاه
+PASS | الاهتزاز: نبضة واحدة عند الوصول إلى الاتجاه | [30]
+PASS | الإعدادات: مفتاح الاهتزاز يبدأ مفعّلًا ثم يُطفأ ويُحفظ | قبل=true بعد=false مخزّن=false
+PASS | الاهتزاز المعطَّل: الوصول لا يُطلق أي نبضة | []
+
+RESULT: 7 passed, 0 failed

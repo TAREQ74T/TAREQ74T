@@ -1,0 +1,10 @@
+PASS | الأذكار: سطح A النهاري مطبَّق (Bakery/Cafe #FEF3C7) | bg=rgb(254, 243, 199) cards=24
+PASS | BottomNav: التبويب النشط بخلفية + لون + وزن على الشاشة الحقيقية | {"bg":"rgb(239, 218, 173)","idleBg":"rgba(0, 0, 0, 0)","color":"rgb(146, 64, 14)","idleColor":"rgb(122, 117, 104)","weight":"700","idleWeight":"400"}
+PASS | الصلاة: سطح B النهاري مطبَّق (Alarm & World Clock #F4F4FE) | bg=rgb(244, 244, 254) panel=true
+PASS | BottomNav: data-active-section يتبدل أذكار/صلاة | adhkar=adhkar prayer=prayer
+PASS | الأذكار ليلي: سطح A.dark مطبَّق (#140902) | rgb(20, 9, 2)
+PASS | الصلاة ليلي: سطح B.dark مُضوّى (tint) خارج الرمادي المحايد #0F172A | B=rgb(23, 31, 62)
+PASS | الوضعان: نهاري ≠ ليلي (تبديل فعلي على الشاشات الحقيقية) | adhkar rgb(254, 243, 199) vs rgb(20, 9, 2) | prayer rgb(244, 244, 254) vs rgb(23, 31, 62)
+PASS | حذف المعاينة: #/palette-preview لم يعد صفحة مستقلة | {"hash":"#/palette-preview","preview":false,"app":true}
+
+RESULT: 8 passed, 0 failed

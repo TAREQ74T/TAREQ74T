@@ -1,0 +1,7 @@
+PASS | ليلي: تفعيل الثيم يضبط data-theme=dark | dark
+PASS | ليلي: الثيم يُحفظ بعد reload | dark
+PASS | ليلي: نصوص الواجهة مقروءة (تباين ≥ 4.0 على خلفية داكنة) | sidebar-title=5.69 surah-name=15.80 ayah-text=12.82
+PASS | نهاري: العودة للثيم الفاتح تعمل | light
+PASS | نهاري: الخلفية فاتحة بعد العودة | bgLum=0.96
+
+RESULT: 5 passed, 0 failed

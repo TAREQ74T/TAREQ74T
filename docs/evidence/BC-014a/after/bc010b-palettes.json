@@ -1,0 +1,50 @@
+{
+  "script": "bc010b-palettes",
+  "preview": "http://127.0.0.1:5199",
+  "timestamp": "2026-10-06T22:50:19.757Z",
+  "result": "PASS",
+  "passed": 8,
+  "failed": 0,
+  "checks": [
+    {
+      "name": "الأذكار: سطح A النهاري مطبَّق (Bakery/Cafe #FEF3C7)",
+      "pass": true,
+      "info": "bg=rgb(254, 243, 199) cards=24"
+    },
+    {
+      "name": "BottomNav: التبويب النشط بخلفية + لون + وزن على الشاشة الحقيقية",
+      "pass": true,
+      "info": "{\"bg\":\"rgb(239, 218, 173)\",\"idleBg\":\"rgba(0, 0, 0, 0)\",\"color\":\"rgb(146, 64, 14)\",\"idleColor\":\"rgb(122, 117, 104)\",\"weight\":\"700\",\"idleWeight\":\"400\"}"
+    },
+    {
+      "name": "الصلاة: سطح B النهاري مطبَّق (Alarm & World Clock #F4F4FE)",
+      "pass": true,
+      "info": "bg=rgb(244, 244, 254) panel=true"
+    },
+    {
+      "name": "BottomNav: data-active-section يتبدل أذكار/صلاة",
+      "pass": true,
+      "info": "adhkar=adhkar prayer=prayer"
+    },
+    {
+      "name": "الأذكار ليلي: سطح A.dark مطبَّق (#140902)",
+      "pass": true,
+      "info": "rgb(20, 9, 2)"
+    },
+    {
+      "name": "الصلاة ليلي: سطح B.dark مُضوّى (tint) خارج الرمادي المحايد #0F172A",
+      "pass": true,
+      "info": "B=rgb(23, 31, 62)"
+    },
+    {
+      "name": "الوضعان: نهاري ≠ ليلي (تبديل فعلي على الشاشات الحقيقية)",
+      "pass": true,
+      "info": "adhkar rgb(254, 243, 199) vs rgb(20, 9, 2) | prayer rgb(244, 244, 254) vs rgb(23, 31, 62)"
+    },
+    {
+      "name": "حذف المعاينة: #/palette-preview لم يعد صفحة مستقلة",
+      "pass": true,
+      "info": "{\"hash\":\"#/palette-preview\",\"preview\":false,\"app\":true}"
+    }
+  ]
+}

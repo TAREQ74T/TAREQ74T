@@ -1,0 +1,18 @@
+PASS | قائمة light 1440: سورة واحدة لكل صف (114 صفًا) | count=114 rows=114 maxPerRow=1
+PASS | آيات light 1440: العنصر block وjustify فعّالة | display=block align=justify
+PASS | آيات light 1440: كل الأسطر = عرض الحاوية عدا الأخير | content=810 lines=[810,810,810,336] maxDiff=0
+PASS | نجمة light 1440: لا تراكب مع أول سطر | overlap=false
+PASS | قائمة light 390: سورة واحدة لكل صف (114 صفًا) | count=114 rows=114 maxPerRow=1
+PASS | آيات light 390: العنصر block وjustify فعّالة | display=block align=justify
+PASS | آيات light 390: كل الأسطر = عرض الحاوية عدا الأخير | content=276 lines=[276,276,276,276,276,276,276,276,102] maxDiff=0
+PASS | نجمة light 390: لا تراكب مع أول سطر | overlap=false
+PASS | قائمة dark 1440: سورة واحدة لكل صف (114 صفًا) | count=114 rows=114 maxPerRow=1
+PASS | آيات dark 1440: العنصر block وjustify فعّالة | display=block align=justify
+PASS | آيات dark 1440: كل الأسطر = عرض الحاوية عدا الأخير | content=810 lines=[810,810,810,336] maxDiff=0
+PASS | نجمة dark 1440: لا تراكب مع أول سطر | overlap=false
+PASS | قائمة dark 390: سورة واحدة لكل صف (114 صفًا) | count=114 rows=114 maxPerRow=1
+PASS | آيات dark 390: العنصر block وjustify فعّالة | display=block align=justify
+PASS | آيات dark 390: كل الأسطر = عرض الحاوية عدا الأخير | content=276 lines=[276,276,276,276,276,276,276,276,102] maxDiff=0
+PASS | نجمة dark 390: لا تراكب مع أول سطر | overlap=false
+
+RESULT: 16 passed, 0 failed

@@ -24,6 +24,10 @@ function hasDeviceOrientation(): boolean {
   return typeof window !== 'undefined' && 'DeviceOrientationEvent' in window
 }
 
+function isAndroidUserAgent(): boolean {
+  return typeof navigator !== 'undefined' && /Android/i.test(navigator.userAgent)
+}
+
 export function useDeviceOrientation(): UseDeviceOrientationResult {
   const [heading, setHeading] = useState<number | null>(null)
   const [status, setStatus] = useState<OrientationStatus>('idle')
@@ -45,7 +49,9 @@ export function useDeviceOrientation(): UseDeviceOrientationResult {
       if (typeof event.webkitCompassHeading === 'number') {
         raw = event.webkitCompassHeading
       } else if (typeof event.alpha === 'number') {
-        raw = (360 - event.alpha) % 360
+        raw = isAndroidUserAgent()
+          ? (event.alpha + 180) % 360
+          : (360 - event.alpha) % 360
       }
       if (raw == null) {
         return
