@@ -1781,6 +1781,84 @@ body {
   color: var(--ink);
 }
 
+/* Qibla debug panel (?debug=1) */
+.qibla-debug {
+  width: 100%;
+  border-top: 1px dashed var(--border-soft, #e4dfd2);
+  padding-top: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  text-align: start;
+}
+
+:root[data-theme='dark'] .qibla-debug {
+  border-top-color: #2c3a33;
+}
+
+.qibla-debug__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.qibla-debug__title {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: var(--green-700);
+}
+
+.qibla-debug__list {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.78rem;
+}
+
+.qibla-debug__row {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  border-bottom: 1px dotted var(--border-soft, #e4dfd2);
+  padding-bottom: 0.15rem;
+}
+
+:root[data-theme='dark'] .qibla-debug__row {
+  border-bottom-color: #2c3a33;
+}
+
+.qibla-debug__row dt {
+  color: var(--muted-strong, #7a7568);
+}
+
+.qibla-debug__row dd {
+  margin: 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  color: var(--ink);
+  direction: ltr;
+}
+
+.qibla-debug__log {
+  width: 100%;
+  min-height: 12rem;
+  resize: vertical;
+  border: 1px solid var(--border-soft, #d8d3c5);
+  border-radius: 0.4rem;
+  padding: 0.5rem;
+  background: var(--surface, #ffffff);
+  color: var(--ink);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.75rem;
+  direction: ltr;
+}
+
+:root[data-theme='dark'] .qibla-debug__log {
+  background: #1a2520;
+  border-color: #2c3a33;
+}
+
 /* Settings: timezone */
 .timezone-mode-options {
   display: flex;

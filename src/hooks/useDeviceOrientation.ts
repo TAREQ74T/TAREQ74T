@@ -11,15 +11,60 @@ interface DeviceOrientationEventLike {
   type?: string
   webkitCompassHeading?: number
   alpha?: number | null
+  beta?: number | null
+  gamma?: number | null
+  absolute?: boolean
 }
 
-export interface UseDeviceOrientationResult {
+export type OrientationBranch = 'webkit' | 'absolute' | 'relative'
+
+export interface OrientationDebugSnapshot {
+  alphaRaw: number | null
+  beta: number | null
+  gamma: number | null
+  branch: OrientationBranch | null
+  absCount: number
+  relCount: number
+  screenAngle: number | null
+  eventAbsolute: boolean | null
+  rawHeading: number | null
+}
+
+export interface UseDeviceOrientationResult extends OrientationDebugSnapshot {
   heading: number | null
   status: OrientationStatus
   error: string | null
   request: () => Promise<void>
   stop: () => void
 }
+
+const EMPTY_DEBUG_SNAPSHOT: OrientationDebugSnapshot = {
+  alphaRaw: null,
+  beta: null,
+  gamma: null,
+  branch: null,
+  absCount: 0,
+  relCount: 0,
+  screenAngle: null,
+  eventAbsolute: null,
+  rawHeading: null,
+}
+
+function isDebugEnabled(): boolean {
+  if (typeof window === 'undefined') {
+    return false
+  }
+  return new URLSearchParams(window.location.search).get('debug') === '1'
+}
+
+function readScreenAngle(): number | null {
+  if (typeof window === 'undefined' || !window.screen) {
+    return null
+  }
+  const angle = window.screen.orientation?.angle
+  return typeof angle === 'number' ? angle : null
+}
+
 
 function hasDeviceOrientation(): boolean {
   return typeof window !== 'undefined' && 'DeviceOrientationEvent' in window
@@ -39,8 +84,56 @@ export function useDeviceOrientation(): UseDeviceOrientationResult {
   const smoothingRef = useRef<number[]>([])
   const hasReceivedAbsoluteRef = useRef<boolean>(false)
 
+  const debugEnabledRef = useRef<boolean>(isDebugEnabled())
+  const [debugSnapshot, setDebugSnapshot] =
+    useState<OrientationDebugSnapshot>(EMPTY_DEBUG_SNAPSHOT)
+  const alphaRawRef = useRef<number | null>(null)
+  const betaRef = useRef<number | null>(null)
+  const gammaRef = useRef<number | null>(null)
+  const branchRef = useRef<OrientationBranch | null>(null)
+  const absCountRef = useRef<number>(0)
+  const relCountRef = useRef<number>(0)
+  const screenAngleRef = useRef<number | null>(null)
+  const eventAbsoluteRef = useRef<boolean | null>(null)
+  const rawHeadingRef = useRef<number | null>(null)
+
+  const resetDebugRefs = useCallback(() => {
+    alphaRawRef.current = null
+    betaRef.current = null
+    gammaRef.current = null
+    branchRef.current = null
+    absCountRef.current = 0
+    relCountRef.current = 0
+    screenAngleRef.current = null
+    eventAbsoluteRef.current = null
+    rawHeadingRef.current = null
+  }, [])
+
+  useEffect(() => {
+    if (!debugEnabledRef.current) {
+      return
+    }
+    const publish = () => {
+      setDebugSnapshot({
+        alphaRaw: alphaRawRef.current,
+        beta: betaRef.current,
+        gamma: gammaRef.current,
+        branch: branchRef.current,
+        absCount: absCountRef.current,
+        relCount: relCountRef.current,
+        screenAngle: screenAngleRef.current,
+        eventAbsolute: eventAbsoluteRef.current,
+        rawHeading: rawHeadingRef.current,
+      })
+    }
+    publish()
+    const timer = window.setInterval(publish, 250)
+    return () => window.clearInterval(timer)
+  }, [])
+
   const attachListener = useCallback(() => {
     hasReceivedAbsoluteRef.current = false
+    resetDebugRefs()
     if (listenerRef.current) {
       window.removeEventListener(
         'deviceorientation',
@@ -82,6 +175,30 @@ export function useDeviceOrientation(): UseDeviceOrientationResult {
       if (raw == null) {
         return
       }
+
+      if (debugEnabledRef.current) {
+        if (event.type === 'deviceorientationabsolute') {
+          absCountRef.current += 1
+        } else {
+          relCountRef.current += 1
+        }
+        alphaRawRef.current =
+          typeof event.alpha === 'number' ? event.alpha : null
+        betaRef.current = typeof event.beta === 'number' ? event.beta : null
+        gammaRef.current = typeof event.gamma === 'number' ? event.gamma : null
+        screenAngleRef.current = readScreenAngle()
+        eventAbsoluteRef.current =
+          typeof event.absolute === 'boolean' ? event.absolute : null
+        rawHeadingRef.current = raw
+        if (typeof event.webkitCompassHeading === 'number') {
+          branchRef.current = 'webkit'
+        } else if (event.type === 'deviceorientationabsolute') {
+          branchRef.current = 'absolute'
+        } else {
+          branchRef.current = 'relative'
+        }
+      }
+
       const values = smoothingRef.current
       values.push(raw)
       if (values.length > 5) {
@@ -102,7 +219,7 @@ export function useDeviceOrientation(): UseDeviceOrientationResult {
       'deviceorientationabsolute',
       handler as EventListener,
     )
-  }, [])
+  }, [resetDebugRefs])
 
   const stop = useCallback(() => {
     if (listenerRef.current) {
@@ -117,9 +234,10 @@ export function useDeviceOrientation(): UseDeviceOrientationResult {
       listenerRef.current = null
     }
     hasReceivedAbsoluteRef.current = false
+    resetDebugRefs()
     setHeading(null)
     setStatus('idle')
-  }, [])
+  }, [resetDebugRefs])
 
   const request = useCallback(async () => {
     if (!window.isSecureContext) {
@@ -174,5 +292,12 @@ export function useDeviceOrientation(): UseDeviceOrientationResult {
     [],
   )
 
-  return { heading, status, error, request, stop }
+  return {
+    heading,
+    status,
+    error,
+    request,
+    stop,
+    ...debugSnapshot,
+  }
 }

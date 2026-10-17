@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useQibla } from '../../hooks/useQibla'
+import type { UseQiblaResult } from '../../hooks/useQibla'
 import { cardinalLabel, roundBearing } from '../../utils/qibla'
 
 const ARABIC_DIGITS = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩']
@@ -48,8 +49,118 @@ interface QiblaCompassProps {
   hapticsEnabled?: boolean
 }
 
+const LOCATION_SOURCE_LABEL: Record<UseQiblaResult['locationSource'], string> = {
+  auto: 'تلقائي',
+  manual: 'يدوي',
+  default: 'افتراضي',
+}
+
+function isDebugMode(): boolean {
+  if (typeof window === 'undefined') {
+    return false
+  }
+  return new URLSearchParams(window.location.search).get('debug') === '1'
+}
+
+function formatDebugNumber(value: number | null): string {
+  if (value == null) {
+    return '—'
+  }
+  return value.toFixed(1)
+}
+
+const BUILD_HASH = import.meta.env.VITE_BUILD_HASH ?? 'unknown'
+const BUILD_DIRTY = import.meta.env.VITE_BUILD_DIRTY === 'true'
+
+function QiblaDebugPanel({ qibla }: { qibla: UseQiblaResult }) {
+  const [swState] = useState(() => {
+    const controller =
+      typeof navigator !== 'undefined' && 'serviceWorker' in navigator
+        ? navigator.serviceWorker.controller
+        : null
+    return controller ? 'SW active' : 'no SW'
+  })
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
+
+  const independentRelative =
+    qibla.heading == null
+      ? null
+      : (qibla.bearing - qibla.heading + 360) % 360
+
+  const rows: Array<[string, string]> = [
+    [
+      'الموقع',
+      `${qibla.coords.latitude.toFixed(4)}, ${qibla.coords.longitude.toFixed(4)} (${LOCATION_SOURCE_LABEL[qibla.locationSource]})`,
+    ],
+    ['qibla.bearing', formatDebugNumber(qibla.bearing)],
+    ['relativeBearing (hook)', formatDebugNumber(qibla.relativeBearing)],
+    ['relativeBearing (مستقل)', formatDebugNumber(independentRelative)],
+    ['heading قبل التنعيم', formatDebugNumber(qibla.rawHeading)],
+    ['heading بعد التنعيم', formatDebugNumber(qibla.heading)],
+    ['alpha الخام', formatDebugNumber(qibla.alphaRaw)],
+    ['beta', formatDebugNumber(qibla.beta)],
+    ['gamma', formatDebugNumber(qibla.gamma)],
+    [
+      'screen.orientation.angle',
+      qibla.screenAngle == null ? '—' : String(qibla.screenAngle),
+    ],
+    [
+      'event.absolute',
+      qibla.eventAbsolute == null ? '—' : String(qibla.eventAbsolute),
+    ],
+    ['الفرع', qibla.branch ?? '—'],
+    ['absolute events', String(qibla.absCount)],
+    ['relative events', String(qibla.relCount)],
+    ['service worker', swState],
+    ['build', `${BUILD_HASH}${BUILD_DIRTY ? ' (dirty)' : ''}`],
+  ]
+
+  const logText = rows.map(([label, value]) => `${label}: ${value}`).join('\n')
+
+  const handleCopy = async () => {
+    const element = textareaRef.current
+    if (!element) {
+      return
+    }
+    element.focus()
+    element.select()
+    try {
+      await navigator.clipboard.writeText(element.value)
+    } catch {
+      document.execCommand('copy')
+    }
+  }
+
+  return (
+    <div className="qibla-debug" data-testid="qibla-debug">
+      <div className="qibla-debug__head">
+        <span className="qibla-debug__title">تشخيص البوصلة</span>
+        <button type="button" className="btn btn--ghost" onClick={() => void handleCopy()}>
+          نسخ السجل
+        </button>
+      </div>
+      <dl className="qibla-debug__list">
+        {rows.map(([label, value]) => (
+          <div className="qibla-debug__row" key={label}>
+            <dt>{label}</dt>
+            <dd>{value}</dd>
+          </div>
+        ))}
+      </dl>
+      <textarea
+        ref={textareaRef}
+        className="qibla-debug__log"
+        readOnly
+        value={logText}
+        aria-label="سجل التشخيص"
+      />
+    </div>
+  )
+}
+
 export function QiblaCompass({ hapticsEnabled = true }: QiblaCompassProps) {
   const qibla = useQibla()
+  const debugMode = isDebugMode()
   const [mode, setMode] = useState<'auto' | 'manual'>('auto')
   const [manualAngle, setManualAngle] = useState(0)
 
@@ -288,6 +399,8 @@ export function QiblaCompass({ hapticsEnabled = true }: QiblaCompassProps) {
           إعادة طلب إذن البوصلة
         </button>
       )}
+
+      {debugMode && <QiblaDebugPanel qibla={qibla} />}
     </section>
   )
 }
