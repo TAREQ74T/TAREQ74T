@@ -8,6 +8,7 @@ export type OrientationStatus =
   | 'insecure'
 
 interface DeviceOrientationEventLike {
+  type?: string
   webkitCompassHeading?: number
   alpha?: number | null
 }
@@ -36,11 +37,17 @@ export function useDeviceOrientation(): UseDeviceOrientationResult {
     null,
   )
   const smoothingRef = useRef<number[]>([])
+  const hasReceivedAbsoluteRef = useRef<boolean>(false)
 
   const attachListener = useCallback(() => {
+    hasReceivedAbsoluteRef.current = false
     if (listenerRef.current) {
       window.removeEventListener(
         'deviceorientation',
+        listenerRef.current as EventListener,
+      )
+      window.removeEventListener(
+        'deviceorientationabsolute',
         listenerRef.current as EventListener,
       )
     }
@@ -48,10 +55,29 @@ export function useDeviceOrientation(): UseDeviceOrientationResult {
       let raw: number | null = null
       if (typeof event.webkitCompassHeading === 'number') {
         raw = event.webkitCompassHeading
-      } else if (typeof event.alpha === 'number') {
-        raw = isAndroidUserAgent()
-          ? (event.alpha + 180) % 360
-          : (360 - event.alpha) % 360
+      }
+
+      if (
+        event.type === 'deviceorientationabsolute' &&
+        typeof event.alpha === 'number'
+      ) {
+        if (!hasReceivedAbsoluteRef.current) {
+          smoothingRef.current = []
+        }
+        hasReceivedAbsoluteRef.current = true
+      } else if (hasReceivedAbsoluteRef.current) {
+        return
+      }
+
+      if (raw == null && typeof event.alpha === 'number') {
+        if (event.type === 'deviceorientationabsolute') {
+          const absoluteHeading = event.alpha
+          raw = absoluteHeading
+        } else {
+          raw = isAndroidUserAgent()
+            ? (event.alpha + 180) % 360
+            : (360 - event.alpha) % 360
+        }
       }
       if (raw == null) {
         return
@@ -72,6 +98,10 @@ export function useDeviceOrientation(): UseDeviceOrientationResult {
     }
     listenerRef.current = handler
     window.addEventListener('deviceorientation', handler as EventListener)
+    window.addEventListener(
+      'deviceorientationabsolute',
+      handler as EventListener,
+    )
   }, [])
 
   const stop = useCallback(() => {
@@ -80,8 +110,13 @@ export function useDeviceOrientation(): UseDeviceOrientationResult {
         'deviceorientation',
         listenerRef.current as EventListener,
       )
+      window.removeEventListener(
+        'deviceorientationabsolute',
+        listenerRef.current as EventListener,
+      )
       listenerRef.current = null
     }
+    hasReceivedAbsoluteRef.current = false
     setHeading(null)
     setStatus('idle')
   }, [])
@@ -128,6 +163,10 @@ export function useDeviceOrientation(): UseDeviceOrientationResult {
       if (listenerRef.current) {
         window.removeEventListener(
           'deviceorientation',
+          listenerRef.current as EventListener,
+        )
+        window.removeEventListener(
+          'deviceorientationabsolute',
           listenerRef.current as EventListener,
         )
       }
