@@ -2,6 +2,7 @@ import { useMemo } from 'react'
 import { useDeviceOrientation } from './useDeviceOrientation'
 import type {
   OrientationBranch,
+  OrientationSample,
   OrientationStatus,
 } from './useDeviceOrientation'
 import { useLocation } from './useLocation'
@@ -29,6 +30,7 @@ export interface UseQiblaResult {
   screenAngle: number | null
   eventAbsolute: boolean | null
   rawHeading: number | null
+  samples: OrientationSample[]
 }
 
 export function useQibla(): UseQiblaResult {
@@ -68,5 +70,6 @@ export function useQibla(): UseQiblaResult {
     screenAngle: orientation.screenAngle,
     eventAbsolute: orientation.eventAbsolute,
     rawHeading: orientation.rawHeading,
+    samples: orientation.samples,
   }
 }

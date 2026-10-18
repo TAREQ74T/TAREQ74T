@@ -87,6 +87,11 @@ function QiblaDebugPanel({ qibla }: { qibla: UseQiblaResult }) {
       ? null
       : (qibla.bearing - qibla.heading + 360) % 360
 
+  const signedIndependentRelative =
+    independentRelative == null
+      ? null
+      : ((independentRelative + 540) % 360) - 180
+
   const rows: Array<[string, string]> = [
     [
       'الموقع',
@@ -95,6 +100,10 @@ function QiblaDebugPanel({ qibla }: { qibla: UseQiblaResult }) {
     ['qibla.bearing', formatDebugNumber(qibla.bearing)],
     ['relativeBearing (hook)', formatDebugNumber(qibla.relativeBearing)],
     ['relativeBearing (مستقل)', formatDebugNumber(independentRelative)],
+    [
+      'relativeBearing (موقَّع)',
+      formatDebugNumber(signedIndependentRelative),
+    ],
     ['heading قبل التنعيم', formatDebugNumber(qibla.rawHeading)],
     ['heading بعد التنعيم', formatDebugNumber(qibla.heading)],
     ['alpha الخام', formatDebugNumber(qibla.alphaRaw)],
@@ -115,7 +124,24 @@ function QiblaDebugPanel({ qibla }: { qibla: UseQiblaResult }) {
     ['build', `${BUILD_HASH}${BUILD_DIRTY ? ' (dirty)' : ''}`],
   ]
 
-  const logText = rows.map(([label, value]) => `${label}: ${value}`).join('\n')
+  const summaryText = rows
+    .map(([label, value]) => `${label}: ${value}`)
+    .join('\n')
+  const samplesText = qibla.samples
+    .map((sample) =>
+      [
+        sample.t.toFixed(0),
+        sample.type,
+        formatDebugNumber(sample.alpha),
+        formatDebugNumber(sample.beta),
+        formatDebugNumber(sample.gamma),
+        formatDebugNumber(sample.rawHeading),
+        formatDebugNumber(sample.heading),
+        sample.branch,
+      ].join('\t'),
+    )
+    .join('\n')
+  const logText = `${summaryText}\n\n--- samples (${qibla.samples.length}) ---\nt\ttype\talpha\tbeta\tgamma\trawHeading\theading\tbranch\n${samplesText}`
 
   const handleCopy = async () => {
     const element = textareaRef.current
