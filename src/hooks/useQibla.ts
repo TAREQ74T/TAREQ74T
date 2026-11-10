@@ -30,6 +30,7 @@ export interface UseQiblaResult {
   screenAngle: number | null
   eventAbsolute: boolean | null
   rawHeading: number | null
+  lastIgnoredRelativeAlpha: number | null
   samples: OrientationSample[]
 }
 
@@ -70,6 +71,7 @@ export function useQibla(): UseQiblaResult {
     screenAngle: orientation.screenAngle,
     eventAbsolute: orientation.eventAbsolute,
     rawHeading: orientation.rawHeading,
+    lastIgnoredRelativeAlpha: orientation.lastIgnoredRelativeAlpha,
     samples: orientation.samples,
   }
 }

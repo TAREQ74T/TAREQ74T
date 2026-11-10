@@ -27,9 +27,11 @@ export interface OrientationSample {
   rawHeading: number | null
   heading: number | null
   branch: OrientationBranch
+  used: boolean
 }
 
-export const DEBUG_SAMPLE_LIMIT = 100
+export const DEBUG_SAMPLE_LIMIT = 150
+const DEBUG_SAMPLE_MIN_INTERVAL_MS = 100
 
 export interface OrientationDebugSnapshot {
   alphaRaw: number | null
@@ -41,6 +43,7 @@ export interface OrientationDebugSnapshot {
   screenAngle: number | null
   eventAbsolute: boolean | null
   rawHeading: number | null
+  lastIgnoredRelativeAlpha: number | null
   samples: OrientationSample[]
 }
 
@@ -62,6 +65,7 @@ const EMPTY_DEBUG_SNAPSHOT: OrientationDebugSnapshot = {
   screenAngle: null,
   eventAbsolute: null,
   rawHeading: null,
+  lastIgnoredRelativeAlpha: null,
   samples: [],
 }
 
@@ -88,6 +92,16 @@ function isAndroidUserAgent(): boolean {
   return typeof navigator !== 'undefined' && /Android/i.test(navigator.userAgent)
 }
 
+function resolveBranch(event: DeviceOrientationEventLike): OrientationBranch {
+  if (typeof event.webkitCompassHeading === 'number') {
+    return 'webkit'
+  }
+  if (event.type === 'deviceorientationabsolute') {
+    return 'absolute'
+  }
+  return 'relative'
+}
+
 export function useDeviceOrientation(): UseDeviceOrientationResult {
   const [heading, setHeading] = useState<number | null>(null)
   const [status, setStatus] = useState<OrientationStatus>('idle')
@@ -110,8 +124,10 @@ export function useDeviceOrientation(): UseDeviceOrientationResult {
   const screenAngleRef = useRef<number | null>(null)
   const eventAbsoluteRef = useRef<boolean | null>(null)
   const rawHeadingRef = useRef<number | null>(null)
+  const lastIgnoredRelativeAlphaRef = useRef<number | null>(null)
   const headingRef = useRef<number | null>(null)
   const samplesRef = useRef<OrientationSample[]>([])
+  const lastSampleAtByTypeRef = useRef<Record<string, number>>({})
 
   useEffect(() => {
     headingRef.current = heading
@@ -127,7 +143,9 @@ export function useDeviceOrientation(): UseDeviceOrientationResult {
     screenAngleRef.current = null
     eventAbsoluteRef.current = null
     rawHeadingRef.current = null
+    lastIgnoredRelativeAlphaRef.current = null
     samplesRef.current = []
+    lastSampleAtByTypeRef.current = {}
   }, [])
 
   useEffect(() => {
@@ -145,6 +163,7 @@ export function useDeviceOrientation(): UseDeviceOrientationResult {
         screenAngle: screenAngleRef.current,
         eventAbsolute: eventAbsoluteRef.current,
         rawHeading: rawHeadingRef.current,
+        lastIgnoredRelativeAlpha: lastIgnoredRelativeAlphaRef.current,
         samples: samplesRef.current.slice(),
       })
     }
@@ -174,8 +193,7 @@ export function useDeviceOrientation(): UseDeviceOrientationResult {
 
       if (raw == null && typeof event.alpha === 'number') {
         if (event.type === 'deviceorientationabsolute') {
-          const absoluteHeading = event.alpha
-          raw = absoluteHeading
+          raw = event.alpha
         } else {
           raw = isAndroidUserAgent()
             ? (event.alpha + 180) % 360
@@ -183,45 +201,7 @@ export function useDeviceOrientation(): UseDeviceOrientationResult {
         }
       }
 
-      if (debugEnabledRef.current) {
-        if (event.type === 'deviceorientationabsolute') {
-          absCountRef.current += 1
-        } else {
-          relCountRef.current += 1
-        }
-        const alpha =
-          typeof event.alpha === 'number' ? event.alpha : null
-        const beta = typeof event.beta === 'number' ? event.beta : null
-        const gamma = typeof event.gamma === 'number' ? event.gamma : null
-        alphaRawRef.current = alpha
-        betaRef.current = beta
-        gammaRef.current = gamma
-        screenAngleRef.current = readScreenAngle()
-        eventAbsoluteRef.current =
-          typeof event.absolute === 'boolean' ? event.absolute : null
-        rawHeadingRef.current = raw
-        const branch: OrientationBranch =
-          typeof event.webkitCompassHeading === 'number'
-            ? 'webkit'
-            : event.type === 'deviceorientationabsolute'
-              ? 'absolute'
-              : 'relative'
-        branchRef.current = branch
-        const samples = samplesRef.current
-        samples.push({
-          t: typeof performance !== 'undefined' ? performance.now() : 0,
-          type: event.type ?? 'unknown',
-          alpha,
-          beta,
-          gamma,
-          rawHeading: raw,
-          heading: headingRef.current,
-          branch,
-        })
-        if (samples.length > DEBUG_SAMPLE_LIMIT) {
-          samples.shift()
-        }
-      }
+      const branch = resolveBranch(event)
 
       if (
         event.type === 'deviceorientationabsolute' &&
@@ -231,7 +211,64 @@ export function useDeviceOrientation(): UseDeviceOrientationResult {
           smoothingRef.current = []
         }
         hasReceivedAbsoluteRef.current = true
-      } else if (hasReceivedAbsoluteRef.current) {
+      }
+
+      const used =
+        branch === 'webkit' ||
+        branch === 'absolute' ||
+        (branch === 'relative' && !hasReceivedAbsoluteRef.current)
+
+      if (debugEnabledRef.current) {
+        if (event.type === 'deviceorientationabsolute') {
+          absCountRef.current += 1
+        } else {
+          relCountRef.current += 1
+        }
+
+        const alpha =
+          typeof event.alpha === 'number' ? event.alpha : null
+        const beta = typeof event.beta === 'number' ? event.beta : null
+        const gamma = typeof event.gamma === 'number' ? event.gamma : null
+
+        if (branch === 'relative' && !used) {
+          lastIgnoredRelativeAlphaRef.current = alpha
+        }
+
+        if (used) {
+          alphaRawRef.current = alpha
+          betaRef.current = beta
+          gammaRef.current = gamma
+          screenAngleRef.current = readScreenAngle()
+          eventAbsoluteRef.current =
+            typeof event.absolute === 'boolean' ? event.absolute : null
+          rawHeadingRef.current = raw
+          branchRef.current = branch
+        }
+
+        const now = typeof performance !== 'undefined' ? performance.now() : 0
+        const eventType = event.type ?? 'unknown'
+        const lastAt = lastSampleAtByTypeRef.current[eventType]
+        if (lastAt == null || now - lastAt >= DEBUG_SAMPLE_MIN_INTERVAL_MS) {
+          lastSampleAtByTypeRef.current[eventType] = now
+          const samples = samplesRef.current
+          samples.push({
+            t: now,
+            type: eventType,
+            alpha,
+            beta,
+            gamma,
+            rawHeading: raw,
+            heading: headingRef.current,
+            branch,
+            used,
+          })
+          if (samples.length > DEBUG_SAMPLE_LIMIT) {
+            samples.shift()
+          }
+        }
+      }
+
+      if (!used) {
         return
       }
 

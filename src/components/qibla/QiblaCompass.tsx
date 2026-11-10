@@ -120,6 +120,10 @@ function QiblaDebugPanel({ qibla }: { qibla: UseQiblaResult }) {
     ['الفرع', qibla.branch ?? '—'],
     ['absolute events', String(qibla.absCount)],
     ['relative events', String(qibla.relCount)],
+    [
+      'آخر relative (متجاهَل)',
+      formatDebugNumber(qibla.lastIgnoredRelativeAlpha),
+    ],
     ['service worker', swState],
     ['build', `${BUILD_HASH}${BUILD_DIRTY ? ' (dirty)' : ''}`],
   ]
@@ -138,10 +142,11 @@ function QiblaDebugPanel({ qibla }: { qibla: UseQiblaResult }) {
         formatDebugNumber(sample.rawHeading),
         formatDebugNumber(sample.heading),
         sample.branch,
+        sample.used ? 'نعم' : 'لا',
       ].join('\t'),
     )
     .join('\n')
-  const logText = `${summaryText}\n\n--- samples (${qibla.samples.length}) ---\nt\ttype\talpha\tbeta\tgamma\trawHeading\theading\tbranch\n${samplesText}`
+  const logText = `${summaryText}\n\n--- samples (${qibla.samples.length}) ---\nt\ttype\talpha\tbeta\tgamma\trawHeading\theading\tbranch\tused\n${samplesText}`
 
   const handleCopy = async () => {
     const element = textareaRef.current
