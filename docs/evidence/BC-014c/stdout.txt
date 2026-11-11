@@ -1,0 +1,164 @@
+BC-014c synthetic tests @ 177db01
+{
+  "commit": "177db019d6372bdc3d6a6c32e69550cdc0fb9ba2",
+  "base": "908edb2078764cbca732dc3f042a72bf184141c4",
+  "runAt": "2026-11-11T16:18:51.373Z",
+  "tests": [
+    {
+      "name": "capacity-and-lock",
+      "description": "10 relative → 1 absolute (alpha=280.6) → 200 relative after lock",
+      "snapshot": {
+        "heading": 280.6,
+        "alphaRaw": 280.6,
+        "rawHeading": 280.6,
+        "branch": "absolute",
+        "absCount": 1,
+        "relCount": 210,
+        "lastIgnoredRelativeAlpha": 1,
+        "sampleCount": 150
+      },
+      "headingAfterLock": 280.6,
+      "checks": [
+        {
+          "name": "relCount > 10 after lock",
+          "pass": true,
+          "detail": 210
+        },
+        {
+          "name": "samples <= 150",
+          "pass": true,
+          "detail": 150
+        },
+        {
+          "name": "samples exactly 150 after overflow",
+          "pass": true,
+          "detail": 150
+        },
+        {
+          "name": "heading unchanged by post-lock relative",
+          "pass": true,
+          "detail": {
+            "headingAfterLock": 280.6,
+            "last": 280.6
+          }
+        },
+        {
+          "name": "no NaN",
+          "pass": true,
+          "detail": false
+        },
+        {
+          "name": "post-lock relative samples used=false",
+          "pass": true,
+          "detail": [
+            {
+              "t": 21900,
+              "type": "deviceorientation",
+              "alpha": 1,
+              "beta": 0,
+              "gamma": 0,
+              "rawHeading": 181,
+              "heading": 280.6,
+              "branch": "relative",
+              "used": false
+            },
+            {
+              "t": 22000,
+              "type": "deviceorientation",
+              "alpha": 1,
+              "beta": 0,
+              "gamma": 0,
+              "rawHeading": 181,
+              "heading": 280.6,
+              "branch": "relative",
+              "used": false
+            },
+            {
+              "t": 22100,
+              "type": "deviceorientation",
+              "alpha": 1,
+              "beta": 0,
+              "gamma": 0,
+              "rawHeading": 181,
+              "heading": 280.6,
+              "branch": "relative",
+              "used": false
+            }
+          ]
+        }
+      ],
+      "pass": true
+    },
+    {
+      "name": "pollution-counter",
+      "description": "absolute alpha=280.6 then relative alpha=280.4; summary must stay on used event",
+      "afterAbsolute": {
+        "alphaRaw": 280.6,
+        "rawHeading": 280.6,
+        "heading": 280.6,
+        "lastIgnoredRelativeAlpha": null,
+        "branch": "absolute"
+      },
+      "afterRelative": {
+        "alphaRaw": 280.6,
+        "rawHeading": 280.6,
+        "heading": 280.6,
+        "lastIgnoredRelativeAlpha": 280.4,
+        "branch": "absolute",
+        "beta": 1.2,
+        "gamma": -0.4
+      },
+      "checks": [
+        {
+          "name": "آخر relative (متجاهَل) = 280.4",
+          "pass": true,
+          "detail": 280.4
+        },
+        {
+          "name": "heading قبل التنعيم = 280.6",
+          "pass": true,
+          "detail": 280.6
+        },
+        {
+          "name": "alphaRaw stays 280.6 (no pollution)",
+          "pass": true,
+          "detail": 280.6
+        },
+        {
+          "name": "beta/gamma not overwritten by ignored relative",
+          "pass": true,
+          "detail": {
+            "beta": 1.2,
+            "gamma": -0.4
+          }
+        },
+        {
+          "name": "branch stays absolute",
+          "pass": true,
+          "detail": "absolute"
+        },
+        {
+          "name": "heading (smoothed) stays 280.6",
+          "pass": true,
+          "detail": 280.6
+        },
+        {
+          "name": "no NaN",
+          "pass": true,
+          "detail": {
+            "alphaRaw": 280.6,
+            "rawHeading": 280.6,
+            "heading": 280.6,
+            "lastIgnoredRelativeAlpha": 280.4,
+            "branch": "absolute",
+            "beta": 1.2,
+            "gamma": -0.4
+          }
+        }
+      ],
+      "pass": true
+    }
+  ],
+  "pass": true
+}
+ALL PASS

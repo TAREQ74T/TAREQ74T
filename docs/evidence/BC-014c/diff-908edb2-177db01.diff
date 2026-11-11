@@ -1,0 +1,248 @@
+diff --git a/src/components/qibla/QiblaCompass.tsx b/src/components/qibla/QiblaCompass.tsx
+index 3b73aa2..c85c3ab 100644
+--- a/src/components/qibla/QiblaCompass.tsx
++++ b/src/components/qibla/QiblaCompass.tsx
+@@ -120,6 +120,10 @@ function QiblaDebugPanel({ qibla }: { qibla: UseQiblaResult }) {
+     ['الفرع', qibla.branch ?? '—'],
+     ['absolute events', String(qibla.absCount)],
+     ['relative events', String(qibla.relCount)],
++    [
++      'آخر relative (متجاهَل)',
++      formatDebugNumber(qibla.lastIgnoredRelativeAlpha),
++    ],
+     ['service worker', swState],
+     ['build', `${BUILD_HASH}${BUILD_DIRTY ? ' (dirty)' : ''}`],
+   ]
+@@ -138,10 +142,11 @@ function QiblaDebugPanel({ qibla }: { qibla: UseQiblaResult }) {
+         formatDebugNumber(sample.rawHeading),
+         formatDebugNumber(sample.heading),
+         sample.branch,
++        sample.used ? 'نعم' : 'لا',
+       ].join('\t'),
+     )
+     .join('\n')
+-  const logText = `${summaryText}\n\n--- samples (${qibla.samples.length}) ---\nt\ttype\talpha\tbeta\tgamma\trawHeading\theading\tbranch\n${samplesText}`
++  const logText = `${summaryText}\n\n--- samples (${qibla.samples.length}) ---\nt\ttype\talpha\tbeta\tgamma\trawHeading\theading\tbranch\tused\n${samplesText}`
+ 
+   const handleCopy = async () => {
+     const element = textareaRef.current
+diff --git a/src/hooks/useDeviceOrientation.ts b/src/hooks/useDeviceOrientation.ts
+index 6b72d21..7dddd3f 100644
+--- a/src/hooks/useDeviceOrientation.ts
++++ b/src/hooks/useDeviceOrientation.ts
+@@ -27,9 +27,11 @@ export interface OrientationSample {
+   rawHeading: number | null
+   heading: number | null
+   branch: OrientationBranch
++  used: boolean
+ }
+ 
+-export const DEBUG_SAMPLE_LIMIT = 100
++export const DEBUG_SAMPLE_LIMIT = 150
++const DEBUG_SAMPLE_MIN_INTERVAL_MS = 100
+ 
+ export interface OrientationDebugSnapshot {
+   alphaRaw: number | null
+@@ -41,6 +43,7 @@ export interface OrientationDebugSnapshot {
+   screenAngle: number | null
+   eventAbsolute: boolean | null
+   rawHeading: number | null
++  lastIgnoredRelativeAlpha: number | null
+   samples: OrientationSample[]
+ }
+ 
+@@ -62,6 +65,7 @@ const EMPTY_DEBUG_SNAPSHOT: OrientationDebugSnapshot = {
+   screenAngle: null,
+   eventAbsolute: null,
+   rawHeading: null,
++  lastIgnoredRelativeAlpha: null,
+   samples: [],
+ }
+ 
+@@ -88,6 +92,16 @@ function isAndroidUserAgent(): boolean {
+   return typeof navigator !== 'undefined' && /Android/i.test(navigator.userAgent)
+ }
+ 
++function resolveBranch(event: DeviceOrientationEventLike): OrientationBranch {
++  if (typeof event.webkitCompassHeading === 'number') {
++    return 'webkit'
++  }
++  if (event.type === 'deviceorientationabsolute') {
++    return 'absolute'
++  }
++  return 'relative'
++}
++
+ export function useDeviceOrientation(): UseDeviceOrientationResult {
+   const [heading, setHeading] = useState<number | null>(null)
+   const [status, setStatus] = useState<OrientationStatus>('idle')
+@@ -110,8 +124,10 @@ export function useDeviceOrientation(): UseDeviceOrientationResult {
+   const screenAngleRef = useRef<number | null>(null)
+   const eventAbsoluteRef = useRef<boolean | null>(null)
+   const rawHeadingRef = useRef<number | null>(null)
++  const lastIgnoredRelativeAlphaRef = useRef<number | null>(null)
+   const headingRef = useRef<number | null>(null)
+   const samplesRef = useRef<OrientationSample[]>([])
++  const lastSampleAtByTypeRef = useRef<Record<string, number>>({})
+ 
+   useEffect(() => {
+     headingRef.current = heading
+@@ -127,7 +143,9 @@ export function useDeviceOrientation(): UseDeviceOrientationResult {
+     screenAngleRef.current = null
+     eventAbsoluteRef.current = null
+     rawHeadingRef.current = null
++    lastIgnoredRelativeAlphaRef.current = null
+     samplesRef.current = []
++    lastSampleAtByTypeRef.current = {}
+   }, [])
+ 
+   useEffect(() => {
+@@ -145,6 +163,7 @@ export function useDeviceOrientation(): UseDeviceOrientationResult {
+         screenAngle: screenAngleRef.current,
+         eventAbsolute: eventAbsoluteRef.current,
+         rawHeading: rawHeadingRef.current,
++        lastIgnoredRelativeAlpha: lastIgnoredRelativeAlphaRef.current,
+         samples: samplesRef.current.slice(),
+       })
+     }
+@@ -174,8 +193,7 @@ export function useDeviceOrientation(): UseDeviceOrientationResult {
+ 
+       if (raw == null && typeof event.alpha === 'number') {
+         if (event.type === 'deviceorientationabsolute') {
+-          const absoluteHeading = event.alpha
+-          raw = absoluteHeading
++          raw = event.alpha
+         } else {
+           raw = isAndroidUserAgent()
+             ? (event.alpha + 180) % 360
+@@ -183,55 +201,74 @@ export function useDeviceOrientation(): UseDeviceOrientationResult {
+         }
+       }
+ 
++      const branch = resolveBranch(event)
++
++      if (
++        event.type === 'deviceorientationabsolute' &&
++        typeof event.alpha === 'number'
++      ) {
++        if (!hasReceivedAbsoluteRef.current) {
++          smoothingRef.current = []
++        }
++        hasReceivedAbsoluteRef.current = true
++      }
++
++      const used =
++        branch === 'webkit' ||
++        branch === 'absolute' ||
++        (branch === 'relative' && !hasReceivedAbsoluteRef.current)
++
+       if (debugEnabledRef.current) {
+         if (event.type === 'deviceorientationabsolute') {
+           absCountRef.current += 1
+         } else {
+           relCountRef.current += 1
+         }
++
+         const alpha =
+           typeof event.alpha === 'number' ? event.alpha : null
+         const beta = typeof event.beta === 'number' ? event.beta : null
+         const gamma = typeof event.gamma === 'number' ? event.gamma : null
+-        alphaRawRef.current = alpha
+-        betaRef.current = beta
+-        gammaRef.current = gamma
+-        screenAngleRef.current = readScreenAngle()
+-        eventAbsoluteRef.current =
+-          typeof event.absolute === 'boolean' ? event.absolute : null
+-        rawHeadingRef.current = raw
+-        const branch: OrientationBranch =
+-          typeof event.webkitCompassHeading === 'number'
+-            ? 'webkit'
+-            : event.type === 'deviceorientationabsolute'
+-              ? 'absolute'
+-              : 'relative'
+-        branchRef.current = branch
+-        const samples = samplesRef.current
+-        samples.push({
+-          t: typeof performance !== 'undefined' ? performance.now() : 0,
+-          type: event.type ?? 'unknown',
+-          alpha,
+-          beta,
+-          gamma,
+-          rawHeading: raw,
+-          heading: headingRef.current,
+-          branch,
+-        })
+-        if (samples.length > DEBUG_SAMPLE_LIMIT) {
+-          samples.shift()
++
++        if (branch === 'relative' && !used) {
++          lastIgnoredRelativeAlphaRef.current = alpha
+         }
+-      }
+ 
+-      if (
+-        event.type === 'deviceorientationabsolute' &&
+-        typeof event.alpha === 'number'
+-      ) {
+-        if (!hasReceivedAbsoluteRef.current) {
+-          smoothingRef.current = []
++        if (used) {
++          alphaRawRef.current = alpha
++          betaRef.current = beta
++          gammaRef.current = gamma
++          screenAngleRef.current = readScreenAngle()
++          eventAbsoluteRef.current =
++            typeof event.absolute === 'boolean' ? event.absolute : null
++          rawHeadingRef.current = raw
++          branchRef.current = branch
+         }
+-        hasReceivedAbsoluteRef.current = true
+-      } else if (hasReceivedAbsoluteRef.current) {
++
++        const now = typeof performance !== 'undefined' ? performance.now() : 0
++        const eventType = event.type ?? 'unknown'
++        const lastAt = lastSampleAtByTypeRef.current[eventType]
++        if (lastAt == null || now - lastAt >= DEBUG_SAMPLE_MIN_INTERVAL_MS) {
++          lastSampleAtByTypeRef.current[eventType] = now
++          const samples = samplesRef.current
++          samples.push({
++            t: now,
++            type: eventType,
++            alpha,
++            beta,
++            gamma,
++            rawHeading: raw,
++            heading: headingRef.current,
++            branch,
++            used,
++          })
++          if (samples.length > DEBUG_SAMPLE_LIMIT) {
++            samples.shift()
++          }
++        }
++      }
++
++      if (!used) {
+         return
+       }
+ 
+diff --git a/src/hooks/useQibla.ts b/src/hooks/useQibla.ts
+index 28f9463..3339c08 100644
+--- a/src/hooks/useQibla.ts
++++ b/src/hooks/useQibla.ts
+@@ -30,6 +30,7 @@ export interface UseQiblaResult {
+   screenAngle: number | null
+   eventAbsolute: boolean | null
+   rawHeading: number | null
++  lastIgnoredRelativeAlpha: number | null
+   samples: OrientationSample[]
+ }
+ 
+@@ -70,6 +71,7 @@ export function useQibla(): UseQiblaResult {
+     screenAngle: orientation.screenAngle,
+     eventAbsolute: orientation.eventAbsolute,
+     rawHeading: orientation.rawHeading,
++    lastIgnoredRelativeAlpha: orientation.lastIgnoredRelativeAlpha,
+     samples: orientation.samples,
+   }
+ }

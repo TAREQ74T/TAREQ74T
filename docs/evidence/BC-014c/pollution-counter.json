@@ -1,0 +1,69 @@
+{
+  "name": "pollution-counter",
+  "description": "absolute alpha=280.6 then relative alpha=280.4; summary must stay on used event",
+  "afterAbsolute": {
+    "alphaRaw": 280.6,
+    "rawHeading": 280.6,
+    "heading": 280.6,
+    "lastIgnoredRelativeAlpha": null,
+    "branch": "absolute"
+  },
+  "afterRelative": {
+    "alphaRaw": 280.6,
+    "rawHeading": 280.6,
+    "heading": 280.6,
+    "lastIgnoredRelativeAlpha": 280.4,
+    "branch": "absolute",
+    "beta": 1.2,
+    "gamma": -0.4
+  },
+  "checks": [
+    {
+      "name": "آخر relative (متجاهَل) = 280.4",
+      "pass": true,
+      "detail": 280.4
+    },
+    {
+      "name": "heading قبل التنعيم = 280.6",
+      "pass": true,
+      "detail": 280.6
+    },
+    {
+      "name": "alphaRaw stays 280.6 (no pollution)",
+      "pass": true,
+      "detail": 280.6
+    },
+    {
+      "name": "beta/gamma not overwritten by ignored relative",
+      "pass": true,
+      "detail": {
+        "beta": 1.2,
+        "gamma": -0.4
+      }
+    },
+    {
+      "name": "branch stays absolute",
+      "pass": true,
+      "detail": "absolute"
+    },
+    {
+      "name": "heading (smoothed) stays 280.6",
+      "pass": true,
+      "detail": 280.6
+    },
+    {
+      "name": "no NaN",
+      "pass": true,
+      "detail": {
+        "alphaRaw": 280.6,
+        "rawHeading": 280.6,
+        "heading": 280.6,
+        "lastIgnoredRelativeAlpha": 280.4,
+        "branch": "absolute",
+        "beta": 1.2,
+        "gamma": -0.4
+      }
+    }
+  ],
+  "pass": true
+}

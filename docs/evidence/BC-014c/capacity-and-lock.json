@@ -1,0 +1,85 @@
+{
+  "name": "capacity-and-lock",
+  "description": "10 relative → 1 absolute (alpha=280.6) → 200 relative after lock",
+  "snapshot": {
+    "heading": 280.6,
+    "alphaRaw": 280.6,
+    "rawHeading": 280.6,
+    "branch": "absolute",
+    "absCount": 1,
+    "relCount": 210,
+    "lastIgnoredRelativeAlpha": 1,
+    "sampleCount": 150
+  },
+  "headingAfterLock": 280.6,
+  "checks": [
+    {
+      "name": "relCount > 10 after lock",
+      "pass": true,
+      "detail": 210
+    },
+    {
+      "name": "samples <= 150",
+      "pass": true,
+      "detail": 150
+    },
+    {
+      "name": "samples exactly 150 after overflow",
+      "pass": true,
+      "detail": 150
+    },
+    {
+      "name": "heading unchanged by post-lock relative",
+      "pass": true,
+      "detail": {
+        "headingAfterLock": 280.6,
+        "last": 280.6
+      }
+    },
+    {
+      "name": "no NaN",
+      "pass": true,
+      "detail": false
+    },
+    {
+      "name": "post-lock relative samples used=false",
+      "pass": true,
+      "detail": [
+        {
+          "t": 21900,
+          "type": "deviceorientation",
+          "alpha": 1,
+          "beta": 0,
+          "gamma": 0,
+          "rawHeading": 181,
+          "heading": 280.6,
+          "branch": "relative",
+          "used": false
+        },
+        {
+          "t": 22000,
+          "type": "deviceorientation",
+          "alpha": 1,
+          "beta": 0,
+          "gamma": 0,
+          "rawHeading": 181,
+          "heading": 280.6,
+          "branch": "relative",
+          "used": false
+        },
+        {
+          "t": 22100,
+          "type": "deviceorientation",
+          "alpha": 1,
+          "beta": 0,
+          "gamma": 0,
+          "rawHeading": 181,
+          "heading": 280.6,
+          "branch": "relative",
+          "used": false
+        }
+      ]
+    }
+  ],
+  "pass": true
+}
